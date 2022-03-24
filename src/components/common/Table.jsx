@@ -20,9 +20,9 @@ function Table(props) {
       <table className={tableClassnames}>
         <thead>
           <tr>
-            {props.headings.map((h) => {
+            {props.headings.map((h, i) => {
               return (
-                <th class={headerClassnames} id={h}>
+                <th key={i} className={headerClassnames} id={h}>
                   {h}
                 </th>
               );
@@ -30,9 +30,9 @@ function Table(props) {
           </tr>
         </thead>
         <tbody>
-          {(props.rows.length > 0) && props.rows.map(row => {
+          {(props.rows.length > 0) && props.rows.map((row, i) => {
             return (
-              <tr>{row.map(r => { return <td className={cellClassnames}>{r}</td> })}</tr>
+              <tr key={i}>{row.map((r, j) => { return <td key={j} className={cellClassnames}>{r}</td> })}</tr>
             )
           })}
         </tbody>
