@@ -1,34 +1,13 @@
-import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
-
-function Field(props) {
-
-    if(props.isHidden)
-        return (
-        <input type="password" placeholder={props.fieldName}></input>
-        )
-
-    return (
-        <input type="text" placeholder={props.fieldName}></input>
-      )
-}
-
-Field.propTypes = {
-    fieldName: PropTypes.string.isRequired,
-    isHidden: PropTypes.bool
-}
-
-Field.defaultProps = {
-    isHidden: false
-}
+import TextField from "./TextField";
 
 function Form(props) {
 
     function renderFields() {
         const fields = []
         props.fields.map(item => {
-            fields.push(<Field fieldName={item[0]} isHidden={item[1]}/>)
+            fields.push(<TextField placeholder={item[0]} isHidden={item[1]}/>)
         })
         return fields
         }

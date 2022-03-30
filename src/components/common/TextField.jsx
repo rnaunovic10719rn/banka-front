@@ -15,6 +15,10 @@ export default function TextField(props) {
     props.className // custom style
   );
 
+  if(props.isHidden)
+  return (
+    <input type="password" placeholder={props.placeholder} className={classes} />
+  );
   return (
     <input type="text" placeholder={props.placeholder} className={classes} />
   );
