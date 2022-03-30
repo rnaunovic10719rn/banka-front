@@ -14,7 +14,11 @@ export default function TextField(props) {
     "transition ease-in-out", // effects
     props.className // custom style
   );
-
+    
+  if(props.type == 'hidden')
+  return (
+    <input type="password" placeholder={props.placeholder} className={classes} />
+  );
   return (
     <input type="text" placeholder={props.placeholder} className={classes} />
   );
