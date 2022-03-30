@@ -10,11 +10,19 @@ export default {
 
 const Template = (args) => <Form {...args} />;
 
+export const Login = Template.bind({});
+Login.args = {
+  title: "PRIJAVA",
+  fields: [['Korisničko ime'], ['Šifra','hidden']],
+  link: ["Zaboravili ste šifru?",'wwww.google.com'],
+  button: "Prijavite se"
+};
+
 export const ChangePassword = Template.bind({});
 ChangePassword.args = {
   title: "PROMENITE ŠIFRU",
-  fields: [['Šifra',true], ['Ponovite šifru',true]],
-  button: "dugme"
+  fields: [['Šifra','hidden'], ['Ponovite šifru','hidden']],
+  button: "Prijavite se"
 };
 
 export const TwoFactorAuth = Template.bind({});
