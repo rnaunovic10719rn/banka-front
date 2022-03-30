@@ -7,7 +7,7 @@ function Form(props) {
     function renderFields() {
         const fields = []
         props.fields.map(item => {
-            fields.push(<TextField placeholder={item[0]} isHidden={item[1]}/>)
+            fields.push(<p><TextField placeholder={item[0]} isHidden={item[1]}/></p>)
         })
         return fields
         }
@@ -24,12 +24,14 @@ function Form(props) {
             <div>
                 {renderInfo()}
             </div>
-            <div>
-                {renderFields().map(r => r)} 
-            </div>
-            <div>
-                <Button label={props.button}/>
-            </div>
+            <form>
+                <div>
+                    {renderFields().map(r => r)} 
+                </div>
+                <div>
+                    <Button label={props.button}/>
+                </div>
+            </form>
         </div>
 
 
