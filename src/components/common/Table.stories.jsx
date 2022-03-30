@@ -1,7 +1,7 @@
 import React from "react";
 
 import Table from "./Table";
-import Button, {BUTTON_DESIGN } from "./Button";
+import Button, { BUTTON_DESIGN } from "./Button";
 
 export default {
   title: "Components/Table",
