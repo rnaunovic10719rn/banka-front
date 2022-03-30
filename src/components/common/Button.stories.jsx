@@ -3,7 +3,7 @@ import React from "react";
 import Button, { BUTTON_DESIGN } from "./Button";
 
 export default {
-  title: "Components/Button",
+  title: "Common/Button",
   component: Button,
   argTypes: {
     design: {

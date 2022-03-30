@@ -4,7 +4,7 @@ import QRCode from "react-qr-code";
 import Modal from "./Modal";
 
 export default {
-    title: "Components/Modal",
+    title: "Common/Modal",
     component: Modal,
     argTypes: {
     },
