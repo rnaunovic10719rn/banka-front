@@ -4,7 +4,7 @@ import Table from "./Table";
 import Button, { BUTTON_DESIGN } from "./Button";
 
 export default {
-  title: "Components/Table",
+  title: "Common/Table",
   component: Table,
 };
 
