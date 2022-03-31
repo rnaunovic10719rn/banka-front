@@ -3,7 +3,7 @@ import React from "react";
 import Pagination from "./Pagination";
 
 export default {
-  title: "Components/Pagination",
+  title: "Common/Pagination",
   component: Pagination,
   argTypes: {
     onChange: {
