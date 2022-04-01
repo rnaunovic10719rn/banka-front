@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import { URLS } from "../index";
 
 function SidebarItem(props) {
     const style = classNames(
@@ -24,18 +25,17 @@ SidebarItem.propTypes = {
 
 function Sidebar(props) {
     const style = classNames(
-        "absolute inset-y-0 left-0", //position
-        "w-60",
+        "inset-y-0 left-0", //position
+        "w-60 h-screen",
         "bg-gray-500",
-        "",
-        "",
     )
 
     return (
         <div className={style} >
             <div className="mt-8 flex flex-col">
-                <SidebarItem text="Informacije" href="" />
-                <SidebarItem text="Privatnost" href="" />
+                <SidebarItem text="Home" href={URLS.DASHBOARD.INDEX} />
+                <SidebarItem text="Informacije" href={URLS.DASHBOARD.INFORMATION} />
+                <SidebarItem text="Privatnost" href={URLS.DASHBOARD.PRIVACY} />
             </div>
         </div>
     );
