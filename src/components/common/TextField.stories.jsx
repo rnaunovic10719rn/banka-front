@@ -9,7 +9,14 @@ export default {
 
 const Template = (args) => <TextField {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Default = Template.bind({});
+Default.args = {
   placeholder: "Placeholder",
+};
+
+export const Password = Template.bind({});
+Password.args = {
+  placeholder: "Placeholder",
+  type: "password",
+  onChange: (value) => console.log(value)
 };

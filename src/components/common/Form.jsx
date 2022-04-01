@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import Button from "./Button";
 import TextField from "./TextField";
-import classnames from "classnames";
 import classNames from "classnames";
 
 function Form(props) {
@@ -41,28 +40,28 @@ function Form(props) {
     )
 
     function renderInfo() {
-        if(props.info)
-            return <div className= {infoClasses}>{props.info}</div> 
+        if (props.info)
+            return <div className={infoClasses}>{props.info}</div>
         return;
-        }
-    
+    }
+
     function renderLink() {
-        if(props.link)
-            return <div className = {linkClasses}><a href={props.link[1]}>{props.link[0]}</a></div> 
+        if (props.link)
+            return <div className={linkClasses}><a href={props.link[1]}>{props.link[0]}</a></div>
         return;
-        }
+    }
 
     function renderFields() {
         const fields = []
         props.fields.map(item => {
-            fields.push(<p className={fieldClasses}><TextField placeholder={item[0]} type={item[1]} className ='w-full'/></p>)
+            fields.push(<p className={fieldClasses}><TextField placeholder={item[0]} type={item[1]} className='w-full' /></p>)
         })
         return fields
-        }
+    }
 
     return (
         <div className={formWrapperClasses}>
-            <div className = {tittleClasses}>
+            <div className={tittleClasses}>
                 {props.title}
             </div>
             <div>
@@ -70,27 +69,27 @@ function Form(props) {
             </div>
             <form>
                 <div>
-                    {renderFields().map(r => r)} 
+                    {renderFields().map(r => r)}
                 </div>
                 <div>
                     {renderLink()}
                 </div>
-                <div className = {buttonWrapperClasses}>
-                    <Button label={props.button} className ='w-full'/>
+                <div className={buttonWrapperClasses}>
+                    <Button label={props.button} className='w-full' />
                 </div>
             </form>
         </div>
 
 
-  );
+    );
 }
 
 Form.propTypes = {
-  title: PropTypes.string,
-  info: PropTypes.string,
-  fields: PropTypes.arrayOf(PropTypes.array),
-  link:PropTypes.arrayOf(PropTypes.string),
-  button: PropTypes.string
+    title: PropTypes.string,
+    info: PropTypes.string,
+    fields: PropTypes.arrayOf(PropTypes.array),
+    link: PropTypes.arrayOf(PropTypes.string),
+    button: PropTypes.string
 };
 
 export default Form;

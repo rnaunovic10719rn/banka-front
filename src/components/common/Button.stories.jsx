@@ -22,6 +22,13 @@ Primary.args = {
   disabled: false,
 };
 
+export const Secondary = Template.bind({});
+Secondary.args = {
+  label: "Button",
+  design: BUTTON_DESIGN.SECONDARY,
+  disabled: false,
+};
+
 export const Inline = Template.bind({});
 Inline.args = {
   label: 'Inline',
