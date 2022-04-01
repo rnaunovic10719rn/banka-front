@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { URLS } from "../index";
+import { URLS } from "../routes";
 
 function SidebarItem(props) {
     const style = classNames(
@@ -34,8 +34,9 @@ function Sidebar(props) {
         <div className={style} >
             <div className="mt-8 flex flex-col">
                 <SidebarItem text="Home" href={URLS.DASHBOARD.INDEX} />
-                <SidebarItem text="Informacije" href={URLS.DASHBOARD.INFORMATION} />
-                <SidebarItem text="Privatnost" href={URLS.DASHBOARD.PRIVACY} />
+                <SidebarItem text="Informacije" href={"/" + URLS.DASHBOARD.INFORMATION} />
+                <SidebarItem text="Privatnost" href={"/" + URLS.DASHBOARD.PRIVACY} />
+                <SidebarItem text="Lista zaposlenih" href={"/" + URLS.DASHBOARD.LIST.INDEX} />
             </div>
         </div>
     );

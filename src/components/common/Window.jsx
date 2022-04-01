@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 function Window(props) {
     const formWrapperClasses = classNames(
-        "box-border",
+        "box-border border border-gray-300",
         "h-full w-[500px]",
         "border-1",
         "bg-gray-50",

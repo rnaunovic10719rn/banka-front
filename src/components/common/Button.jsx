@@ -20,10 +20,10 @@ function Button(props) {
   )
 
   const secondaryStyle = classNames(
-    "text-indigo-500 hover:text-indigo-700 font-bold text-base", // text
+    "text-indigo-500 hover:text-indigo-700 text-base", // text
     "py-2 px-4", //spacing
     "bg-transparent hover:bg-indigo-50", // background
-    "border-2 border-indigo-500 hover:border-indigo-700", //border
+    "border rounded border-indigo-500 hover:border-indigo-700", //border
     "transition ease-in-out", // effects
     { 'opacity-60 text-gray-400 hover:text-gray-400  cursor-not-allowed': props.disabled },
     props.className // custom style

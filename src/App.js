@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 function App(props) {
 	return (
-		<div className="h-screen bg-blue-100">
+		<div className="h-screen ">
 			<Outlet />
 		</div>
 	);
