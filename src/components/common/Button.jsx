@@ -4,6 +4,7 @@ import classNames from "classnames";
 
 export const BUTTON_DESIGN = {
   PRIMARY: 'primary',
+  SECONDARY: 'secondary',
   INLINE: 'inline',
 }
 
@@ -18,6 +19,16 @@ function Button(props) {
     props.className // custom style
   )
 
+  const secondaryStyle = classNames(
+    "text-indigo-500 hover:text-indigo-700 text-base", // text
+    "py-2 px-4", //spacing
+    "bg-transparent hover:bg-indigo-50", // background
+    "border rounded border-indigo-500 hover:border-indigo-700", //border
+    "transition ease-in-out", // effects
+    { 'opacity-60 text-gray-400 hover:text-gray-400  cursor-not-allowed': props.disabled },
+    props.className // custom style
+  )
+
   const inlineStyle = classNames(
     "text-blue-500 hover:text-blue-700 font-bold text-base hover:underline", // text
     "transition ease-in-out", // effects
@@ -29,6 +40,9 @@ function Button(props) {
   switch (props.design) {
     case BUTTON_DESIGN.PRIMARY:
       style = primaryStyle
+      break
+    case BUTTON_DESIGN.SECONDARY:
+      style = secondaryStyle
       break
     case BUTTON_DESIGN.INLINE:
       style = inlineStyle
@@ -53,7 +67,7 @@ function Button(props) {
 
 Button.propTypes = {
   label: PropTypes.string.isRequired,
-  design: PropTypes.oneOf([BUTTON_DESIGN.PRIMARY, BUTTON_DESIGN.INLINE]),
+  design: PropTypes.oneOf([BUTTON_DESIGN.PRIMARY, BUTTON_DESIGN.SECONDARY, BUTTON_DESIGN.INLINE]),
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   className: PropTypes.string,
