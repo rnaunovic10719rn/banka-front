@@ -13,6 +13,7 @@ import TradePage from "./pages/dashboard/trade";
 import OverviewPage from "./pages/dashboard/overview";
 import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
+import OverviewStockPage from "./pages/dashboard/overview-stock";
 
 export const URLS = {
 	DASHBOARD: {
@@ -23,7 +24,10 @@ export const URLS = {
 			INDEX: "list",
 			NEW_USER: "list/new-user",
 		},
-		OVERVIEW: "view",
+		OVERVIEW: {
+			INDEX: "view",
+			STOCK: "view/:id",
+		},
 		TRADE: "trade",
 		ORDERS: "orders",
 		SYSTEM: "system",
@@ -63,8 +67,12 @@ export function AppRoutes() {
 							element={<TradePage />}
 						/>
 						<Route
-							path={URLS.DASHBOARD.OVERVIEW}
+							path={URLS.DASHBOARD.OVERVIEW.INDEX}
 							element={<OverviewPage />}
+						></Route>
+						<Route
+							path={URLS.DASHBOARD.OVERVIEW.STOCK}
+							element={<OverviewStockPage />}
 						/>
 						<Route
 							path={URLS.DASHBOARD.ORDERS}

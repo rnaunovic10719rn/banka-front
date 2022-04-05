@@ -7,19 +7,27 @@ const borderColor = "border-gray-200"
 const cellSpacing = "px-4 py-3"
 
 function TableRow(props) {
-  const cellClassnames = classNames("border-b text-gray-700 bg-white", borderColor, cellSpacing)
+  const cellClassnames = classNames(
+    "border-b text-gray-700", borderColor, cellSpacing,
+  )
+
+  const rowStyle = classNames(
+    { "hover:bg-gray-100 cursor-pointer": props.clickable },
+  )
 
   if (!props.row) {
     return null
   }
 
   return (
-    <tr>{props.row.map((r, j) => <td key={j} className={cellClassnames}>{r}</td>)}</tr>
+    <tr className={rowStyle} onClick={props.onClick}>{props.row.map((r, j) => <td key={j} className={cellClassnames}>{r}</td>)}</tr>
   )
 }
 
 TableRow.propTypes = {
   row: PropTypes.arrayOf(PropTypes.any),
+  clickable: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 function Table(props) {
@@ -31,13 +39,19 @@ function Table(props) {
     "border-collapse border", borderColor, // border
     "w-full", // width
     "text-left", // text
+    "bg-white",
     props.classNames,
   );
+
+  function handleClick() {
+    if (!props.clickable) return
+    props.onClick()
+  }
 
   function renderRows() {
     const rows = []
     for (let i = startRange; i < endRange + 1; i++) {
-      rows.push(<TableRow key={i} row={props.rows[i]} />)
+      rows.push(<TableRow key={i} row={props.rows[i]} onClick={handleClick} clickable={props.clickable} />)
     }
     return rows
   }
@@ -98,6 +112,8 @@ Table.propTypes = {
   emptyStatePlaceholder: PropTypes.string,
   pagination: PropTypes.bool,
   paginationGroupSize: PropTypes.number,
+  clickable: PropTypes.bool,
+  onClick: PropTypes.func,
   classNames: PropTypes.string,
 };
 
@@ -105,6 +121,7 @@ Table.defaultProps = {
   emptyStatePlaceholder: "No data.",
   pagination: false,
   paginationGroupSize: 5,
+  clickable: false,
 }
 
 export default Table;

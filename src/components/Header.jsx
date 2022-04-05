@@ -24,7 +24,7 @@ function Header(props) {
                     </div>
                     <Link to={`${URLS.DASHBOARD.INDEX}`}>Pocetna</Link>
                     <Link to={`${URLS.DASHBOARD.LIST.INDEX}`}>Spisak zaposlenih</Link>
-                    <Link to={`${URLS.DASHBOARD.OVERVIEW}`}>Pregled</Link>
+                    <Link to={`${URLS.DASHBOARD.OVERVIEW.INDEX}`}>Pregled</Link>
                     <Link to={`${URLS.DASHBOARD.TRADE}`}>Trgovina</Link>
                     <Link to={`${URLS.DASHBOARD.ORDERS}`}>Narudzbine</Link>
                     <Link to={`${URLS.DASHBOARD.SYSTEM}`}>Sistem</Link>
