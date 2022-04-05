@@ -12,23 +12,23 @@ function Card(props) {
     )
 
     const titleStyle = classNames(
-        "relative px-3 left-20 top-3.5", // position
+        "relative px-2 left-6 top-3.5", // position
         "bg-white ", // background
-        "text-xl",
+        "text-xl text-gray-500",
     )
 
     return (
 
         <div>
-            <span className={titleStyle}>
+            {props.title && < span className={titleStyle}>
                 <b>{props.title}</b>
-            </span>
+            </span>}
             <div className={cardStyle}>
                 <div>
                     {props.children}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

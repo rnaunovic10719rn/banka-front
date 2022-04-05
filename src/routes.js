@@ -9,6 +9,9 @@ import PageLayout from "./components/PageLayout";
 import App from "./App";
 import NewUserPage from "./pages/dashboard/newuser";
 import LoginPage from "./pages/login";
+import TradePage from "./pages/dashboard/trade";
+import OverviewPage from "./pages/dashboard/overview";
+import SystemPage from "./pages/dashboard/system";
 
 export const URLS = {
 	DASHBOARD: {
@@ -52,6 +55,18 @@ export function AppRoutes() {
 						<Route
 							path={URLS.DASHBOARD.LIST.NEW_USER}
 							element={<NewUserPage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.TRADE}
+							element={<TradePage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.OVERVIEW}
+							element={<OverviewPage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.SYSTEM}
+							element={<SystemPage />}
 						/>
 					</Route>
 					<Route element={<PageLayout />}>
