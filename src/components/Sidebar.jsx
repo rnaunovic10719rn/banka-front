@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 import { URLS } from "../routes";
 
 function SidebarItem(props) {
@@ -14,7 +15,7 @@ function SidebarItem(props) {
     )
 
     return (
-        <a className={style} href={props.href}>{props.text}</a>
+        <Link className={style} to={`${props.href}`}>{props.text}</Link>
     )
 }
 
@@ -33,10 +34,8 @@ function Sidebar(props) {
     return (
         <div className={style} >
             <div className="mt-8 flex flex-col">
-                <SidebarItem text="Home" href={URLS.DASHBOARD.INDEX} />
                 <SidebarItem text="Informacije" href={"/" + URLS.DASHBOARD.INFORMATION} />
                 <SidebarItem text="Privatnost" href={"/" + URLS.DASHBOARD.PRIVACY} />
-                <SidebarItem text="Lista zaposlenih" href={"/" + URLS.DASHBOARD.LIST.INDEX} />
             </div>
         </div>
     );

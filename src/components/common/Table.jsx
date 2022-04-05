@@ -4,10 +4,10 @@ import classNames from "classnames";
 import Pagination from "./Pagination";
 
 const borderColor = "border-gray-200"
-const cellSpacing = "px-3 py-4"
+const cellSpacing = "px-4 py-3"
 
 function TableRow(props) {
-  const cellClassnames = classNames("border-b text-gray-400 bg-white", borderColor, cellSpacing)
+  const cellClassnames = classNames("border-b text-gray-700 bg-white", borderColor, cellSpacing)
 
   if (!props.row) {
     return null
@@ -26,7 +26,7 @@ function Table(props) {
   const [startRange, setStartRange] = useState(0)
   const [endRange, setEndRange] = useState(0)
 
-  const headerClassnames = classNames("border-b bg-gray-50", "px-3 py-1.5", borderColor)
+  const headerClassnames = classNames("border-b bg-gray-50", cellSpacing, borderColor)
   const tableClassnames = classNames(
     "border-collapse border", borderColor, // border
     "w-full", // width
@@ -61,7 +61,7 @@ function Table(props) {
 
   return (
     <div>
-      <div className="drop-shadow-md">
+      <div className="drop-shadow">
         <table className={tableClassnames}>
           <thead>
             <tr>
