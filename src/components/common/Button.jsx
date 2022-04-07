@@ -69,6 +69,7 @@ Button.propTypes = {
   label: PropTypes.string.isRequired,
   design: PropTypes.oneOf([BUTTON_DESIGN.PRIMARY, BUTTON_DESIGN.SECONDARY, BUTTON_DESIGN.INLINE]),
   disabled: PropTypes.bool,
+  type: PropTypes.oneOf(['button', 'submit']),
   onClick: PropTypes.func,
   className: PropTypes.string,
 };
@@ -76,6 +77,7 @@ Button.propTypes = {
 Button.defaultProps = {
   design: BUTTON_DESIGN.PRIMARY,
   disabled: false,
+  type: 'button',
   className: '',
   onClick: () => { }
 };
