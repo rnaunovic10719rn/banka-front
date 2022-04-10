@@ -17,6 +17,11 @@ export async function loginAction(username, password, otp = null) {
 	return r;
 }
 
+export function getUserApi() {
+	let url = new URL(BASE_URL + "/user");
+	return get(url);
+}
+
 export function getUsersAction() {
 	let url = new URL(BASE_URL + "/users");
 	return get(url);
