@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Card from "../../components/common/Card";
 import TextField from "../../components/common/TextField";
 import Button from "../../components/common/Button";
+import Alert from "../../components/common/Alert";
 
 export default function InformationPage(props) {
   const [form, setForm] = useState({
@@ -13,31 +14,45 @@ export default function InformationPage(props) {
     br_telefon: "",
   });
 
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
   const onChange = (event) => {
-    console.log(`IN INPUT ${event}`);
     setForm({ ...form, ...event });
   };
 
-  function onSubmit() {
-    return fetch("/user/edit/{id}")
-      .then((response) => response.json())
-      .then((responseJson) => {
-        return responseJson.InformationPage;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  async function onSubmit() {
+    try {
+      //await editUserAction(form);
+      setSuccess(true);
+    } catch (e) {
+      setError(true);
+    }
   }
 
   return (
     <div className="w-[900px] flex flex-col gap-8">
+      {error && (
+        <Alert
+          design="danger"
+          text="Error"
+          onDismiss={() => setError(null)}
+        ></Alert>
+      )}
+      {success && (
+        <Alert
+          design="success"
+          text="Success"
+          onDismiss={() => setSuccess(null)}
+        ></Alert>
+      )}
       <Card title="Osnovno">
         <div class="flex flex-col gap-5">
           <div className="flex justify-between items-center">
             <div className="w-[100px]">Ime</div>
             <TextField
               className="grow"
-              onChange={(e) => setForm({ ime: e })}
+              onChange={(e) => onChange({ ime: e })}
               placeholder="Ime"
             />
           </div>
@@ -45,7 +60,7 @@ export default function InformationPage(props) {
             <div className="w-[100px]">Prezime</div>
             <TextField
               className="grow"
-              onChange={(e) => setForm({ prezime: e })}
+              onChange={(e) => onChange({ prezime: e })}
               placeholder="Prezime"
             />
           </div>
@@ -53,7 +68,7 @@ export default function InformationPage(props) {
             <div className="w-[100px]">JMBG</div>
             <TextField
               className="grow"
-              onChange={(e) => setForm({ jmbg: e })}
+              onChange={(e) => onChange({ jmbg: e })}
               placeholder="JMBG"
             />
           </div>
@@ -61,7 +76,7 @@ export default function InformationPage(props) {
             <div className="w-[100px]">Pozicija</div>
             <TextField
               className="grow"
-              onChange={(e) => setForm({ pozicija: e })}
+              onChange={(e) => onChange({ pozicija: e })}
               placeholder="Pozicija"
             />
           </div>
@@ -69,7 +84,7 @@ export default function InformationPage(props) {
             <div className="w-[100px]">E-mail</div>
             <TextField
               className="grow"
-              onChange={(e) => setForm({ email: e })}
+              onChange={(e) => onChange({ email: e })}
               placeholder="E-mail"
             />
           </div>
@@ -77,7 +92,7 @@ export default function InformationPage(props) {
             <div className="w-[100px]">Telefon</div>
             <TextField
               className="grow"
-              onChange={(e) => setForm({ br_telefon: e })}
+              onChange={(e) => onChange({ br_telefon: e })}
               placeholder="Telefon"
             />
           </div>
