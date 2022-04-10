@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
@@ -7,6 +7,7 @@ const TEXT_FIELD_TYPE = {
   PASSWORD: 'password',
 }
 function TextField(props) {
+  const [value, setValue] = useState(props.value)
   const classes = classNames(
     "border-2 border-gray-300",
     "min-widht",
@@ -20,12 +21,22 @@ function TextField(props) {
     props.className // custom style
   );
 
+  function handleChange(e) {
+    setValue(e.target.value)
+    props.onChange(e.target.value)
+  }
+
+  useEffect(() => {
+    setValue(props.value)
+  }, [props.value])
+
   return (
-    <input type={props.type} placeholder={props.placeholder} className={classes} onChange={(e) => props.onChange(e.target.value)} />
+    <input value={value} type={props.type} placeholder={props.placeholder} className={classes} onChange={handleChange} />
   );
 }
 
 TextField.propTypes = {
+  value: PropTypes.string,
   type: PropTypes.oneOf([TEXT_FIELD_TYPE.TEXT, TEXT_FIELD_TYPE.PASSWORD]),
   className: PropTypes.string,
   onChange: PropTypes.func,
@@ -33,6 +44,7 @@ TextField.propTypes = {
 
 TextField.defaultProps = {
   type: TEXT_FIELD_TYPE.TEXT,
+  value: "",
 }
 
 export default TextField

@@ -1,11 +1,15 @@
 import { authGetToken } from "../auth";
 
 export function get(url) {
-	return request("get", url);
+	return request("GET", url);
 }
 
 export function post(url, body = null) {
-	return request("post", url, body);
+	return request("POST", url, body);
+}
+
+export function patch(url, body = null) {
+	return request("PATCH", url, body);
 }
 
 async function request(method, url, body) {

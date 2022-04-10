@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 import { URLS } from "../../routes"
 
 
-const BANK_POSITIONS = {
+export const BANK_POSITIONS = {
     ADMIN_GL: "ROLE_GL_ADMIN",
     ADMIN: "ROLE_ADMIN",
 }

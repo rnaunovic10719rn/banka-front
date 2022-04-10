@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../components/common/Card";
 import TextField from "../../components/common/TextField";
 import Button from "../../components/common/Button";
 import Alert from "../../components/common/Alert";
+import Select from "../../components/common/Select";
+import { editUserAction } from "../../clients/client";
+import { useSelector } from "react-redux";
+import { getUserSelector } from "../../redux/selectors";
+import { BANK_POSITIONS } from "./newuser";
 
 export default function InformationPage(props) {
+  const user = useSelector(getUserSelector)
   const [form, setForm] = useState({
     ime: "",
     prezime: "",
-    jmbg: "",
-    pozicija: "",
     email: "",
+    jmbg: "",
     br_telefon: "",
+    pozicija: "",
   });
 
   const [error, setError] = useState(null);
@@ -23,26 +29,38 @@ export default function InformationPage(props) {
 
   async function onSubmit() {
     try {
-      //await editUserAction(form);
+      await editUserAction(form);
       setSuccess(true);
     } catch (e) {
       setError(true);
     }
   }
 
+  useEffect(() => {
+    if (!user) return
+    setForm({
+      ime: user["ime"],
+      prezime: user["prezime"],
+      email: user["email"],
+      jmbg: user["jmbg"],
+      br_telefon: user["br_telefon"],
+      pozicija: user["pozicija"],
+    })
+  }, [user])
+
   return (
     <div className="w-[900px] flex flex-col gap-8">
       {error && (
         <Alert
           design="danger"
-          text="Error"
+          text="Neuspesno menjanje informacije"
           onDismiss={() => setError(null)}
         ></Alert>
       )}
       {success && (
         <Alert
           design="success"
-          text="Success"
+          text="Uspesno promenjeni podaci"
           onDismiss={() => setSuccess(null)}
         ></Alert>
       )}
@@ -54,6 +72,7 @@ export default function InformationPage(props) {
               className="grow"
               onChange={(e) => onChange({ ime: e })}
               placeholder="Ime"
+              value={form && form["ime"]}
             />
           </div>
           <div className="flex justify-between items-center">
@@ -62,6 +81,7 @@ export default function InformationPage(props) {
               className="grow"
               onChange={(e) => onChange({ prezime: e })}
               placeholder="Prezime"
+              value={form && form["prezime"]}
             />
           </div>
           <div className="flex justify-between items-center">
@@ -70,14 +90,16 @@ export default function InformationPage(props) {
               className="grow"
               onChange={(e) => onChange({ jmbg: e })}
               placeholder="JMBG"
+              value={form && form["jmbg"]}
             />
           </div>
           <div className="flex justify-between items-center">
             <div className="w-[100px]">Pozicija</div>
-            <TextField
+            <Select
               className="grow"
               onChange={(e) => onChange({ pozicija: e })}
-              placeholder="Pozicija"
+              options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL]}
+              value={form && form["pozicija"]}
             />
           </div>
           <div className="flex justify-between items-center">
@@ -86,6 +108,7 @@ export default function InformationPage(props) {
               className="grow"
               onChange={(e) => onChange({ email: e })}
               placeholder="E-mail"
+              value={form && form["email"]}
             />
           </div>
           <div className="flex justify-between items-center">
@@ -94,6 +117,7 @@ export default function InformationPage(props) {
               className="grow"
               onChange={(e) => onChange({ br_telefon: e })}
               placeholder="Telefon"
+              value={form && form["br_telefona"]}
             />
           </div>
           <div>
