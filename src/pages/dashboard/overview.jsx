@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Button from "../../components/common/Button";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
 import Tab from "../../components/common/Tab";
 import Table from "../../components/common/Table";
-import { URLS } from "../../routes";
-import Modal from "../../components/common/Modal";
-import TextField from "../../components/common/TextField";
+import { getForexApi, getFuturesApi, getStocksApi } from "../../clients/stocks";
+import StocksModal from "../../components/StocksModal";
+import PlaceholderLoading from 'react-placeholder-loading'
 
 const TABS = {
   STOCKS: "Stocks",
@@ -17,151 +17,125 @@ export default function OverviewPage() {
   let navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(TABS.STOCKS);
 
-  const [openModal, setOpenModal] = useState(false);
+  const [stocksRowData, setStocksRowData] = useState([])
+  const [forexData, setForexData] = useState([])
+  const [futuresData, setFuturesData] = useState([])
+
+  const [selectedStock, setSelectedStock] = useState(null)
+  const [selectedForex, setSelectedForex] = useState(null)
+  const [selectedFuture, setSelectedFuture] = useState(null)
+
+
+  async function getStocks() {
+    const response = await getStocksApi()
+    let tmp = []
+    response.map(r => {
+      tmp.push([
+        r['ticker'],
+        r['price'],
+        r['volume'],
+        r['change'],
+        r['changePercent'],
+        moment(r['time']).format("DD/MM/YYYY - HH:MM"),
+      ])
+    })
+    setStocksRowData(tmp)
+  }
+
+  async function getForex() {
+    const response = await getForexApi()
+    let tmp = []
+    response.map(r => {
+      tmp.push([
+        r['fromCurrency'],
+        r['toCurrency'],
+        r['exchangeRate'],
+        moment(r['time']).format("DD/MM/YYYY - HH:MM"),
+      ])
+    })
+    setForexData(tmp)
+  }
+
+  async function getFutures() {
+    const response = await getFuturesApi()
+    let tmp = []
+    response.map(r => {
+      tmp.push([
+        r['symbol'],
+        r['high'],
+        "EUREX",
+        moment(r['time']).format("DD/MM/YYYY - HH:MM"),
+      ])
+    })
+    setFuturesData(tmp)
+  }
 
   function renderFutures() {
-    const rows = new Array(15).fill([
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-    ]);
-
     return (
       <Table
         headings={[
           "Oznaka",
           "Cena",
-          "Promena iznosa",
-          "Opseg",
-          "Ugovorena velicina",
-          "Ugovorena jedinica",
-          "Margina odrzavanja",
-          "Datum poravnanja",
+          "Berza",
+          "Poslednje azuriranje",
         ]}
-        rows={rows}
+        rows={futuresData}
         pagination
       />
     );
   }
 
-  function renderForex() {
-    const rows = new Array(15).fill([
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-    ]);
+  function renderPlaceholderRows(cols) {
+    return new Array(5).fill(new Array(cols).fill(<PlaceholderLoading shape="rect" width={'100%'} height={20} />))
+  }
 
+  function renderForex() {
     return (
       <Table
         headings={[
-          "Oznaka",
-          "Cena",
-          "Promena iznosa",
-          "Opseg",
-          "Osnovna valuta",
-          "Navedena valuta",
-          "Ugovorena velicina",
+          "Prodajna valuta",
+          "Kupovna valuta",
+          "Kurs",
+          "Poslednje azuriranje",
         ]}
-        rows={rows}
+        rows={forexData}
         pagination
       />
     );
   }
 
   function renderStocks() {
-    const rows = new Array(15).fill([
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-    ]);
+    const data = stocksRowData.length > 0 ? stocksRowData : renderPlaceholderRows(6)
 
     return (
       <Table
         headings={[
           "Oznaka",
           "Cena",
-          "Promena iznosa",
-          "Opseg",
-          "Naziv berze",
-          "Oznaka berze",
-          "Drzava",
-          "Valuta",
-          "Vremenska zona",
+          "Volume",
+          "Promena",
+          "Promena (%)",
+          "Poslednje azuriranje",
         ]}
-        rows={rows}
+        rows={data}
         pagination
         clickable
-        onClick={() => navigate("123", { id: "test" })}
+        // Nesrecno je uradjeno biranje iz tabele, mora da se vrati red pa da se bira redni broj za informaciju
+        onClick={(e) => setSelectedStock(e[0])}
       />
     );
   }
 
-  function onSubmit() {}
+  function onSubmit() { }
+
+  useEffect(() => {
+    getStocks()
+    getForex()
+    getFutures()
+  }, [])
 
   return (
     <div>
-      <Button
-        className="float-right"
-        onClick={() => {
-          setOpenModal(true);
-        }}
-        label="Filter"
-      />
-      {openModal && (
-        <Modal title="Filter" id="1" onClose={setOpenModal} visible={true}>
-          <div class="flex flex-col gap-5">
-            <div className="flex justify-between items-center">
-              <div className="w-[100px]">Exchange: </div>
-              <TextField className="grow" placeholder="Exchange" />
-            </div>
-            <div className="flex justify-between items-center gap-5">
-              <div className="w-[100px]">Price: </div>
-              <TextField className="grow" placeholder="Price 1" />
-              <TextField className="grow" placeholder="Price 2" />
-            </div>
-            <div className="flex justify-between items-center gap-5">
-              <div className="w-[100px]">Ask: </div>
-              <TextField className="grow" placeholder="Ask 1" />
-              <TextField className="grow" placeholder="Ask 2" />
-            </div>
-            <div className="flex justify-between items-center gap-5">
-              <div className="w-[100px]">Bid: </div>
-              <TextField className="grow" placeholder="Bid 1" />
-              <TextField className="grow" placeholder="Bid 2" />
-            </div>
-            <div className="flex justify-between items-center gap-5">
-              <div className="w-[100px]">Volume: </div>
-              <TextField className="grow" placeholder="Volume 1" />
-              <TextField className="grow" placeholder="Volume 2" />
-            </div>
-            <div>
-              <Button
-                className="float-right"
-                onClick={() => {
-                  setOpenModal(false);
-                }}
-                label="Filter"
-              />
-            </div>
-          </div>
-        </Modal>
-      )}
-
       <Tab
         tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
         onChange={(e) => setActiveTab(e)}
@@ -169,6 +143,7 @@ export default function OverviewPage() {
       {activeTab === TABS.STOCKS && renderStocks()}
       {activeTab === TABS.FOREX && renderForex()}
       {activeTab === TABS.FUTURES && renderFutures()}
+      {selectedStock !== null && <StocksModal ticker={selectedStock} onClose={() => setSelectedStock(null)} />}
     </div>
   );
 }

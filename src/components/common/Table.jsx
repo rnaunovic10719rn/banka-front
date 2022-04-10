@@ -19,8 +19,12 @@ function TableRow(props) {
     return null
   }
 
+  function handleClick() {
+    props.onClick(props.row)
+  }
+
   return (
-    <tr className={rowStyle} onClick={props.onClick}>{props.row.map((r, j) => <td key={j} className={cellClassnames}>{r}</td>)}</tr>
+    <tr className={rowStyle} onClick={handleClick}>{props.row.map((r, j) => <td key={j} className={cellClassnames}>{r}</td>)}</tr>
   )
 }
 
@@ -43,9 +47,9 @@ function Table(props) {
     props.classNames,
   );
 
-  function handleClick() {
+  function handleClick(e) {
     if (!props.clickable) return
-    props.onClick()
+    props.onClick(e)
   }
 
   function renderRows() {

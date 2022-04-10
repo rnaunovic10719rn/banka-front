@@ -1,0 +1,46 @@
+import { get, post } from "./api";
+const alpha = require("alphavantage")({ key: "R2A94K4PARJ2R5LS" });
+const BASE_URL = "http://localhost:8082/api";
+
+// http://localhost:8082/api/akcije/podaci
+
+export async function getRawStockAction(stock, format) {
+	const data = await alpha.data.intraday("AAPL");
+	return data[format["payloadKey"]];
+}
+
+export function getStockInfo(symbol, func, size, interval = null) {
+	let url = new URL("https://www.alphavantage.co/query");
+	let params = new URLSearchParams(url.search);
+	params.append("symbol", symbol);
+	params.append("function", func);
+	params.append("datatype", "json");
+	params.append("outputsize", size);
+	if (interval) {
+		params.append("interval", interval);
+	}
+	params.append("apikey", "R2A94K4PARJ2R5LS");
+
+	url = url + "?" + params;
+	return get(url);
+}
+
+export function getStocksApi() {
+	let url = new URL(BASE_URL + "/akcije/podaci");
+	return get(url);
+}
+
+export function getStockDetailsApi(ticker) {
+	let url = new URL(BASE_URL + "/akcije/podaci/" + ticker);
+	return get(url);
+}
+
+export function getForexApi() {
+	let url = new URL(BASE_URL + "/forex/podaci");
+	return get(url);
+}
+
+export function getFuturesApi() {
+	let url = new URL(BASE_URL + "/futures/podaci");
+	return get(url);
+}

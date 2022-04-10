@@ -24,13 +24,9 @@ function Modal(props) {
                 <h3 class="text-2xl font-semibold text-gray-900 lg:text-2xl">
                     {props.title}
                 </h3>
-                <ExitButton onClick={handleClose} />
+                <ExitButton onClick={props.onClose} />
             </div>
         )
-    }
-
-    function handleClose() {
-        props.onClose()
     }
 
     return (
