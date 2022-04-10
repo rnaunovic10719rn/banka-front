@@ -9,6 +9,8 @@ import PageLayout from "./components/PageLayout";
 import App from "./App";
 import NewUserPage from "./pages/dashboard/newuser";
 import LoginPage from "./pages/login";
+import ChangePasswordPage from "./pages/dashboard/changepass";
+
 
 export const URLS = {
 	DASHBOARD: {
@@ -19,6 +21,7 @@ export const URLS = {
 			INDEX: "list",
 			NEW_USER: "list/new-user",
 		},
+		CHANGEPASSWORD: "changepassword",
 	},
 	LOGIN: "login",
 	REGISTER: "register",
@@ -50,6 +53,12 @@ export function AppRoutes() {
 							path={URLS.DASHBOARD.LIST.NEW_USER}
 							element={<NewUserPage />}
 						/>
+						<Route element={<PageLayout />}>
+						<Route 
+							path={URLS.DASHBOARD.CHANGEPASSWORD} 
+							element={<ChangePasswordPage />} 
+						/>
+					</Route>
 					</Route>
 					<Route element={<PageLayout />}>
 						<Route path={URLS.LOGIN} element={<LoginPage />} />

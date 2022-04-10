@@ -21,3 +21,10 @@ export function getUsersAction() {
 	let url = new URL(BASE_URL + "/users");
 	return get(url);
 }
+
+
+
+//export async function savePassAction(password1,password2, otp = null){
+//	let url = new URL(BASE_URL + "/login");
+//	let params = new URLSearchParams(url.search);
+//}
