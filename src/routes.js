@@ -14,6 +14,8 @@ import OverviewPage from "./pages/dashboard/overview";
 import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
 import OverviewStockPage from "./pages/dashboard/overview-stock";
+import ChangePasswordPage from "./pages/dashboard/changepass";
+
 
 export const URLS = {
 	DASHBOARD: {
@@ -24,6 +26,7 @@ export const URLS = {
 			INDEX: "list",
 			NEW_USER: "list/new-user",
 		},
+		CHANGEPASSWORD: "changepassword",
 		OVERVIEW: {
 			INDEX: "view",
 			STOCK: "view/:id",
@@ -82,6 +85,12 @@ export function AppRoutes() {
 							path={URLS.DASHBOARD.SYSTEM}
 							element={<SystemPage />}
 						/>
+						<Route element={<PageLayout />}>
+						<Route
+							path={URLS.DASHBOARD.CHANGEPASSWORD}
+							element={<ChangePasswordPage />}
+						/>
+					</Route>
 					</Route>
 					<Route element={<PageLayout />}>
 						<Route path={URLS.LOGIN} element={<LoginPage />} />

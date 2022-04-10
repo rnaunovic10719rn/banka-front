@@ -36,3 +36,10 @@ export function createUserAction(body) {
 	let url = new URL(BASE_URL + "/user/create");
 	return post(url, body);
 }
+
+
+
+//export async function savePassAction(password1,password2, otp = null){
+//	let url = new URL(BASE_URL + "/login");
+//	let params = new URLSearchParams(url.search);
+//}
