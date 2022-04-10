@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import { URLS } from "../routes";
 import Button, { BUTTON_DESIGN } from "./common/Button";
+import { useSelector } from "react-redux";
+import { getUserSelector } from "../redux/selectors";
 
 function Header(props) {
+    const user = useSelector(getUserSelector)
+    const [username, setUsername] = useState("Username")
+
     const style = classNames(
         "inset-x-0 top-0", //position
         "bg-gray-400", // background
         "text-base leading-9 text-white font-semibold", // font
         "py-3", // spacing
     )
+
+    useEffect(() => {
+        if (user) setUsername(user['username'])
+    }, [user])
 
 
     return (
@@ -29,7 +38,7 @@ function Header(props) {
                     <Link to={`${URLS.DASHBOARD.ORDERS}`}>Narudzbine</Link>
                     <Link to={`${URLS.DASHBOARD.SYSTEM}`}>Sistem</Link>
                 </div>
-                <Button design={BUTTON_DESIGN.INLINE} className="pr-8 !text-white" label="Username" />
+                <Button design={BUTTON_DESIGN.INLINE} className="pr-8 !text-white" label={username} />
             </div>
         </div>
     );
