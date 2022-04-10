@@ -21,3 +21,8 @@ export function getUsersAction() {
 	let url = new URL(BASE_URL + "/users");
 	return get(url);
 }
+
+export function createUserAction(body) {
+	let url = new URL(BASE_URL + "/user/create");
+	return post(url, body);
+}
