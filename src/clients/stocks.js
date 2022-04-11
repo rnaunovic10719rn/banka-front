@@ -35,6 +35,13 @@ export function getStockDetailsApi(ticker) {
 	return get(url);
 }
 
+export function getStockTimeSeriesApi(ticker, range) {
+	let url = new URL(
+		BASE_URL + "/akcije/podaci/timeseries/" + range + "/" + ticker
+	);
+	return get(url);
+}
+
 export function getForexApi() {
 	let url = new URL(BASE_URL + "/forex/podaci");
 	return get(url);

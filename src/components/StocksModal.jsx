@@ -3,14 +3,29 @@ import PropTypes from "prop-types";
 import Modal from "./common/Modal"
 import { getStockDetailsApi } from "../clients/stocks";
 import Card from "./common/Card";
+import StocksChart, { CHART_FILTERS } from "./StockChart";
 import PlaceholderLoading from 'react-placeholder-loading'
+import { getStockTimeSeriesApi } from "../clients/stocks";
 
 function StocksModal(props) {
     const [details, setDetails] = useState(null)
+    const [chartFilter, setChartFilter] = useState(CHART_FILTERS.ONE_DAY)
+    const [chartColor, setChartColor] = useState("colorGreen")
+    const [chartData, setChartData] = useState([])
 
     async function getStockDeatils() {
         const response = await getStockDetailsApi(props.ticker)
         setDetails(response)
+    }
+
+    async function getDataForChart() {
+        const response = await getStockTimeSeriesApi(props.ticker, chartFilter)
+        if (response[0]['close'] > response[response.length - 1]['close']) {
+            setChartColor("colorRed")
+        } else {
+            setChartColor("colorGreen")
+        }
+        setChartData(response)
     }
 
     function renderDetails() {
@@ -30,6 +45,7 @@ function StocksModal(props) {
 
         return (
             <div>
+                <StocksChart ticker={props.ticker} data={chartData} color={chartColor} onChange={(e) => { setChartFilter(e); }} />
                 <p className="text-lg font-bold pb-5 text-gray-600">
                     {details['opisHartije']}
                 </p>
@@ -67,11 +83,11 @@ function StocksModal(props) {
     }, [])
 
     useEffect(() => {
-        console.log(details)
-    }, [details])
+        getDataForChart()
+    }, [chartFilter])
 
     return (
-        <Modal visible={true} onClose={props.onClose} title={props.ticker}>
+        <Modal visible={true} onClose={props.onClose} title={props.ticker} className="max-w-[900px]">
             <Card title="Details">
                 {!details && renderPlaceholder()}
                 {details && renderDetails()}

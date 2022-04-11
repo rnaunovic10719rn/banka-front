@@ -16,6 +16,7 @@ function Modal(props) {
     const modalStyle = classNames(
         "w-full max-w-2xl h-full",
         "drop-shadow-2xl",
+        props.className,
     )
 
     function renderHeader() {
@@ -55,6 +56,7 @@ Modal.propTypes = {
     children: PropTypes.node,
     cta: PropTypes.func,
     onClose: PropTypes.func.isRequired,
+    className: PropTypes.string,
 }
 
 export default Modal
