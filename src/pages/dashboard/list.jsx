@@ -32,7 +32,6 @@ export default function ListPage() {
                 u['role']['name']
             ])
         })
-        console.log(r)
         setRows(r)
     }, [users])
 

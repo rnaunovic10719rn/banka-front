@@ -16,6 +16,7 @@ function Modal(props) {
     const modalStyle = classNames(
         "w-full max-w-2xl h-full",
         "drop-shadow-2xl",
+        props.className,
     )
 
     function renderHeader() {
@@ -24,19 +25,15 @@ function Modal(props) {
                 <h3 class="text-2xl font-semibold text-gray-900 lg:text-2xl">
                     {props.title}
                 </h3>
-                <ExitButton onClick={handleClose} />
+                <ExitButton onClick={props.onClose} />
             </div>
         )
-    }
-
-    function handleClose() {
-        props.onClose()
     }
 
     return (
         <div id={props.id} tabindex="-1" className={wrapperStyle}>
             <div class={modalStyle}>
-                <div class="relative bg-white shadow">
+                <div class="relative bg-white shadow rounded">
                     {renderHeader()}
                     <div className='p-6'>
                         {props.children}
@@ -59,6 +56,7 @@ Modal.propTypes = {
     children: PropTypes.node,
     cta: PropTypes.func,
     onClose: PropTypes.func.isRequired,
+    className: PropTypes.string,
 }
 
 export default Modal

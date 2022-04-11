@@ -9,6 +9,12 @@ import PageLayout from "./components/PageLayout";
 import App from "./App";
 import NewUserPage from "./pages/dashboard/newuser";
 import LoginPage from "./pages/login";
+import TradePage from "./pages/dashboard/trade";
+import OverviewPage from "./pages/dashboard/overview";
+import SystemPage from "./pages/dashboard/system";
+import OrdersPage from "./pages/dashboard/order";
+import OverviewStockPage from "./pages/dashboard/overview-stock";
+import ChangePasswordPage from "./pages/dashboard/changepass";
 
 export const URLS = {
 	DASHBOARD: {
@@ -19,6 +25,14 @@ export const URLS = {
 			INDEX: "list",
 			NEW_USER: "list/new-user",
 		},
+		CHANGEPASSWORD: "changepassword",
+		OVERVIEW: {
+			INDEX: "view",
+			STOCK: "view/:id",
+		},
+		TRADE: "trade",
+		ORDERS: "orders",
+		SYSTEM: "system",
 	},
 	LOGIN: "login",
 	REGISTER: "register",
@@ -49,6 +63,30 @@ export function AppRoutes() {
 						<Route
 							path={URLS.DASHBOARD.LIST.NEW_USER}
 							element={<NewUserPage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.TRADE}
+							element={<TradePage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.OVERVIEW.INDEX}
+							element={<OverviewPage />}
+						></Route>
+						<Route
+							path={URLS.DASHBOARD.OVERVIEW.STOCK}
+							element={<OverviewStockPage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.ORDERS}
+							element={<OrdersPage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.SYSTEM}
+							element={<SystemPage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.CHANGEPASSWORD}
+							element={<ChangePasswordPage />}
 						/>
 					</Route>
 					<Route element={<PageLayout />}>

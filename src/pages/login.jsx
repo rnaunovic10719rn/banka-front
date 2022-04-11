@@ -19,7 +19,8 @@ export default function LoginPage() {
         return false
     }
 
-    async function login() {
+    async function login(e) {
+        e.preventDefault()
         try {
             await loginAction(username, password)
             navigate(URLS.DASHBOARD.INDEX)
@@ -30,12 +31,12 @@ export default function LoginPage() {
 
     return (
         <Window title="Welcome" className="mx-auto">
-            <div className="flex flex-col gap-3">
+            <form onSubmit={login} className="flex flex-col gap-3">
                 {error && <Alert design="danger" text={error} onDismiss={() => setError(null)} />}
                 <TextField placeholder="Korisnicko ime" onChange={setUsername} />
-                <TextField placeholder="Lozinka" onChange={setPassword} />
-                <Button label="Login" disabled={disableCta()} onClick={login} />
-            </div>
+                <TextField type="password" placeholder="Lozinka" onChange={setPassword} />
+                <Button type="submit" label="Login" disabled={disableCta()} />
+            </form>
         </Window>
     )
 }

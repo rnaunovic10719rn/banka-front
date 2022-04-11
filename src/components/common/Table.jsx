@@ -4,40 +4,58 @@ import classNames from "classnames";
 import Pagination from "./Pagination";
 
 const borderColor = "border-gray-200"
-const cellSpacing = "px-3 py-4"
+const cellSpacing = "px-4 py-3"
 
 function TableRow(props) {
-  const cellClassnames = classNames("border-b text-gray-400 bg-white", borderColor, cellSpacing)
+  const cellClassnames = classNames(
+    "border-b text-gray-700", borderColor, cellSpacing,
+  )
+
+  const rowStyle = classNames(
+    { "hover:bg-gray-100 cursor-pointer": props.clickable },
+  )
 
   if (!props.row) {
     return null
   }
 
+  function handleClick() {
+    props.onClick(props.row)
+  }
+
   return (
-    <tr>{props.row.map((r, j) => <td key={j} className={cellClassnames}>{r}</td>)}</tr>
+    <tr className={rowStyle} onClick={handleClick}>{props.row.map((r, j) => <td key={j} className={cellClassnames}>{r}</td>)}</tr>
   )
 }
 
 TableRow.propTypes = {
   row: PropTypes.arrayOf(PropTypes.any),
+  clickable: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 function Table(props) {
   const [startRange, setStartRange] = useState(0)
   const [endRange, setEndRange] = useState(0)
 
-  const headerClassnames = classNames("border-b bg-gray-50", "px-3 py-1.5", borderColor)
+  const headerClassnames = classNames("border-b bg-gray-50", cellSpacing, borderColor)
   const tableClassnames = classNames(
     "border-collapse border", borderColor, // border
     "w-full", // width
     "text-left", // text
+    "bg-white",
     props.classNames,
   );
+
+  function handleClick(e) {
+    if (!props.clickable) return
+    props.onClick(e)
+  }
 
   function renderRows() {
     const rows = []
     for (let i = startRange; i < endRange + 1; i++) {
-      rows.push(<TableRow key={i} row={props.rows[i]} />)
+      rows.push(<TableRow key={i} row={props.rows[i]} onClick={handleClick} clickable={props.clickable} />)
     }
     return rows
   }
@@ -61,7 +79,7 @@ function Table(props) {
 
   return (
     <div>
-      <div className="drop-shadow-md">
+      <div className="drop-shadow">
         <table className={tableClassnames}>
           <thead>
             <tr>
@@ -98,6 +116,8 @@ Table.propTypes = {
   emptyStatePlaceholder: PropTypes.string,
   pagination: PropTypes.bool,
   paginationGroupSize: PropTypes.number,
+  clickable: PropTypes.bool,
+  onClick: PropTypes.func,
   classNames: PropTypes.string,
 };
 
@@ -105,6 +125,7 @@ Table.defaultProps = {
   emptyStatePlaceholder: "No data.",
   pagination: false,
   paginationGroupSize: 5,
+  clickable: false,
 }
 
 export default Table;
