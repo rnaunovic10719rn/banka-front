@@ -57,7 +57,7 @@ function Button(props) {
   return (
     <button
       className={style}
-      type="button"
+      type={props.type}
       onClick={props.onClick}
     >
       {props.label}
