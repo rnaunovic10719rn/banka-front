@@ -63,3 +63,15 @@ export function getFuturesApi() {
 	let url = new URL(BASE_URL + "/futures/podaci");
 	return get(url);
 }
+
+export function getFuturesDetailsApi(future) {
+	let url = new URL(BASE_URL + `/futures/podaci/${future}`);
+	return get(url);
+}
+
+export function getFuturesTimeSeriesApi(future, range) {
+	let url = new URL(
+		BASE_URL + `/futures/podaci/timeseries/${range}/${future}`
+	);
+	return get(url);
+}

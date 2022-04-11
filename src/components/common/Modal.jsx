@@ -33,7 +33,7 @@ function Modal(props) {
     return (
         <div id={props.id} tabindex="-1" className={wrapperStyle}>
             <div class={modalStyle}>
-                <div class="relative bg-white shadow">
+                <div class="relative bg-white shadow rounded">
                     {renderHeader()}
                     <div className='p-6'>
                         {props.children}

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import Tab from "../../components/common/Tab";
 import Table from "../../components/common/Table";
 import { getForexApi, getFuturesApi, getStocksApi } from "../../clients/stocks";
 import StocksModal from "../../components/StocksModal";
 import ForexModal from "../../components/ForexModal";
+import FuturesModal from "../../components/FuturesModal";
 import PlaceholderLoading from 'react-placeholder-loading'
 
 const TABS = {
@@ -15,7 +15,6 @@ const TABS = {
 };
 
 export default function OverviewPage() {
-  let navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(TABS.STOCKS);
 
   const [stocksRowData, setStocksRowData] = useState([])
@@ -82,6 +81,8 @@ export default function OverviewPage() {
         ]}
         rows={futuresData}
         pagination
+        clickable
+        onClick={(e) => setSelectedFuture(e[0])}
       />
     );
   }
@@ -147,6 +148,7 @@ export default function OverviewPage() {
       {activeTab === TABS.FUTURES && renderFutures()}
       {selectedStock !== null && <StocksModal ticker={selectedStock} onClose={() => setSelectedStock(null)} />}
       {selectedForex !== null && <ForexModal from={selectedForex[0]} to={selectedForex[1]} onClose={() => setSelectedForex(null)} />}
+      {selectedFuture !== null && <FuturesModal future={selectedFuture} onClose={() => setSelectedFuture(null)} />}
     </div>
   );
 }
