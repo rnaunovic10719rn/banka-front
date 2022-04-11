@@ -40,41 +40,44 @@ function StocksModal(props) {
                     </div>
                 </div>
             )
-
         }
 
         return (
-            <div>
-                <StocksChart ticker={props.ticker} data={chartData} color={chartColor} onChange={(e) => { setChartFilter(e); }} />
-                <p className="text-lg font-bold pb-5 text-gray-600">
-                    {details['opisHartije']}
-                </p>
-                <div className="flex flex-col">
-                    {renderRow("Previous close:", details['previousClose'])}
-                    {renderRow("Change:", details['change'] + '(' + details['changePercent'] + ')')}
-                    {renderRow("Day range:", details['low'] + ' - ' + details['high'])}
-                    {renderRow("Open:", details['open'])}
-                    {renderRow("Low:", details['low'])}
-                    {renderRow("High:", details['high'])}
-                    {renderRow("Price volume", details['priceVolume'])}
-                    {renderRow("Volume", details['volume'])}
-                    {renderRow("Outstanding shares", details['outstandingShares'])}
-                    {renderRow("Market cap", details['marketCap'])}
-                </div >
+            <div className="flex flex-col gap-5">
+                <Card title="Chart">
+                    <StocksChart ticker={props.ticker} data={chartData} color={chartColor} onChange={(e) => { setChartFilter(e); }} />
+                </Card>
+                <Card title="Details">
+                    <p className="text-lg font-bold pb-5 text-gray-600">
+                        {details['opisHartije']}
+                    </p>
+                    <div className="flex flex-col">
+                        {renderRow("Previous close:", details['previousClose'])}
+                        {renderRow("Change:", details['change'] + '(' + details['changePercent'] + ')')}
+                        {renderRow("Day range:", details['low'] + ' - ' + details['high'])}
+                        {renderRow("Open:", details['open'])}
+                        {renderRow("Low:", details['low'])}
+                        {renderRow("High:", details['high'])}
+                        {renderRow("Price volume", details['priceVolume'])}
+                        {renderRow("Volume", details['volume'])}
+                        {renderRow("Outstanding shares", details['outstandingShares'])}
+                        {renderRow("Market cap", details['marketCap'])}
+                    </div >
+                </Card>
             </div>
         )
     }
 
     function renderPlaceholder() {
         return (
-            <div className="flex flex-col gap-3">
+            <Card className="flex flex-col gap-3">
                 <PlaceholderLoading shape="rect" width={'100%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'90%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'100%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'90%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'100%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'90%'} height={20} />
-            </div>
+            </Card>
         )
     }
 
@@ -88,10 +91,10 @@ function StocksModal(props) {
 
     return (
         <Modal visible={true} onClose={props.onClose} title={props.ticker} className="max-w-[900px]">
-            <Card title="Details">
+            <div>
                 {!details && renderPlaceholder()}
                 {details && renderDetails()}
-            </Card>
+            </div>
         </Modal>
     )
 }

@@ -5,6 +5,7 @@ import Tab from "../../components/common/Tab";
 import Table from "../../components/common/Table";
 import { getForexApi, getFuturesApi, getStocksApi } from "../../clients/stocks";
 import StocksModal from "../../components/StocksModal";
+import ForexModal from "../../components/ForexModal";
 import PlaceholderLoading from 'react-placeholder-loading'
 
 const TABS = {
@@ -100,6 +101,9 @@ export default function OverviewPage() {
         ]}
         rows={forexData}
         pagination
+        clickable
+        // Ovo je jos vise nesrecno jer nam treba 2 parametra => tabela treba da se refaktorise da primar props.children redova i da se pise odvojeno logika za red a ne ovi hakovi
+        onClick={(e) => setSelectedForex([e[0], e[1]])}
       />
     );
   }
@@ -126,8 +130,6 @@ export default function OverviewPage() {
     );
   }
 
-  function onSubmit() { }
-
   useEffect(() => {
     getStocks()
     getForex()
@@ -144,6 +146,7 @@ export default function OverviewPage() {
       {activeTab === TABS.FOREX && renderForex()}
       {activeTab === TABS.FUTURES && renderFutures()}
       {selectedStock !== null && <StocksModal ticker={selectedStock} onClose={() => setSelectedStock(null)} />}
+      {selectedForex !== null && <ForexModal from={selectedForex[0]} to={selectedForex[1]} onClose={() => setSelectedForex(null)} />}
     </div>
   );
 }

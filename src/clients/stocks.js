@@ -37,13 +37,25 @@ export function getStockDetailsApi(ticker) {
 
 export function getStockTimeSeriesApi(ticker, range) {
 	let url = new URL(
-		BASE_URL + "/akcije/podaci/timeseries/" + range + "/" + ticker
+		BASE_URL + `/akcije/podaci/timeseries/${range}/${ticker}`
 	);
 	return get(url);
 }
 
 export function getForexApi() {
 	let url = new URL(BASE_URL + "/forex/podaci");
+	return get(url);
+}
+
+export function getForexDetalsApi(from, to) {
+	let url = new URL(BASE_URL + `/forex/podaci/${from}/${to}`);
+	return get(url);
+}
+
+export function getForexTimeSeriesApi(from, to, range) {
+	let url = new URL(
+		BASE_URL + `/forex/podaci/timeseries/${range}/${from}/${to}`
+	);
 	return get(url);
 }
 

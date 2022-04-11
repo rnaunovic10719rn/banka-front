@@ -24,9 +24,7 @@ function Card(props) {
                 <b>{props.title}</b>
             </span>}
             <div className={cardStyle}>
-                <div>
-                    {props.children}
-                </div>
+                {props.children}
             </div>
         </div >
     );
