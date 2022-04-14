@@ -35,7 +35,7 @@ export const URLS = {
 		SYSTEM: "system",
 	},
 	LOGIN: "login",
-	REGISTER: "register",
+	REGISTER: "register"
 };
 
 export function AppRoutes() {

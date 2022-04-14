@@ -1,6 +1,7 @@
 import { get, post, patch } from "./api";
 import { authSaveToken } from "../auth";
 
+
 const BASE_URL = "http://localhost:8080/api";
 
 export async function loginAction(username, password, otp = null) {
@@ -15,6 +16,11 @@ export async function loginAction(username, password, otp = null) {
 	const r = await post(url);
 	authSaveToken(r);
 	return r;
+}
+
+export function logoutAction() {
+	localStorage.clear();
+	console.log("loggggggggggouttttttt");
 }
 
 export function getUserApi() {
