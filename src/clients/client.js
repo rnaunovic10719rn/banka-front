@@ -43,6 +43,11 @@ export function editUserAction(form) {
 	return patch(url, form);
 }
 
+export function editUserByIdAction(id, form) {
+	let url = new URL(BASE_URL + "/user/edit/" + id);
+	return post(url, form);
+}
+
 export function createUserAction(body) {
 	let url = new URL(BASE_URL + "/user/create");
 	return post(url, body);
