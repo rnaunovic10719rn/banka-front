@@ -5,12 +5,14 @@ import { deleteUserAction, getUsersAction, getUserId } from "../../clients/clien
 import Table from '../../components/common/Table'
 import Button, { BUTTON_DESIGN } from '../../components/common/Button'
 import { URLS } from '../../routes'
+import UserModal from "../../components/UserModal"
 
 export default function ListPage() {
     let navigate = useNavigate()
     const [users, setUsers] = useState([])
     const [rows, setRows] = useState([])
-    const [id, setId] = useState(null);
+    const [id, setId] = useState(null)
+    const [selectedUser, setSelectedUser] = useState(null)
 
     async function getId() {
         setId(await getUserId());
@@ -58,7 +60,8 @@ export default function ListPage() {
                     <Button design={BUTTON_DESIGN.SECONDARY} label="Dodaj novog zaposlenog" onClick={() => navigate("/" + URLS.DASHBOARD.LIST.NEW_USER)} />
                 </div>
             </div>
-            <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija', '']} clickable={true} rows={rows} />
+            <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija', '']} clickable={true} onClick={e => setSelectedUser(e[0])} rows={rows} />
+            {selectedUser !== null && <UserModal id={selectedUser} onClose={() => setSelectedUser(null)} />}
         </div>
     )
 }

@@ -30,7 +30,6 @@ export default function NewUserPage() {
     }
 
     async function handleSubmit() {
-        console.log(form);
         try {
             await createUserAction(form)
             navigate("/" + URLS.DASHBOARD.LIST.INDEX)
