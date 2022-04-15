@@ -1,5 +1,5 @@
-import { get, post, patch } from "./api";
-import { authSaveToken } from "../auth";
+import { get, post, patch, delete_ } from "./api";
+import { authSaveToken, authGetToken } from "../auth";
 
 
 const BASE_URL = "http://localhost:8080/api";
@@ -32,6 +32,12 @@ export function getUsersAction() {
 	return get(url);
 }
 
+export function getUserId() {
+	const token = authGetToken();
+	let url = new URL(BASE_URL + "/user/getId/" + token);
+	return post(url);
+}
+
 export function editUserAction(form) {
 	let url = new URL(BASE_URL + "/user");
 	return patch(url, form);
@@ -40,6 +46,11 @@ export function editUserAction(form) {
 export function createUserAction(body) {
 	let url = new URL(BASE_URL + "/user/create");
 	return post(url, body);
+}
+
+export function deleteUserAction(id) {
+	let url = new URL(BASE_URL + "/user/delete/" + id);
+	return delete_(url);
 }
 
 export function changePasswordApi(password) {
