@@ -58,7 +58,7 @@ export default function ListPage() {
                     <Button design={BUTTON_DESIGN.SECONDARY} label="Dodaj novog zaposlenog" onClick={() => navigate("/" + URLS.DASHBOARD.LIST.NEW_USER)} />
                 </div>
             </div>
-            <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija', '']} rows={rows} />
+            <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija', '']} clickable={true} rows={rows} />
         </div>
     )
 }

@@ -22,7 +22,7 @@ export default function NewUserPage() {
         email: "",
         jmbg: "",
         br_telefona: "",
-        pozicija: BANK_POSITIONS.ADMIN_GL,
+        pozicija: BANK_POSITIONS.ADMIN,
     })
 
     function handleChange(e) {
@@ -30,6 +30,7 @@ export default function NewUserPage() {
     }
 
     async function handleSubmit() {
+        console.log(form);
         try {
             await createUserAction(form)
             navigate("/" + URLS.DASHBOARD.LIST.INDEX)

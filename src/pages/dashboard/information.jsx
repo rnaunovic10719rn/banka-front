@@ -17,7 +17,7 @@ export default function InformationPage(props) {
     email: "",
     jmbg: "",
     br_telefon: "",
-    pozicija: "",
+    pozicija: BANK_POSITIONS.ADMIN,
   });
 
   const [error, setError] = useState(null);
@@ -26,6 +26,10 @@ export default function InformationPage(props) {
   const onChange = (event) => {
     setForm({ ...form, ...event });
   };
+
+  function testSmth() {
+    console.log(user)
+  }
 
   async function onSubmit() {
     try {
@@ -123,7 +127,7 @@ export default function InformationPage(props) {
           <div>
             <Button
               className="float-right"
-              onClick={onSubmit}
+              onClick={() => testSmth()}
               label="Promeni"
             />
           </div>
