@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardPageLayout from "./components/DashboardPageLayout";
-import DashboardPage from "./pages/dashboard/index";
 import InformationPage from "./pages/dashboard/information";
 import PrivacyPage from "./pages/dashboard/privacy";
 import ListPage from "./pages/dashboard/list";
@@ -46,7 +45,7 @@ export function AppRoutes() {
 					<Route element={<DashboardPageLayout />}>
 						<Route
 							path={URLS.DASHBOARD.INDEX}
-							element={<DashboardPage />}
+							element={<OverviewPage />}
 						/>
 						<Route
 							path={URLS.DASHBOARD.INFORMATION}

@@ -20,7 +20,6 @@ export async function loginAction(username, password, otp = null) {
 
 export function logoutAction() {
 	localStorage.clear();
-	console.log("loggggggggggouttttttt");
 }
 
 export function getUserApi() {
