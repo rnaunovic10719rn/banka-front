@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getUsersAction } from "../../clients/client"
+import { deleteUserAction, getUsersAction, getUserId } from "../../clients/client"
 import Table from '../../components/common/Table'
 import Button, { BUTTON_DESIGN } from '../../components/common/Button'
 import { URLS } from '../../routes'
@@ -10,30 +10,45 @@ export default function ListPage() {
     let navigate = useNavigate()
     const [users, setUsers] = useState([])
     const [rows, setRows] = useState([])
+    const [id, setId] = useState(null);
+
+    async function getId() {
+        setId(await getUserId());
+    }
 
     async function getUsers() {
         setUsers(await getUsersAction())
     }
 
+    function deleteUser(id) {
+        console.log(id);
+        deleteUserAction(id);
+    }
+
     useEffect(() => {
+        getId()
         getUsers()
     }, [])
 
     useEffect(() => {
         if (users.length === 0) return
+        if (id == null) return
+        getId()
         let r = []
         users.map(u => {
+            console.log(u);
             r.push([
                 u['id'],
                 u['username'],
                 u['ime'] + " " + u['prezime'],
                 u['jmbg'],
                 u['email'],
-                u['role']['name']
-            ])
+                u['role']['name'],
+                u['id'] != id ? <Button design="inline" onClick={() => deleteUser(u['id'])} label="Disable" /> : null
+            ]);
         })
         setRows(r)
-    }, [users])
+    }, [id, users])
 
     return (
         <div className="flex flex-col gap-4">
@@ -43,7 +58,7 @@ export default function ListPage() {
                     <Button design={BUTTON_DESIGN.SECONDARY} label="Dodaj novog zaposlenog" onClick={() => navigate("/" + URLS.DASHBOARD.LIST.NEW_USER)} />
                 </div>
             </div>
-            <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija']} rows={rows} />
+            <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija', '']} rows={rows} />
         </div>
     )
 }
