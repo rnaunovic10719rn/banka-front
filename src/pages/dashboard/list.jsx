@@ -39,15 +39,16 @@ export default function ListPage() {
         let r = []
         users.map(u => {
             console.log(u);
-            r.push([
-                u['id'],
-                u['username'],
-                u['ime'] + " " + u['prezime'],
-                u['jmbg'],
-                u['email'],
-                u['role']['name'],
-                u['id'] != id ? <Button design="inline" onClick={() => deleteUser(u['id'])} label="Disable" /> : null
-            ]);
+            if (u['aktivan'])
+                r.push([
+                    u['id'],
+                    u['username'],
+                    u['ime'] + " " + u['prezime'],
+                    u['jmbg'],
+                    u['email'],
+                    u['role']['name'],
+                    u['id'] != id ? <Button design="inline" onClick={() => deleteUser(u['id'])} label="Disable" /> : null
+                ]);
         })
         setRows(r)
     }, [id, users])
