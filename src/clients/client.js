@@ -32,6 +32,11 @@ export function getUsersAction() {
 	return get(url);
 }
 
+export function generateSecret() {
+	let url = new URL(BASE_URL + "/otp/generateSecret");
+	return get(url);
+}
+
 export function getUserId() {
 	const token = authGetToken();
 	let url = new URL(BASE_URL + "/user/getId/" + token);
@@ -66,18 +71,23 @@ export function changePasswordApi(password) {
 	return post(url, body);
 }
 
-export function getQrCodeApi() {
+export function getQrCodeApi(secret) {
+	console.log(secret);
 	let url = new URL(BASE_URL + "/otp/generateQrUri");
 	const body = {
 		label: "Banka",
-		secret: "test",
+		secret: secret,
 	};
 	return post(url, body);
 }
 
-export function postValidationCodeApi() {
+export function postValidationCodeApi(otp, secret) {
 	let url = new URL(BASE_URL + "/otp/validate");
-	return post(url);
+	const body = {
+		otp: otp,
+		secret: secret
+	};
+	return post(url, body);
 }
 
 //export async function savePassAction(password1,password2, otp = null){
