@@ -15,6 +15,7 @@ import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
 import OverviewStockPage from "./pages/dashboard/overview-stock";
 import ChangePasswordPage from "./pages/dashboard/changepass";
+import EmailPage from "./pages/enter-email"
 
 export const URLS = {
 	DASHBOARD: {
@@ -35,7 +36,8 @@ export const URLS = {
 		SYSTEM: "system",
 	},
 	LOGIN: "login",
-	REGISTER: "register"
+	REGISTER: "register",
+	EMAIL : "email"
 };
 
 export function AppRoutes() {
@@ -95,6 +97,9 @@ export function AppRoutes() {
 					</Route>
 					<Route element={<PageLayout />}>
 						<Route path={URLS.LOGIN} element={<LoginPage />} />
+					</Route>
+					<Route element={<PageLayout />}>
+						<Route path={URLS.EMAIL} element={<EmailPage />} />
 					</Route>
 				</Route>
 			</Routes>
