@@ -30,7 +30,7 @@ export default function EmailPage() {
 
     return (
         <Window title="ZABORAVILI STE ŠIFRU" className="mx-auto">
-            <form onSubmit={emailRes()} className="flex flex-col gap-3">
+            <form onSubmit={emailRes} className="flex flex-col gap-3">
                 {error && <Alert design="danger" text={error} onDismiss={() => setError(null)} />}
                 <TextField placeholder="E-mail" onChange={setEmail} />
                 <Button type="submit" label="Posaljite email" disabled={disableCta()} />
