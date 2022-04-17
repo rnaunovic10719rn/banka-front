@@ -14,6 +14,18 @@ export default function ChangePasswordPage() {
     const [password2, setPassword2] = useState(null);
     const [error, setError] = useState(null)
 
+
+    const [id, setId] = useState(null)
+
+    async function getId() {
+        setId(await getUserId());
+    }
+
+    useEffect(() => {
+        getId()
+    }, [])
+
+
     async function changePassword(e) {
         e.preventDefault()
 
