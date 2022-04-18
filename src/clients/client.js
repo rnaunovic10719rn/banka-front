@@ -11,15 +11,6 @@ export async function loginAction(username, password, otp = null) {
 		username: username,
 		password: password
 	}
-	/*
-	let params = new URLSearchParams(url.search);
-	params.append("username", username);
-	params.append("password", password);
-	if (otp) {
-		params.append("otp", otp);
-	}
-	url = url + "?" + params;
-	*/
 	const r = await post(url, body);
 	authSaveToken(r);
 	return r;
