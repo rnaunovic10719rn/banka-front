@@ -59,6 +59,7 @@ function Button(props) {
       className={style}
       type={props.type}
       onClick={props.onClick}
+      disabled={props.disabled}
     >
       {props.label}
     </button>

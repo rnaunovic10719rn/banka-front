@@ -89,9 +89,9 @@ export function AppRoutes() {
 							element={<ChangePasswordPage />}
 						/>
 					</Route>
-					<Route element={<PageLayout />}>
-						<Route path={URLS.LOGIN} element={<LoginPage />} />
-					</Route>
+				</Route>
+				<Route element={<PageLayout />}>
+					<Route path={URLS.LOGIN} element={<LoginPage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
