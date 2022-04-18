@@ -33,6 +33,7 @@ export default function InformationPage(props) {
 
   async function onSubmit() {
     try {
+      testSmth()
       await editUserAction(form);
       setSuccess(true);
     } catch (e) {
@@ -48,7 +49,7 @@ export default function InformationPage(props) {
       email: user["email"],
       jmbg: user["jmbg"],
       br_telefon: user["br_telefon"],
-      pozicija: user["pozicija"],
+      pozicija: user["role"]["name"],
     })
   }, [user])
 
@@ -103,7 +104,7 @@ export default function InformationPage(props) {
               className="grow"
               onChange={(e) => onChange({ pozicija: e })}
               options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL]}
-              value={form && form["pozicija"]}
+              defValue={form && form["pozicija"]}
             />
           </div>
           <div className="flex justify-between items-center">
@@ -121,13 +122,13 @@ export default function InformationPage(props) {
               className="grow"
               onChange={(e) => onChange({ br_telefon: e })}
               placeholder="Telefon"
-              value={form && form["br_telefona"]}
+              value={form && form["br_telefon"]}
             />
           </div>
           <div>
             <Button
               className="float-right"
-              onClick={() => testSmth()}
+              onClick={() => onSubmit()}
               label="Promeni"
             />
           </div>
