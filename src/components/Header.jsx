@@ -5,6 +5,7 @@ import { URLS } from "../routes";
 import Button, { BUTTON_DESIGN } from "./common/Button";
 import { useSelector } from "react-redux";
 import { getUserSelector } from "../redux/selectors";
+import { logoutAction } from "../clients/client";
 
 function Header(props) {
     const user = useSelector(getUserSelector)
@@ -32,13 +33,14 @@ function Header(props) {
                         </svg>
                     </div>
                     <Link to={`${URLS.DASHBOARD.INDEX}`}>Pocetna</Link>
-                    <Link to={`${URLS.DASHBOARD.LIST.INDEX}`}>Spisak zaposlenih</Link>
-                    <Link to={`${URLS.DASHBOARD.OVERVIEW.INDEX}`}>Pregled</Link>
                     <Link to={`${URLS.DASHBOARD.TRADE}`}>Trgovina</Link>
                     <Link to={`${URLS.DASHBOARD.ORDERS}`}>Narudzbine</Link>
-                    <Link to={`${URLS.DASHBOARD.SYSTEM}`}>Sistem</Link>
+                    <Link to={`${URLS.DASHBOARD.LIST.INDEX}`}>Spisak zaposlenih</Link>
                 </div>
-                <Button design={BUTTON_DESIGN.INLINE} className="pr-8 !text-white" label={username} />
+                <div className="flex gap-4">
+                    <Link to={`${URLS.DASHBOARD.INFORMATION}`} className="pr-8 !text-white" > {username} </Link>
+                    <Link to={`${URLS.DASHBOARD.INDEX}`} className="pr-8 !text-white" onClick={() => logoutAction()}>Logout</Link>
+                </div>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardPageLayout from "./components/DashboardPageLayout";
-import DashboardPage from "./pages/dashboard/index";
+import HeaderPageLayout from "./components/HeaderPageLayout";
 import InformationPage from "./pages/dashboard/information";
 import PrivacyPage from "./pages/dashboard/privacy";
 import ListPage from "./pages/dashboard/list";
@@ -35,7 +35,7 @@ export const URLS = {
 		SYSTEM: "system",
 	},
 	LOGIN: "login",
-	REGISTER: "register",
+	REGISTER: "register"
 };
 
 export function AppRoutes() {
@@ -43,11 +43,13 @@ export function AppRoutes() {
 		<BrowserRouter>
 			<Routes>
 				<Route element={<App />}>
-					<Route element={<DashboardPageLayout />}>
+					<Route element={<HeaderPageLayout />}>
 						<Route
 							path={URLS.DASHBOARD.INDEX}
-							element={<DashboardPage />}
+							element={<OverviewPage />}
 						/>
+					</Route>
+					<Route element={<DashboardPageLayout />}>
 						<Route
 							path={URLS.DASHBOARD.INFORMATION}
 							element={<InformationPage />}
@@ -56,6 +58,8 @@ export function AppRoutes() {
 							path={URLS.DASHBOARD.PRIVACY}
 							element={<PrivacyPage />}
 						/>
+					</Route>
+					<Route element={<HeaderPageLayout />}>
 						<Route
 							path={URLS.DASHBOARD.LIST.INDEX}
 							element={<ListPage />}
