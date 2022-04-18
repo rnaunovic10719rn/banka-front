@@ -7,6 +7,11 @@ const BASE_URL = "http://localhost:8080/api";
 
 export async function loginAction(username, password, otp = null) {
 	let url = new URL(BASE_URL + "/login");
+	const body = {
+		username: username,
+		password: password
+	}
+	/*
 	let params = new URLSearchParams(url.search);
 	params.append("username", username);
 	params.append("password", password);
@@ -14,7 +19,8 @@ export async function loginAction(username, password, otp = null) {
 		params.append("otp", otp);
 	}
 	url = url + "?" + params;
-	const r = await post(url);
+	*/
+	const r = await post(url, body);
 	authSaveToken(r);
 	return r;
 }
