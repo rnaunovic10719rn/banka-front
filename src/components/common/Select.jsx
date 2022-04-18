@@ -12,7 +12,7 @@ function Select(props) {
 
     return (
         <select className={style} onChange={(e) => props.onChange(e.target.value)}>
-            {props.options.map(o => <option value={o}>{o}</option>)}
+            {props.options.map(o => o == props.defValue ? <option value={o} selected>{o}</option> : <option value={o}>{o}</option>)}
         </select>
     )
 }
@@ -20,7 +20,8 @@ function Select(props) {
 Select.propTypes = {
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     onChange: PropTypes.func,
-    className: PropTypes.string
+    className: PropTypes.string,
+    defValue: PropTypes.string
 }
 
 export default Select

@@ -14,31 +14,12 @@ export function patch(url, body = null) {
 
 // delete_ ima underscore jer je delete rezervisana rec
 export async function delete_(url) {
-	//return request("DELETE", url);
-	const token = authGetToken();
-	try {
-		const response = await fetch(url, {
-			method: "DELETE",
-			mode: "no-cors",
-			headers: {
-				Authorization: "Bearer " + token,
-				"Content-Type": "application/json"
-			},
-		});
-		if (!response.ok) {
-			console.log(response);
-			throw Error("Request failed");
-		}
-
-		return await response.json();
-	}
-	catch (e) {
-		throw e;
-	}
+	return request("DELETE", url);
 }
 
 async function request(method, url, body) {
 	const token = authGetToken();
+	console.log(body);
 	try {
 		const response = await fetch(url, {
 			method: method,
