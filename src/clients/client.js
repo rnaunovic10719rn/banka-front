@@ -90,6 +90,22 @@ export function postValidationCodeApi(otp, secret) {
 	return post(url, body);
 }
 
+export function resetEmail(email){
+	let url = new URL(BASE_URL + `/user/reset-password`);
+	const body = {
+		email: email,
+	};
+	return post(url, body);
+}
+
+export function changePasswordById(id,password){
+	let url = new URL(BASE_URL + `/user/new-password/` + id);
+	const body = {
+		newPassword: password,
+	};
+	return post(url, body);
+}
+
 //export async function savePassAction(password1,password2, otp = null){
 //	let url = new URL(BASE_URL + "/login");
 //	let params = new URLSearchParams(url.search);
