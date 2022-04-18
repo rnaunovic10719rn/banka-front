@@ -22,7 +22,7 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "react-scripts -r @cypress/instrument-cra start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
@@ -58,6 +58,8 @@
 		]
 	},
 	"devDependencies": {
+		"@cypress/code-coverage": "^3.9.12",
+		"@cypress/instrument-cra": "^1.4.0",
 		"@cypress/react": "^5.12.4",
 		"@cypress/webpack-dev-server": "^1.8.4",
 		"@storybook/addon-actions": "^6.4.19",
@@ -71,6 +73,7 @@
 		"@storybook/preset-create-react-app": "^4.1.0",
 		"@storybook/react": "^6.4.19",
 		"@storybook/testing-library": "^0.0.9",
+		"babel-plugin-istanbul": "^6.1.1",
 		"cypress": "^9.5.4",
 		"postcss": "^8.4.12",
 		"prop-types": "^15.8.1",
