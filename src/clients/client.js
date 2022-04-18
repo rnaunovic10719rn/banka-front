@@ -6,14 +6,11 @@ const BASE_URL = "http://localhost:8080/api";
 
 export async function loginAction(username, password, otp = null) {
 	let url = new URL(BASE_URL + "/login");
-	let params = new URLSearchParams(url.search);
-	params.append("username", username);
-	params.append("password", password);
-	if (otp) {
-		params.append("otp", otp);
+	const body = {
+		username: username,
+		password: password
 	}
-	url = url + "?" + params;
-	const r = await post(url);
+	const r = await post(url, body);
 	authSaveToken(r);
 	return r;
 }
@@ -86,6 +83,22 @@ export function postValidationCodeApi(otp, secret) {
 	const body = {
 		otp: otp,
 		secret: secret
+	};
+	return post(url, body);
+}
+
+export function resetEmail(email){
+	let url = new URL(BASE_URL + `/user/reset-password`);
+	const body = {
+		email: email,
+	};
+	return post(url, body);
+}
+
+export function changePasswordById(id,password){
+	let url = new URL(BASE_URL + `/user/new-password/` + id);
+	const body = {
+		newPassword: password,
 	};
 	return post(url, body);
 }
