@@ -12,7 +12,6 @@ jobs:
             - name: Run E2E tests 🧪
               uses: cypress-io/github-action@v2
               with:
-                  headless: true
                   start: npm start
 
             - name: Run Component tests 🧪
