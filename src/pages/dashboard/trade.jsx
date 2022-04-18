@@ -17,9 +17,9 @@ const TABS = {
 export default function TradePage() {
 
     const [form, setForm] = useState({
-        user_id: 1,
+        userId: 1,
         symbol: "",
-        hartija_od_vrednosti_tip: "AKCIJA",
+        hartijaOdVrednostiTip: "AKCIJA",
         kolicina: 0,
         akcija: "BUY",
         limitValue: 0,
@@ -35,7 +35,7 @@ export default function TradePage() {
     async function handleSubmit(e) {
         e.preventDefault()
         const id = await getUserId()
-        onChange({user_id: id})
+        onChange({userId: id})
         console.log(form);
 
         buySellStocks(form);
@@ -51,7 +51,7 @@ export default function TradePage() {
                 </div>
                 <Select
                 className="grow"
-                onChange={(e) => onChange({hartija_od_vrednosti_tip: e})}
+                onChange={(e) => onChange({hartijaOdVrednostiTip: e})}
                 options={["AKCIJA", "FOREX", "FUTURES_UGOVOR"]}
                 defValue="AKCIJA"
                 />
