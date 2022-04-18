@@ -8,6 +8,12 @@ it('<Button/> => render', () => {
     cy.get('button').contains('Test').click()
 })
 
+it('<Button/> => defualt', () => {
+    mount(<Button label='Test' />)
+    cy.get('button').should("have.class", 'bg-indigo-500')
+})
+
+
 it('<Button/> => primary', () => {
     mount(<Button design='primary' label='Test' />)
     cy.get('button').should("have.class", 'bg-indigo-500')

@@ -1,4 +1,4 @@
-describe("Login", () => {
+describe("login", () => {
 	beforeEach(() => {
 		cy.visit("http://localhost:3000/login");
 		cy.intercept(
