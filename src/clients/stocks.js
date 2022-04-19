@@ -86,3 +86,8 @@ export function getFuturesTimeSeriesApi(future, range) {
   let url = new URL(BASE_URL + `/futures/podaci/timeseries/${range}/${future}`);
   return get(url);
 }
+
+export function buySellStocks(form) {
+	let url = new URL(BASE_URL + "/berza/order");
+	return post(url, form);
+}
