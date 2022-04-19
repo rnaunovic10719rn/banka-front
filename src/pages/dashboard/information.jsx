@@ -27,13 +27,8 @@ export default function InformationPage(props) {
     setForm({ ...form, ...event });
   };
 
-  function testSmth() {
-    console.log(user)
-  }
-
   async function onSubmit() {
     try {
-      testSmth()
       await editUserAction(form);
       setSuccess(true);
     } catch (e) {

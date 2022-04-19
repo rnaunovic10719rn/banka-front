@@ -25,7 +25,6 @@ function OtpModal(props) {
         if (secret == null) return;
         const r = await getQrCodeApi(secret);
         setQrCode(r)
-        console.log(r)
     }
 
     function handleClose() {
