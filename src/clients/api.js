@@ -12,8 +12,14 @@ export function patch(url, body = null) {
 	return request("PATCH", url, body);
 }
 
+// delete_ ima underscore jer je delete rezervisana rec
+export function delete_(url) {
+	return request("DELETE", url);
+}
+
 async function request(method, url, body) {
 	const token = authGetToken();
+	console.log(body);
 	try {
 		const response = await fetch(url, {
 			method: method,
@@ -21,10 +27,11 @@ async function request(method, url, body) {
 			mode: "cors",
 			headers: {
 				Authorization: "Bearer " + token,
-				"Content-Type": "application/json",
+				"Content-Type": "application/json"
 			},
 		});
 		if (!response.ok) {
+			console.log(response);
 			throw Error("Request failed");
 		}
 

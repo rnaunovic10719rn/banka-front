@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import QRCode from "react-qr-code";
 import TextField from "./common/TextField"
 import Modal from "./common/Modal"
 import Button from "./common/Button"
-import { getQrCodeApi } from "../clients/client";
+import { generateSecret, getQrCodeApi } from "../clients/client";
 
 const MODAL_STATE = {
     QR_CODE: "QR_CODE",
@@ -13,11 +13,17 @@ const MODAL_STATE = {
 
 function OtpModal(props) {
     const [modalState, setModalState] = useState(MODAL_STATE.QR_CODE)
+    const [secret, setSecret] = useState("")
     const [qrCode, setQrCode] = useState("")
     const [validationCode, setValidationCode] = useState("")
 
+    async function getSecret() {
+        setSecret(await generateSecret())
+    }
+
     async function getQrCode() {
-        const r = await getQrCodeApi()
+        if (secret == null) return;
+        const r = await getQrCodeApi(secret);
         setQrCode(r)
     }
 
@@ -27,8 +33,12 @@ function OtpModal(props) {
     }
 
     useEffect(() => {
-        getQrCode()
+        getSecret()
     }, [])
+
+    useEffect(() => {
+        getQrCode()
+    }, [secret])
 
     return (
         <Modal id="otp-modal" visible={props.visible} onClose={handleClose} title="OTP Setup">
@@ -54,7 +64,10 @@ function OtpModal(props) {
                         <TextField placeholder="Kod" onChange={setValidationCode} />
                     </div>
                     <div>
-                        <Button className="float-right" label="Nastavi" onClick={() => setModalState(MODAL_STATE.CONFIRM_CODE)} />
+                        <Button className="float-right" label="Nastavi" onClick={() => {
+                            sendValidationCode();
+                            handleClose();
+                        }} />
                     </div>
                 </div>
             }
