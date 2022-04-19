@@ -13,7 +13,7 @@ export function patch(url, body = null) {
 }
 
 // delete_ ima underscore jer je delete rezervisana rec
-export async function delete_(url) {
+export function delete_(url) {
 	return request("DELETE", url);
 }
 
