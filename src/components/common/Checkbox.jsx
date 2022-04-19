@@ -16,7 +16,7 @@ function Checkbox(props) {
 
     return (
         <label className={style} htmlFor={props.value}>
-            <input className="mr-2" type="checkbox" value={props.value} id={props.value} checked={active} onClick={handleClick} />
+            <input className="mr-2" type="checkbox" value={props.value} id={props.value} checked={active} onChange={handleClick} />
             {props.label}
         </label>
     )
@@ -25,7 +25,7 @@ function Checkbox(props) {
 Checkbox.propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-    onChange: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
 }
 
 export default Checkbox

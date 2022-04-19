@@ -112,11 +112,11 @@ function Pagination(props) {
 
         // breaking on the side
         buttons.push(<PaginationButton label={1} active={current === 0} onClick={() => setActiveGroup(0)} />)
-            buttons.push(<PaginationButton label="..." onClick={null} />)
+        buttons.push(<PaginationButton label="..." onClick={null} />)
         for (let i = current - offset + 1; i < current + offset; i++) {
             buttons.push(<PaginationButton label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
         }
-            buttons.push(<PaginationButton label="..." onClick={null} />)
+        buttons.push(<PaginationButton label="..." onClick={null} />)
         buttons.push(<PaginationButton label={groupCount} active={current === groupCount} onClick={() => setActiveGroup(groupCount - 1)} />)
 
         return buttons
@@ -131,7 +131,7 @@ function Pagination(props) {
     }, [current])
 
     return (
-        <div className='flex'>
+        <div data-testid="common-pagination" className='flex'>
             <PaginationButton label='<' onClick={() => setActiveGroup(current - 1)} disabled={current === 0} />
             {renderButtons().map(i => i)}
             <PaginationButton label='>' onClick={() => setActiveGroup(current + 1)} disabled={current === groupCount - 1} />
@@ -142,7 +142,7 @@ function Pagination(props) {
 Pagination.propTypes = {
     itemCount: PropTypes.number.isRequired,
     groupSize: PropTypes.number,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func.isRequired,
 }
 
 Pagination.defaultProps = {
