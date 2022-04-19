@@ -4,8 +4,8 @@ import Card from "../../components/common/Card"
 import TextField from "../../components/common/TextField"
 import Button from "../../components/common/Button"
 import { URLS } from "../../routes"
-import { changePasswordApi } from "../../clients/client"
-
+import { changePasswordById, getUserId } from "../../clients/client"
+import { useEffect } from 'react';
 
 
 export default function ChangePasswordPage() {
@@ -13,6 +13,18 @@ export default function ChangePasswordPage() {
     const [password1, setPassword1] = useState(null);
     const [password2, setPassword2] = useState(null);
     const [error, setError] = useState(null)
+
+
+    const [id, setId] = useState(null)
+
+    async function getId() {
+        setId(await getUserId());
+    }
+
+    useEffect(() => {
+        getId()
+    }, [])
+
 
     async function changePassword(e) {
         e.preventDefault()
@@ -23,7 +35,7 @@ export default function ChangePasswordPage() {
         }
 
         try {
-            await changePasswordApi(password1)
+            await changePasswordById(id,password1)
             navigate("/" + URLS.DASHBOARD.PRIVACY)
         } catch {
             setError("Failed to change password.")

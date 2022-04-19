@@ -35,6 +35,10 @@ export default function LoginPage() {
                 {error && <Alert design="danger" text={error} onDismiss={() => setError(null)} />}
                 <TextField placeholder="Korisnicko ime" onChange={setUsername} />
                 <TextField type="password" placeholder="Lozinka" onChange={setPassword} />
+                <div style={{textAlign: 'right'}}>
+                    <a href={"/" + URLS.EMAIL}>Zaboravili ste sifru</a>
+                </div>
+
                 <Button type="submit" label="Login" disabled={disableCta()} />
             </form>
         </Window>
