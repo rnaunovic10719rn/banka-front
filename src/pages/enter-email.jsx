@@ -21,7 +21,6 @@ export default function EmailPage() {
     async function emailRes(e) {
         e.preventDefault()
         try {
-            console.log("slanje mejla")
             await resetEmail(email)
             navigate("/" + URLS.LOGIN)
         } catch {

@@ -90,15 +90,13 @@ export function postValidationCodeApi(otp, secret) {
 export function resetEmail(email){
 	let url = new URL(BASE_URL + "/user/reset-password");
 	const body = {
-		email: email,
+		email: email
 	};
-	console.log(url);
-	console.log(body);
 	return post(url, body);
 }
 
 export function changePasswordById(id,password){
-	let url = new URL(BASE_URL + `/user/new-password/` + id);
+	let url = new URL(BASE_URL + "/user/new-password/" + id);
 	const body = {
 		newPassword: password,
 	};

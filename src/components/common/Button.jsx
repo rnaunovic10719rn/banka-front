@@ -47,11 +47,6 @@ function Button(props) {
     case BUTTON_DESIGN.INLINE:
       style = inlineStyle
       break
-    default:
-      style = primaryStyle
-      break
-
-
   }
 
   return (

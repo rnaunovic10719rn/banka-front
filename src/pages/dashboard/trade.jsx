@@ -38,7 +38,7 @@ export default function TradePage() {
         onChange({userId: id})
         console.log(form);
 
-        buySellStocks(form);
+        await buySellStocks(form);
     }
 
     function renderStocks() {

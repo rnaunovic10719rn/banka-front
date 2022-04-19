@@ -19,6 +19,7 @@ export function delete_(url) {
 
 async function request(method, url, body) {
 	const token = authGetToken();
+	console.log(body);
 	try {
 		const response = await fetch(url, {
 			method: method,
