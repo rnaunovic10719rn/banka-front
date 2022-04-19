@@ -19,7 +19,6 @@ function OtpModal(props) {
     async function getQrCode() {
         const r = await getQrCodeApi()
         setQrCode(r)
-        console.log(r)
     }
 
     function handleClose() {
@@ -27,23 +26,19 @@ function OtpModal(props) {
         props.onClose()
     }
 
-    function sendValidationCode() {
-        console.log(validationCode)
-    }
-
     useEffect(() => {
         getQrCode()
     }, [])
 
     return (
-        <Modal visible={props.visible} onClose={handleClose} title="OTP Setup">
+        <Modal id="otp-modal" visible={props.visible} onClose={handleClose} title="OTP Setup">
             {(modalState === MODAL_STATE.QR_CODE) &&
                 <div className="flex flex-col gap-5">
                     <div className="grid justify-items-center gap-5">
                         <div>
                             <h4>Korisite Vašu aplikaciju za autentifikaciju da biste skenirali ovaj QR kod.</h4>
                         </div>
-                        <QRCode value={qrCode} />
+                        {qrCode && <span title="QR CODE"><QRCode value={qrCode} /></span>}
                     </div>
                     <div>
                         <Button className="float-right" label="Nastavi" onClick={() => setModalState(MODAL_STATE.CONFIRM_CODE)} />

@@ -1,7 +1,7 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import DashboardPageLayout from "./DashboardPageLayout";
+import Header from "./Header";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import * as reactRedux from "react-redux";
@@ -13,12 +13,14 @@ beforeEach(() => {
 	useSelectorMock.mockReturnValue(null);
 });
 
-test("<DashboardPageLayout/> => render", async () => {
+afterEach(() => {});
+
+test("<Header/> => render", async () => {
 	render(
 		<Router location={history.location} navigator={history}>
-			<DashboardPageLayout />
+			<Header />
 		</Router>
 	);
-	const element = screen.getByTestId("component-auth-required");
+	const element = screen.getByTestId("component-header");
 	expect(element).toBeVisible();
 });
