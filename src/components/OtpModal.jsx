@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import QRCode from "react-qr-code";
 import TextField from "./common/TextField"
 import Modal from "./common/Modal"
@@ -65,7 +65,6 @@ function OtpModal(props) {
                     </div>
                     <div>
                         <Button className="float-right" label="Nastavi" onClick={() => {
-                            sendValidationCode();
                             handleClose();
                         }} />
                     </div>
