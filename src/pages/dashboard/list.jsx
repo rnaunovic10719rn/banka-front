@@ -25,6 +25,7 @@ export default function ListPage() {
     function deleteUser(id) {
         console.log(id);
         deleteUserAction(id);
+        setSelectedUser(null);
     }
 
     useEffect(() => {

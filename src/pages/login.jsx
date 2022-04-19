@@ -7,12 +7,22 @@ import Button from "../components/common/Button"
 import Alert from "../components/common/Alert"
 import { loginAction } from "../clients/client"
 import { URLS } from "../routes"
+import { useDispatch } from "react-redux";
+import { getUserApi } from "../clients/client";
+import { addUserAction } from "../redux/actions";
 
 export default function LoginPage() {
     let navigate = useNavigate();
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null)
     const [error, setError] = useState(null)
+
+    const dispatch = useDispatch();
+
+	async function getUser() {
+		const response = await getUserApi();
+		dispatch(addUserAction(response));
+	}
 
     function disableCta() {
         if (username == null || password == null) return true
@@ -23,6 +33,7 @@ export default function LoginPage() {
         e.preventDefault()
         try {
             await loginAction(username, password)
+            await getUser()
             navigate(URLS.DASHBOARD.INDEX)
         } catch {
             setError("Failed to login.")
