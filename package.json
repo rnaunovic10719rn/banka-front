@@ -2,6 +2,12 @@
 	"name": "banka-front",
 	"version": "0.1.0",
 	"private": true,
+	"jest": {
+		"collectCoverageFrom": [
+			"src/**/*.{js,jsx}",
+			"!src/**/*.stories.{js,jsx}"
+		]
+	},
 	"dependencies": {
 		"@testing-library/jest-dom": "^5.16.2",
 		"@testing-library/react": "^12.1.4",
@@ -22,9 +28,10 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "react-scripts -r @cypress/instrument-cra start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
+		"test:coverage": "react-scripts test --coverage",
 		"eject": "react-scripts eject",
 		"storybook": "start-storybook -p 6006 -s public",
 		"build-storybook": "build-storybook -s public"
@@ -58,6 +65,8 @@
 		]
 	},
 	"devDependencies": {
+		"@cypress/code-coverage": "^3.9.12",
+		"@cypress/instrument-cra": "^1.4.0",
 		"@cypress/react": "^5.12.4",
 		"@cypress/webpack-dev-server": "^1.8.4",
 		"@storybook/addon-actions": "^6.4.19",
@@ -71,6 +80,7 @@
 		"@storybook/preset-create-react-app": "^4.1.0",
 		"@storybook/react": "^6.4.19",
 		"@storybook/testing-library": "^0.0.9",
+		"babel-plugin-istanbul": "^6.1.1",
 		"cypress": "^9.5.4",
 		"postcss": "^8.4.12",
 		"prop-types": "^15.8.1",
