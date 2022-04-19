@@ -3,21 +3,26 @@ name: Tests
 on: push
 
 jobs:
-    e2e-tests:
-        runs-on: ubuntu-20.04
-        steps:
-            - name: Check out code 🛎
-              uses: actions/checkout@v2
-            - name: Run E2E tests 🧪
-              uses: cypress-io/github-action@v2
-              with:
-                  install: true
-                  start: npm start
+    # e2e-tests:
+    #     runs-on: ubuntu-20.04
+    #     steps:
+    #         - name: Check out code 🛎
+    #           uses: actions/checkout@v2
+    #         - name: Run E2E tests 🧪
+    #           uses: cypress-io/github-action@v2
+    #           with:
+    #               install: true
+    #               start: npm start
     unit-tests:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
             - name: Install modules
               run: npm install
-            - name: Run tests
+            - name: Run unit tests 🧪
               run: npm test
+            - name: Comment with Test Coverage
+              uses: dkershner6/jest-coverage-commenter-action@v1
+              with:
+                  github_token: "${{ secrets.GITHUB_TOKEN }}"
+                  test_command: "npm run test:coverage"
