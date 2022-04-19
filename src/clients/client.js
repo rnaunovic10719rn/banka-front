@@ -33,6 +33,7 @@ export function generateSecret() {
 	return get(url);
 }
 
+// TODO replace this with getUserApi
 export function getUserId() {
 	const token = authGetToken();
 	let url = new URL(BASE_URL + "/user/getId/" + token);
