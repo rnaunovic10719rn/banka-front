@@ -2,18 +2,16 @@ import { get, post, patch, delete_ } from "./api";
 import { authSaveToken, authGetToken } from "../auth";
 
 
+
 const BASE_URL = "http://localhost:8080/api";
 
 export async function loginAction(username, password, otp = null) {
 	let url = new URL(BASE_URL + "/login");
-	let params = new URLSearchParams(url.search);
-	params.append("username", username);
-	params.append("password", password);
-	if (otp) {
-		params.append("otp", otp);
+	const body = {
+		username: username,
+		password: password
 	}
-	url = url + "?" + params;
-	const r = await post(url);
+	const r = await post(url, body);
 	authSaveToken(r);
 	return r;
 }

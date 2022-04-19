@@ -5,6 +5,9 @@ import TextField from "../../components/common/TextField"
 import RadioGroup from "../../components/common/RadioGroup"
 import Checkbox from "../../components/common/Checkbox"
 import Button from "../../components/common/Button"
+import Select from "../../components/common/Select"
+import { getUserId } from "../../clients/client"
+import { buySellStocks } from "../../clients/stocks"
 
 const TABS = {
     STOCKS: "Stocks",
@@ -15,8 +18,29 @@ const TABS = {
 export default function TradePage() {
     const [activeTab, setActiveTab] = useState(TABS.STOCKS)
 
-    function handleSubmit(e) {
+    const [form, setForm] = useState({
+        userId: 1,
+        symbol: "",
+        hartijaOdVrednostiTip: "AKCIJA",
+        kolicina: 0,
+        akcija: "BUY",
+        limitValue: 0,
+        stopValue: 0,
+        allOrNoneFlag: false,
+        marginFlag: false
+    });
+
+    const onChange = (event) => {
+        setForm({ ...form, ...event });
+      };
+
+    async function handleSubmit(e) {
         e.preventDefault()
+        const id = await getUserId()
+        onChange({userId: id})
+        console.log(form);
+
+        buySellStocks(form);
     }
 
     function renderStocks() {
@@ -24,8 +48,18 @@ export default function TradePage() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                 <TextField placeholder="Simbol (npr. AAPL)" />
                 <div className="flex gap-3">
-                    <RadioGroup options={['Kupovina', 'Prodaja']} onChange={() => { }} />
-                    <TextField className="grow" placeholder="Kolicina" />
+                    <RadioGroup options={["BUY", "SELL"]} onChange={(e) => onChange({akcija: e})} />
+                    <TextField className="grow" placeholder="Kolicina" value={form["kolicina"]} />
+                </div>
+                <Select
+                className="grow"
+                onChange={(e) => onChange({hartijaOdVrednostiTip: e})}
+                options={["AKCIJA", "FOREX", "FUTURES_UGOVOR"]}
+                defValue="AKCIJA"
+                />
+                <div className="flex gap-4">
+                    <TextField placeholder="Limit" className="w-48" onChange={(e) => onChange({limitValue: e})} value={form["limitValue"]}/>
+                    <TextField placeholder="Stop" className="w-48" onChange={(e) => onChange({stopValue: e})} value={form["stopValue"]}/>
                 </div>
                 <TextField placeholder="Tip" />
                 <TextField placeholder="Limit" />
