@@ -31,7 +31,7 @@ function Modal(props) {
     }
 
     return (
-        <div id={props.id} tabIndex="-1" className={wrapperStyle}>
+        <div data-testid="common-modal" id={props.id} tabIndex="-1" className={wrapperStyle}>
             <div className={modalStyle}>
                 <div className="relative bg-white shadow rounded">
                     {renderHeader()}

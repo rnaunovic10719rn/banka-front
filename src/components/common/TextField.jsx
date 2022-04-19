@@ -31,7 +31,7 @@ function TextField(props) {
   }, [props.value])
 
   return (
-    <input value={value} type={props.type} placeholder={props.placeholder} className={classes} onChange={handleChange} />
+    <input data-testid="common-text-field" value={value} type={props.type} placeholder={props.placeholder} className={classes} onChange={handleChange} />
   );
 }
 

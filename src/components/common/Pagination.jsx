@@ -67,7 +67,7 @@ function Pagination(props) {
         // no breaking
         if (groupCount <= offset * 3 + 1) {
             for (let i = 0; i < groupCount; i++) {
-                buttons.push(<PaginationButton label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
+                buttons.push(<PaginationButton key={i} label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
             }
             return buttons
         }
@@ -75,11 +75,11 @@ function Pagination(props) {
         // breaking in the middle
         if (current <= offset - 1 || current >= groupCount - offset) {
             for (let i = 0; i < offset + 1; i++) {
-                buttons.push(<PaginationButton label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
+                buttons.push(<PaginationButton key={i} label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
             }
-            buttons.push(<PaginationButton label="..." onClick={null} />)
+            buttons.push(<PaginationButton key={'middle...'} label="..." onClick={null} />)
             for (let i = groupCount - offset - 1; i < groupCount; i++) {
-                buttons.push(<PaginationButton label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
+                buttons.push(<PaginationButton key={i} label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
             }
             return buttons
         }
@@ -87,12 +87,12 @@ function Pagination(props) {
         // left breaking transition
         if (current == offset) {
             for (let i = 0; i < offset + 2; i++) {
-                buttons.push(<PaginationButton label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
+                buttons.push(<PaginationButton key={i} label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
             }
 
-            buttons.push(<PaginationButton label="..." onClick={null} />)
+            buttons.push(<PaginationButton key={"left..."} label="..." onClick={null} />)
             for (let i = groupCount - offset; i < groupCount; i++) {
-                buttons.push(<PaginationButton label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
+                buttons.push(<PaginationButton key={i} label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
             }
             return buttons
         }
@@ -100,24 +100,24 @@ function Pagination(props) {
         // right breaking transition
         if (current == groupCount - offset - 1) {
             for (let i = 0; i < offset; i++) {
-                buttons.push(<PaginationButton label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
+                buttons.push(<PaginationButton key={i} label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
             }
 
-            buttons.push(<PaginationButton label="..." onClick={null} />)
+            buttons.push(<PaginationButton key={"right..."} label="..." onClick={null} />)
             for (let i = groupCount - offset - 2; i < groupCount; i++) {
-                buttons.push(<PaginationButton label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
+                buttons.push(<PaginationButton key={i} label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
             }
             return buttons
         }
 
         // breaking on the side
-        buttons.push(<PaginationButton label={1} active={current === 0} onClick={() => setActiveGroup(0)} />)
-        buttons.push(<PaginationButton label="..." onClick={null} />)
+        buttons.push(<PaginationButton key={0} label={1} active={current === 0} onClick={() => setActiveGroup(0)} />)
+        buttons.push(<PaginationButton key={"left..."} label="..." onClick={null} />)
         for (let i = current - offset + 1; i < current + offset; i++) {
-            buttons.push(<PaginationButton label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
+            buttons.push(<PaginationButton key={i} label={i + 1} active={current === i} onClick={() => setActiveGroup(i)} />)
         }
-        buttons.push(<PaginationButton label="..." onClick={null} />)
-        buttons.push(<PaginationButton label={groupCount} active={current === groupCount} onClick={() => setActiveGroup(groupCount - 1)} />)
+        buttons.push(<PaginationButton key={"right..."} label="..." onClick={null} />)
+        buttons.push(<PaginationButton key={current + offset + 1} label={groupCount} active={current === groupCount} onClick={() => setActiveGroup(groupCount - 1)} />)
 
         return buttons
     }
