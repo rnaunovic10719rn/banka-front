@@ -20,4 +20,4 @@ jobs:
             - name: Install modules
               run: npm install
             - name: Run unit tests 🧪
-              run: npm run test:coverage
+              run: npm run test -- --watchAll=false

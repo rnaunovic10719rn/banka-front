@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import Button from "./Button";
 
 test("<Button/> => render", async () => {
-	render(<Button label="Test" />);
+	render(<Button label="Test2" />);
 	const element = screen.getByText("Test");
 	expect(element).toBeVisible();
 });
