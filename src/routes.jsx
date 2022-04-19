@@ -37,7 +37,7 @@ export const URLS = {
 	},
 	LOGIN: "login",
 	REGISTER: "register",
-	EMAIL : "email"
+	EMAIL: "email"
 };
 
 export function AppRoutes() {
