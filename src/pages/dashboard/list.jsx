@@ -63,7 +63,7 @@ export default function ListPage() {
                 </div>
             </div>
             <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija', '']} clickable={true} onClick={e => setSelectedUser(e[0])} rows={rows} />
-            {selectedUser !== null && <UserModal id={selectedUser} onClose={() => setSelectedUser(null)} />}
+            {selectedUser !== null && <UserModal id={selectedUser.id} onClose={() => setSelectedUser(null)} />}
         </div>
     )
 }
