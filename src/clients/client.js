@@ -88,10 +88,12 @@ export function postValidationCodeApi(otp, secret) {
 }
 
 export function resetEmail(email){
-	let url = new URL(BASE_URL + `/user/reset-password`);
+	let url = new URL(BASE_URL + "/user/reset-password");
 	const body = {
 		email: email,
 	};
+	console.log(url);
+	console.log(body);
 	return post(url, body);
 }
 
