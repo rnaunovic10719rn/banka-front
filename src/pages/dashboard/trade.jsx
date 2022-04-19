@@ -5,6 +5,9 @@ import TextField from "../../components/common/TextField"
 import RadioGroup from "../../components/common/RadioGroup"
 import Checkbox from "../../components/common/Checkbox"
 import Button from "../../components/common/Button"
+import Select from "../../components/common/Select"
+import { getUserId } from "../../clients/client"
+import { buySellStocks } from "../../clients/stocks"
 
 const TABS = {
     STOCKS: "Stocks",
