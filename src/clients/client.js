@@ -1,15 +1,14 @@
 import { get, post, patch, delete_ } from "./api";
 import { authSaveToken, authGetToken } from "../auth";
 
-
 const BASE_URL = "http://localhost:8080/api";
 
 export async function loginAction(username, password, otp = null) {
 	let url = new URL(BASE_URL + "/login");
 	const body = {
 		username: username,
-		password: password
-	}
+		password: password,
+	};
 	const r = await post(url, body);
 	authSaveToken(r);
 	return r;
@@ -34,6 +33,7 @@ export function generateSecret() {
 	return get(url);
 }
 
+// TODO replace this with getUserApi
 export function getUserId() {
 	const token = authGetToken();
 	let url = new URL(BASE_URL + "/user/getId/" + token);
@@ -69,7 +69,6 @@ export function changePasswordApi(password) {
 }
 
 export function getQrCodeApi(secret) {
-	console.log(secret);
 	let url = new URL(BASE_URL + "/otp/generateQrUri");
 	const body = {
 		label: "Banka",
@@ -82,20 +81,20 @@ export function postValidationCodeApi(otp, secret) {
 	let url = new URL(BASE_URL + "/otp/validate");
 	const body = {
 		otp: otp,
-		secret: secret
+		secret: secret,
 	};
 	return post(url, body);
 }
 
-export function resetEmail(email){
+export function resetEmail(email) {
 	let url = new URL(BASE_URL + "/user/reset-password");
 	const body = {
-		email: email
+		email: email,
 	};
 	return post(url, body);
 }
 
-export function changePasswordById(id,password){
+export function changePasswordById(id, password) {
 	let url = new URL(BASE_URL + "/user/new-password/" + id);
 	const body = {
 		newPassword: password,

@@ -24,7 +24,7 @@ function TableRow(props) {
   }
 
   return (
-    <tr className={rowStyle} onClick={handleClick}>{props.row.map((r, j) => <td key={j} className={cellClassnames}>{r}</td>)}</tr>
+    <tr data-testid="common-table-row" className={rowStyle} onClick={handleClick}>{props.row.map((r, j) => <td key={j} className={cellClassnames}>{r}</td>)}</tr>
   )
 }
 
@@ -78,7 +78,7 @@ function Table(props) {
   }, [props.rows, props.pagination, props.paginationGroupSize])
 
   return (
-    <div>
+    <div data-testid="common-table">
       <div className="drop-shadow">
         <table className={tableClassnames}>
           <thead>
@@ -111,7 +111,7 @@ function Table(props) {
 }
 
 Table.propTypes = {
-  headings: PropTypes.arrayOf(PropTypes.string),
+  headings: PropTypes.arrayOf(PropTypes.string).isRequired,
   rows: PropTypes.array,
   emptyStatePlaceholder: PropTypes.string,
   pagination: PropTypes.bool,
@@ -122,6 +122,7 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
+  rows: [],
   emptyStatePlaceholder: "No data.",
   pagination: false,
   paginationGroupSize: 5,

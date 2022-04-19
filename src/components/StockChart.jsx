@@ -25,7 +25,7 @@ function StockChart(props) {
     return (
         <div className={props.className}>
             <div className="mb-5">
-                <RadioGroup options={['1d', '5d', '1m', '6m', '1y', '2y', 'ytd']} onChange={props.onChange} />
+                <RadioGroup name="chart" options={['1d', '5d', '1m', '6m', '1y', '2y', 'ytd']} onChange={props.onChange} />
             </div>
             <ResponsiveContainer height={250}>
                 <AreaChart

@@ -20,7 +20,7 @@ function Alert(props) {
     )
 
     return (
-        <div className={style} >
+        <div data-testid="common-alert" className={style} >
             <div className="flex justify-between">
                 <div>
                     {props.text}
@@ -35,6 +35,11 @@ Alert.propTypes = {
     text: PropTypes.string.isRequired,
     design: PropTypes.oneOf([ALERT_TYPES.SUCCESS, ALERT_TYPES.WARNING, ALERT_TYPES.DANGER]).isRequired,
     onDismiss: PropTypes.func.isRequired,
+}
+
+Alert.defaultProps = {
+    design: ALERT_TYPES.SUCCESS,
+    onDismiss: () => { },
 }
 
 export default Alert

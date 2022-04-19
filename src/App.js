@@ -17,7 +17,7 @@ function App(props) {
 	}, []);
 
 	return (
-		<div className="h-screen ">
+		<div data-testid="app" className="h-screen ">
 			<Outlet />
 		</div>
 	);

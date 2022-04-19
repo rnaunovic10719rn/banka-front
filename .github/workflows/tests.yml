@@ -14,15 +14,10 @@ jobs:
     #               install: true
     #               start: npm start
     unit-tests:
+        permissions: write-all
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-            - name: Install modules
-              run: npm install
-            - name: Run unit tests 🧪
-              run: npm run test -- --watchAll=false
-            - name: Test coverage
-              run: npm run test:coverage -- --watchAll=false
-            - name: Jest coverage report
-              uses: ArtiomTr/jest-coverage-report-action@v2.0.6
-
+            - uses: actions/checkout@v1
+            - uses: ArtiomTr/jest-coverage-report-action@v2
+              with:
+                  test-script: npm run test:coverage -- --watchAll=false --silent
