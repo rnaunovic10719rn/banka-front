@@ -14,10 +14,10 @@ jobs:
                   install: true
                   start: npm start
     unit-tests:
-        permissions:
-            checks: write
-            pull-requests: write
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
-            - uses: ArtiomTr/jest-coverage-report-action@v2
+            - uses: actions/checkout@v2
+            - name: Install modules
+              run: npm
+            - name: Run tests
+              run: npm test
