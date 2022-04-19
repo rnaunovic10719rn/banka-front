@@ -40,7 +40,7 @@ function Tab(props) {
     }
 
     return (
-        <div className={style} >
+        <div data-testid="common-tab" className={style} >
             {props.tabs.map(t => <TabItem key={t} label={t} isActive={t === active} onClick={handleClick} />)}
         </div>
     );

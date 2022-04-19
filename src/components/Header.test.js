@@ -10,7 +10,7 @@ const history = createMemoryHistory();
 
 beforeEach(() => {
 	const useSelectorMock = jest.spyOn(reactRedux, "useSelector");
-	useSelectorMock.mockReturnValue(null);
+	useSelectorMock.mockReturnValue({ username: "username" });
 });
 
 afterEach(() => {});
@@ -22,5 +22,16 @@ test("<Header/> => render", async () => {
 		</Router>
 	);
 	const element = screen.getByTestId("component-header");
+	expect(element).toBeVisible();
+});
+
+test("<Header/> => action => logout", async () => {
+	render(
+		<Router location={history.location} navigator={history}>
+			<Header />
+		</Router>
+	);
+	const element = screen.getByText("Logout");
+	fireEvent.click(element);
 	expect(element).toBeVisible();
 });

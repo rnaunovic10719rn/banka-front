@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Modal from "./common/Modal"
+import TextField from "./common/TextField"
+import Button from "./common/Button"
 
 function FilterModal(props) {
     useEffect(() => {
     }, [])
 
     return (
-        <Modal title="Filter" id="1" onClose={setOpenModal} visible={true}>
-            <div class="flex flex-col gap-5">
+        <Modal title="Filter" id="1" onClose={props.onClose} visible={true}>
+            <div className="flex flex-col gap-5">
                 <div className="flex justify-between items-center">
                     <div className="w-[100px]">Exchange: </div>
                     <TextField className="grow" placeholder="Exchange" />
@@ -36,9 +38,7 @@ function FilterModal(props) {
                 <div>
                     <Button
                         className="float-right"
-                        onClick={() => {
-                            setOpenModal(false);
-                        }}
+                        onClick={props.onClose}
                         label="Filter"
                     />
                 </div>
