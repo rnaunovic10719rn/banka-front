@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Tests
 
 on: push
 
@@ -14,13 +14,10 @@ jobs:
                   install: true
                   start: npm start
     unit-tests:
-        runs-on: ubuntu-20.04
+        permissions:
+            checks: write
+            pull-requests: write
+        runs-on: ubuntu-latest
         steps:
-            - name: Check out code 🛎
-              uses: actions/checkout@v2
-
-            - name: Run Component tests 🧪
-              uses: cypress-io/github-action@v2
-              with:
-                  install: true
-                  command: yarn cypress run-ct
+            - uses: actions/checkout@v1
+            - uses: ArtiomTr/jest-coverage-report-action@v2
