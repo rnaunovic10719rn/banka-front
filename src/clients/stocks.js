@@ -87,3 +87,8 @@ export function buySellStocks(form) {
 	let url = new URL(BASE_URL + "/berza/order");
 	return post(url, form);
 }
+
+export function getOrdersApi() {
+	let url = new URL(BASE_URL + `/berza/order`);
+	return get(url);
+}
