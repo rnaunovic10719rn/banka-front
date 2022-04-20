@@ -5,6 +5,8 @@
 	"jest": {
 		"collectCoverageFrom": [
 			"src/**/*.{js,jsx}",
+			"!src/pages/**/*",
+			"!src/*",
 			"!src/**/*.stories.{js,jsx}"
 		]
 	},

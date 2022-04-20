@@ -42,7 +42,7 @@ Once the app is up and running it can be accessed at:
 Pokretanje unit testova koristi se komanda
 
 ```
-npx cypress open-ct
+npm run test
 ```
 
 #### End-to-end testing
@@ -51,6 +51,8 @@ Pokretanje end-to-end testova koristi se komanda
 
 ```
 npx cypress open
+or
+npx cypress run
 ```
 
 ## Technologies

@@ -64,13 +64,13 @@ function ForexModal(props) {
     }
     function renderPlaceholder() {
         return (
-            <Card className="flex flex-col gap-3">
-                <PlaceholderLoading shape="rect" width={'100%'} height={20} />
+            <Card title="" className="flex flex-col gap-3">
+                {/* <PlaceholderLoading shape="rect" width={'100%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'90%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'100%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'90%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'100%'} height={20} />
-                <PlaceholderLoading shape="rect" width={'90%'} height={20} />
+                <PlaceholderLoading shape="rect" width={'90%'} height={20} /> */}
             </Card>
         )
     }
@@ -84,7 +84,7 @@ function ForexModal(props) {
         getDataForChart()
     }, [chartFilter])
     return (
-        <Modal visible onClose={props.onClose} title={props.future} className="max-w-[900px]">
+        <Modal id="futures-modal" visible onClose={props.onClose} title={props.future} className="max-w-[900px]">
             {details && renderDetails()}
             {!details && renderPlaceholder()}
         </Modal>

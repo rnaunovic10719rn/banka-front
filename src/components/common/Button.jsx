@@ -51,6 +51,7 @@ function Button(props) {
 
   return (
     <button
+      data-testid="common-button"
       className={style}
       type={props.type}
       onClick={props.onClick}

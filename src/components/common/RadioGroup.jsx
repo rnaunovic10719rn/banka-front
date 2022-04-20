@@ -16,7 +16,7 @@ function RadioButton(props) {
     )
 
     return (
-        <label className={style} htmlFor={props.value}>
+        <label data-testid="common-radio-button" className={style} htmlFor={props.value}>
             <input className="hidden" type="radio" name={props.name} id={props.value} value={props.value} onChange={props.onChange} />
             {props.label}
         </label>
@@ -39,21 +39,20 @@ function RadioGroup(props) {
     )
 
     function handleChange(e) {
-        console.log(e.target.value)
         setActive(e.target.value)
         props.onChange(e.target.value)
     }
 
     return (
-        <div className={style} >
-            {props.options && props.options.map(o => <RadioButton value={o} name={props.name} label={o} onChange={handleChange} isActive={o === active} />)}
+        <div data-testid="common-radio-group" className={style} >
+            {props.options && props.options.map(o => <RadioButton key={o} value={o} name={props.name} label={o} onChange={handleChange} isActive={o === active} />)}
         </div>
     );
 }
 
 RadioGroup.propTypes = {
     name: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(PropTypes.string),
+    options: PropTypes.arrayOf(PropTypes.string).isRequired,
     onChange: PropTypes.func.isRequired,
 }
 

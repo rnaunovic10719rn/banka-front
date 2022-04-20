@@ -11,8 +11,8 @@ function Select(props) {
     )
 
     return (
-        <select className={style} onChange={(e) => props.onChange(e.target.value)}>
-            {props.options.map(o => o == props.defValue ? <option value={o} selected>{o}</option> : <option value={o}>{o}</option>)}
+        <select data-testid="common-select" className={style} onChange={(e) => props.onChange(e.target.value)}>
+            {props.options.map(o => o == props.defValue ? <option data-testid="common-select-option" key={o} value={o} selected>{o}</option> : <option data-testid="common-select-option" key={o} value={o}>{o}</option>)}
         </select>
     )
 }

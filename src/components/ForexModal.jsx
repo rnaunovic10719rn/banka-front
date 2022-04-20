@@ -4,8 +4,7 @@ import Modal from "./common/Modal"
 import StocksChart, { CHART_FILTERS } from "./StockChart";
 import Card from "./common/Card";
 import PlaceholderLoading from 'react-placeholder-loading'
-import { getForexDetalsApi, getForexTimeSeriesApi, getStockTimeSeriesApi } from "../clients/stocks";
-import { getStockDetailsApi } from "../clients/stocks";
+import { getForexDetalsApi, getForexTimeSeriesApi } from "../clients/stocks";
 
 function ForexModal(props) {
     const [details, setDetails] = useState(null)
@@ -64,13 +63,13 @@ function ForexModal(props) {
 
     function renderPlaceholder() {
         return (
-            <Card className="flex flex-col gap-3">
-                <PlaceholderLoading shape="rect" width={'100%'} height={20} />
+            <Card title="" className="flex flex-col gap-3">
+                {/* <PlaceholderLoading shape="rect" width={'100%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'90%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'100%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'90%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'100%'} height={20} />
-                <PlaceholderLoading shape="rect" width={'90%'} height={20} />
+                <PlaceholderLoading shape="rect" width={'90%'} height={20} /> */}
             </Card>
         )
     }
@@ -84,7 +83,7 @@ function ForexModal(props) {
     }, [chartFilter])
 
     return (
-        <Modal visible={true} onClose={props.onClose} title={`${props.from} - ${props.to}`} className="max-w-[900px]">
+        <Modal id="forex-modal" visible={true} onClose={props.onClose} title={`${props.from} - ${props.to}`} className="max-w-[900px]">
             {details && renderDetails()}
             {!details && renderPlaceholder()}
         </Modal>

@@ -18,10 +18,10 @@ function UserModal(props) {
     })
 
     async function handleSubmit() {
-        try{
+        try {
             await editUserByIdAction(props.id, form);
         }
-        catch(e) {
+        catch (e) {
 
         }
     }
@@ -30,19 +30,19 @@ function UserModal(props) {
 
         return (
             <div className="flex flex-col gap-5">
-                <TextField placeholder="Ime" onChange={(e) => setForm({...form, ime: e })} />
-                <TextField placeholder="Prezime" onChange={(e) => setForm({...form, prezime: e })} />
-                <TextField placeholder="E-mail" onChange={(e) => setForm({...form, email: e })} />
-                <TextField placeholder="JMBG" onChange={(e) => setForm({...form, jmbg: e })} />
-                <TextField placeholder="Broj telefona" onChange={(e) => setForm({...form, br_telefona: e })} />
-                <Select options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL]} onChange={(e) => setForm({...form, pozicija: e })} />
-                <Button label="Register" type="submit" onClick={() => handleSubmit()} />
+                <TextField placeholder="Ime" onChange={(e) => setForm({ ...form, ime: e })} />
+                <TextField placeholder="Prezime" onChange={(e) => setForm({ ...form, prezime: e })} />
+                <TextField placeholder="E-mail" onChange={(e) => setForm({ ...form, email: e })} />
+                <TextField placeholder="JMBG" onChange={(e) => setForm({ ...form, jmbg: e })} />
+                <TextField placeholder="Broj telefona" onChange={(e) => setForm({ ...form, br_telefona: e })} />
+                <Select options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL]} onChange={(e) => setForm({ ...form, pozicija: e })} />
+                <Button label="Register" onClick={handleSubmit} />
             </div>
         )
     }
 
     return (
-        <Modal visible={true} onClose={props.onClose} title={props.ticker} className="max-w-[900px]">
+        <Modal id={props.id} visible={true} onClose={props.onClose} title="User modal" className="max-w-[900px]">
             <div>
                 {renderDetails()}
             </div>
@@ -51,7 +51,7 @@ function UserModal(props) {
 }
 
 UserModal.propTypes = {
-    id: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
 }
 

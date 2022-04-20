@@ -21,7 +21,7 @@ const Template = (args) => (
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rutrum tellus pellentesque eu tincidunt tortor aliquam nulla facilisi cras. Nulla posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Viverra accumsan in nisl nisi scelerisque. Amet consectetur adipiscing elit duis. Risus ultricies tristique nulla aliquet enim tortor at auctor urna. Urna duis convallis convallis tellus id interdum velit. Morbi quis commodo odio aenean sed adipiscing diam donec adipiscing. Mi tempus imperdiet nulla malesuada pellentesque elit eget gravida. Feugiat sed lectus vestibulum mattis ullamcorper velit sed. Habitant morbi tristique senectus et netus et malesuada fames. Proin sagittis nisl rhoncus mattis rhoncus urna. Proin fermentum leo vel orci porta non pulvinar.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rutrum tellus pellentesque eu tincidunt tortor aliquam nulla facilisi cras. Nulla posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Viverra accumsan in nisl nisi scelerisque. Amet consectetur adipiscing elit duis. Risus ultricies tristique nulla aliquet enim tortor at auctor urna. Urna duis convallis convallis tellus id interdum velit. Morbi quis commodo odio aenean sed adipiscing diam donec adipiscing. Mi tempus imperdiet nulla malesuada pellentesque elit eget gravida. Feugiat sed lectus vestibulum mattis ullamcorper velit sed. Habitant morbi tristique senectus et netus et malesuada fames. Proin sagittis nisl rhoncus mattis rhoncus urna. Proin fermentum leo vel orci porta non pulvinar.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rutrum tellus pellentesque eu tincidunt tortor aliquam nulla facilisi cras. Nulla posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Viverra accumsan in nisl nisi scelerisque. Amet consectetur adipiscing elit duis. Risus ultricies tristique nulla aliquet enim tortor at auctor urna. Urna duis convallis convallis tellus id interdum velit. Morbi quis commodo odio aenean sed adipiscing diam donec adipiscing. Mi tempus imperdiet nulla malesuada pellentesque elit eget gravida. Feugiat sed lectus vestibulum mattis ullamcorper velit sed. Habitant morbi tristique senectus et netus et malesuada fames. Proin sagittis nisl rhoncus mattis rhoncus urna. Proin fermentum leo vel orci porta non pulvinar.</p>
-        <Modal visible={true} {...args} />
+        <Modal {...args} />
     </div>
 
 );
@@ -35,6 +35,7 @@ const defaultChildren = (
 export const Default = Template.bind({});
 Default.args = {
     id: 'storyModal',
+    visible: true,
     title: 'Title',
     children: defaultChildren,
 };

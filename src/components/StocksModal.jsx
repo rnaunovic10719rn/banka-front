@@ -70,13 +70,13 @@ function StocksModal(props) {
 
     function renderPlaceholder() {
         return (
-            <Card className="flex flex-col gap-3">
-                <PlaceholderLoading shape="rect" width={'100%'} height={20} />
+            <Card title="" className="flex flex-col gap-3">
+                {/* <PlaceholderLoading shape="rect" width={'100%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'90%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'100%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'90%'} height={20} />
                 <PlaceholderLoading shape="rect" width={'100%'} height={20} />
-                <PlaceholderLoading shape="rect" width={'90%'} height={20} />
+                <PlaceholderLoading shape="rect" width={'90%'} height={20} /> */}
             </Card>
         )
     }
@@ -90,7 +90,7 @@ function StocksModal(props) {
     }, [chartFilter])
 
     return (
-        <Modal visible={true} onClose={props.onClose} title={props.ticker} className="max-w-[900px]">
+        <Modal id="stocks-modal" visible={true} onClose={props.onClose} title={props.ticker} className="max-w-[900px]">
             <div>
                 {!details && renderPlaceholder()}
                 {details && renderDetails()}
@@ -100,7 +100,7 @@ function StocksModal(props) {
 }
 
 StocksModal.propTypes = {
-    ticker: PropTypes.object.isRequired,
+    ticker: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
 }
 

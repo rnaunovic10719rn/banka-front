@@ -20,7 +20,7 @@ function Window(props) {
     )
 
     return (
-        <div className={formWrapperClasses}>
+        <div data-testid="common-window" className={formWrapperClasses}>
             <div className={tittleClasses}>
                 {props.title}
             </div>

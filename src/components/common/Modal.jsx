@@ -21,8 +21,8 @@ function Modal(props) {
 
     function renderHeader() {
         return (
-            <div class="py-4 px-6 flex justify-between items-middle border-b bd-gray-300">
-                <h3 class="text-2xl font-semibold text-gray-900 lg:text-2xl">
+            <div className="py-4 px-6 flex justify-between items-middle border-b bd-gray-300">
+                <h3 className="text-2xl font-semibold text-gray-900 lg:text-2xl">
                     {props.title}
                 </h3>
                 <ExitButton onClick={props.onClose} />
@@ -31,9 +31,9 @@ function Modal(props) {
     }
 
     return (
-        <div id={props.id} tabindex="-1" className={wrapperStyle}>
-            <div class={modalStyle}>
-                <div class="relative bg-white shadow rounded">
+        <div data-testid="common-modal" id={props.id} tabIndex="-1" className={wrapperStyle}>
+            <div className={modalStyle}>
+                <div className="relative bg-white shadow rounded">
                     {renderHeader()}
                     <div className='p-6'>
                         {props.children}

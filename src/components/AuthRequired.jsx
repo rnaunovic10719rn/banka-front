@@ -12,7 +12,7 @@ function AuthRequired(props) {
     }, [token])
 
     return (
-        <div>
+        <div data-testid="component-auth-required">
             {props.children}
         </div>
     )

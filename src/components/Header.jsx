@@ -24,7 +24,7 @@ function Header(props) {
 
 
     return (
-        <div className={style}>
+        <div data-testid="component-header" className={style}>
             <div className="flex justify-between">
                 <div className="flex gap-8">
                     <div className="w-60 pl-5 mr-2">
