@@ -90,7 +90,7 @@ function StocksModal(props) {
     }, [chartFilter])
 
     return (
-        <Modal id="stocks-modal" visible={true} onClose={props.onClose} title={props.ticker} className="max-w-[900px]">
+        <Modal id="stocks-modal" visible={true} onClose={props.onClose} title={props.ticker} className="max-w-[1100px]">
             <div>
                 {!details && renderPlaceholder()}
                 {details && renderDetails()}

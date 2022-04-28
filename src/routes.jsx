@@ -15,7 +15,7 @@ import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
 import OverviewStockPage from "./pages/dashboard/overview-stock";
 import ChangePasswordPage from "./pages/dashboard/changepass";
-import EmailPage from "./pages/enter-email"
+import EmailPage from "./pages/enter-email";
 
 export const URLS = {
 	DASHBOARD: {

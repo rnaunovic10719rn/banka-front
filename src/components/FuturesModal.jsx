@@ -84,7 +84,7 @@ function ForexModal(props) {
         getDataForChart()
     }, [chartFilter])
     return (
-        <Modal id="futures-modal" visible onClose={props.onClose} title={props.future} className="max-w-[900px]">
+        <Modal id="futures-modal" visible onClose={props.onClose} title={props.future} className="max-w-[1100px]">
             {details && renderDetails()}
             {!details && renderPlaceholder()}
         </Modal>
