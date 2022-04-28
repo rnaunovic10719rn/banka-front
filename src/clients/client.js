@@ -1,4 +1,4 @@
-import { get, post, patch, delete_ } from "./api";
+import { get, post, patch, delete_, postWithoutStringify, postWithoutToken } from "./api";
 import { authSaveToken, authGetToken } from "../auth";
 
 const BASE_URL = "http://localhost:8080/api";
@@ -8,7 +8,9 @@ export async function loginAction(username, password, otp = null) {
 	const body = {
 		username: username,
 		password: password,
+		otp: otp
 	};
+	console.log(body);
 	const r = await post(url, body);
 	authSaveToken(r);
 	return r;
@@ -77,6 +79,11 @@ export function getQrCodeApi(secret) {
 	return post(url, body);
 }
 
+export function setUserSecret(id, secret) {
+	let url = new URL(BASE_URL + "/otp/set/" + id);
+	return postWithoutStringify(url, secret);
+}
+
 export function postValidationCodeApi(otp, secret) {
 	let url = new URL(BASE_URL + "/otp/validate");
 	const body = {
@@ -100,6 +107,11 @@ export function changePasswordById(id, password) {
 		newPassword: password,
 	};
 	return post(url, body);
+}
+
+export function hasTwoFactor(username) {
+	let url = new URL(BASE_URL + "/otp/has/" + username);
+	return postWithoutToken(url);
 }
 
 //export async function savePassAction(password1,password2, otp = null){

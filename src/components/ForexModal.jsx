@@ -83,7 +83,7 @@ function ForexModal(props) {
     }, [chartFilter])
 
     return (
-        <Modal id="forex-modal" visible={true} onClose={props.onClose} title={`${props.from} - ${props.to}`} className="max-w-[900px]">
+        <Modal id="forex-modal" visible={true} onClose={props.onClose} title={`${props.from} - ${props.to}`} className="max-w-[1100px]">
             {details && renderDetails()}
             {!details && renderPlaceholder()}
         </Modal>

@@ -4,7 +4,7 @@ import QRCode from "react-qr-code";
 import TextField from "./common/TextField"
 import Modal from "./common/Modal"
 import Button from "./common/Button"
-import { generateSecret, getQrCodeApi } from "../clients/client";
+import { generateSecret, getQrCodeApi, getUserId, setUserSecret } from "../clients/client";
 
 const MODAL_STATE = {
     QR_CODE: "QR_CODE",
@@ -25,6 +25,13 @@ function OtpModal(props) {
         if (secret == null) return;
         const r = await getQrCodeApi(secret);
         setQrCode(r)
+    }
+
+    async function setUserSecretModal() {
+        const id = await getUserId();
+        console.log(secret);
+        await setUserSecret(id, secret);
+        console.log('finito');
     }
 
     function handleClose() {
@@ -65,6 +72,7 @@ function OtpModal(props) {
                     </div>
                     <div>
                         <Button className="float-right" label="Nastavi" onClick={() => {
+                            setUserSecretModal();
                             handleClose();
                         }} />
                     </div>

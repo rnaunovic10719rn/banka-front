@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { deleteUserAction, getUsersAction, getUserId, editUserByIdAction } from "../../clients/client"
+import { deleteUserAction, getUsersAction, getUserId } from "../../clients/client"
 import Table from '../../components/common/Table'
 import Button, { BUTTON_DESIGN } from '../../components/common/Button'
 import { URLS } from '../../routes'
