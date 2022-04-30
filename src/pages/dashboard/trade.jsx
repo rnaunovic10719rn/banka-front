@@ -29,18 +29,30 @@ export default function TradePage() {
         marginFlag: false
     });
 
+    const [forexForm, setForexForm] = useState({
+        from: "",
+        to: ""
+    });
+
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
     const onChange = (event) => {
         setForm({ ...form, ...event });
-      };
+    };
+
+    const onForexChange = (event) => {
+        setForexForm({ ...forexForm, ...event });
+    };
 
     async function handleSubmit(e) {
         e.preventDefault()
         try {
             const id = await getUserId()
             onChange({userId: id})
+            if (form.hartijaOdVrednostiTip == "FOREX") {
+                onChange({symbol: forexForm.from + " " + forexForm.to})
+            }
             const msg = await buySellStocks(form);
             setSuccess(true);
         } catch (e) {
@@ -66,7 +78,16 @@ export default function TradePage() {
                 ></Alert>
             )}
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                <TextField placeholder="Simbol (npr. AAPL)" onChange={(e) => onChange({symbol: e})} value={form['symbol']}/>
+                {   (form.hartijaOdVrednostiTip == "AKCIJA" || form.hartijaOdVrednostiTip == "FUTURES_UGOVOR") &&
+                    (<TextField placeholder="Simbol (npr. AAPL)" onChange={(e) => onChange({symbol: e})}/>)
+                }
+                {   (form.hartijaOdVrednostiTip == "FOREX") &&
+                    (   <div className="flex gap-4">
+                            <TextField placeholder="From" onChange={(e) => onForexChange({from: e})} />
+                            <TextField placeholder="To" onChange={(e) => onForexChange({to: e})} />
+                        </div>
+                    )
+                }
                 <div className="flex gap-3">
                     <RadioGroup options={["BUY", "SELL"]} onChange={(e) => onChange({akcija: e})} />
                     <TextField className="grow" placeholder="Kolicina" value={form["kolicina"]} onChange={(e) => onChange({kolicina: e})}  />
