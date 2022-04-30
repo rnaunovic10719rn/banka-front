@@ -12,7 +12,6 @@ import {
 } from "../../clients/stocks";
 import StocksModal from "../../components/StocksModal";
 import ForexModal from "../../components/ForexModal";
-import FuturesModal from "../../components/FuturesModal";
 import PlaceholderLoading from "react-placeholder-loading";
 import Button from "../../components/common/Button";
 import TextField from "../../components/common/TextField";
@@ -32,7 +31,6 @@ export default function OverviewPage() {
 
   const [selectedStock, setSelectedStock] = useState(null);
   const [selectedForex, setSelectedForex] = useState(null);
-  const [selectedFuture, setSelectedFuture] = useState(null);
 
   const [searchData, setSearchData] = useState("");
 
@@ -106,8 +104,6 @@ export default function OverviewPage() {
           headings={["Oznaka", "Cena", "Berza", "Poslednje azuriranje"]}
           rows={futuresData}
           pagination
-          clickable
-          onClick={(e) => setSelectedFuture(e[0])}
         />
       </div>
     );
@@ -233,12 +229,6 @@ export default function OverviewPage() {
           from={selectedForex[0]}
           to={selectedForex[1]}
           onClose={() => setSelectedForex(null)}
-        />
-      )}
-      {selectedFuture !== null && (
-        <FuturesModal
-          future={selectedFuture}
-          onClose={() => setSelectedFuture(null)}
         />
       )}
     </div>

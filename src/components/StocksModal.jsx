@@ -19,7 +19,35 @@ function StocksModal(props) {
     }
 
     async function getDataForChart() {
-        const response = await getStockTimeSeriesApi(props.ticker, chartFilter)
+        let response = await getStockTimeSeriesApi(props.ticker, chartFilter)
+        response.map(r => {
+            const newTime = new Date(r.time);
+            const dates = newTime.toDateString().split(" ");
+            const shortDate = dates[1] + " " + dates[2];
+            const fullDate = dates[1] + " " + dates[2] + " " + dates[3];
+            const times = newTime.toTimeString().split(" ")[0].split(":");
+            const hm = times[0] + ":" + times[1];
+            switch (chartFilter) {
+                case CHART_FILTERS.ONE_DAY:
+                    r.time = hm;
+                    break;
+                case CHART_FILTERS.FIVE_DAYS:
+                    r.time = shortDate + " " + hm;
+                    break;
+                case CHART_FILTERS.ONE_MONTH:
+                    r.time = shortDate;
+                    break;
+                case CHART_FILTERS.SIX_MONTHS:
+                case CHART_FILTERS.ONE_YEAR:
+                case CHART_FILTERS.TWO_YEARS:
+                case CHART_FILTERS.ALL:
+                    r.time = fullDate;
+                    break;
+                default:
+                    break;
+            }
+                
+        });
         if (response[0]['close'] > response[response.length - 1]['close']) {
             setChartColor("colorRed")
         } else {
@@ -44,7 +72,7 @@ function StocksModal(props) {
 
         return (
             <div className="flex flex-col gap-5">
-                <Card title="Chart">
+                <Card className="grow" title="Chart">
                     <StocksChart ticker={props.ticker} data={chartData} color={chartColor} onChange={(e) => { setChartFilter(e); }} />
                 </Card>
                 <Card title="Details">
@@ -90,7 +118,7 @@ function StocksModal(props) {
     }, [chartFilter])
 
     return (
-        <Modal id="stocks-modal" visible={true} onClose={props.onClose} title={props.ticker} className="max-w-[1100px]">
+        <Modal id="stocks-modal" visible={true} onClose={props.onClose} title={props.ticker} className="min-w-[1100px]">
             <div>
                 {!details && renderPlaceholder()}
                 {details && renderDetails()}
