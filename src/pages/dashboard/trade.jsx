@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Card from "../../components/common/Card"
 import TextField from "../../components/common/TextField"
 import RadioGroup from "../../components/common/RadioGroup"
@@ -37,6 +37,12 @@ export default function TradePage() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
+    const [id, setId] = useState(null)
+
+    async function getId() {
+        setId(await getUserId());
+    }
+
     const onChange = (event) => {
         setForm({ ...form, ...event });
     };
@@ -48,17 +54,21 @@ export default function TradePage() {
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            const id = await getUserId()
-            onChange({userId: id})
-            if (form.hartijaOdVrednostiTip == "FOREX") {
-                onChange({symbol: forexForm.from + " " + forexForm.to})
-            }
             const msg = await buySellStocks(form);
             setSuccess(true);
         } catch (e) {
             setError(true);
         }
     }
+
+    useEffect(() => {
+        getId();
+        onChange({userId: id});
+    }, [])
+
+    useEffect(() => {
+        setForm({...form, symbol: forexForm.from + " " + forexForm.to})
+    }, [forexForm])
 
     function renderStocks() {
         return (
