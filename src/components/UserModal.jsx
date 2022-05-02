@@ -20,6 +20,7 @@ function UserModal(props) {
     async function handleSubmit() {
         try {
             await editUserByIdAction(props.id, form);
+            props.onChange();
         }
         catch (e) {
 
@@ -56,13 +57,13 @@ function UserModal(props) {
                     <div className="w-[75px]">Pozicija</div>
                     <Select className="grow" options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL]} defValue={form.pozicija} onChange={(e) => setForm({ ...form, pozicija: e })} />
                 </div>
-                <Button label="Register" onClick={handleSubmit} />
+                <Button label="Izmeni" onClick={handleSubmit} />
             </div>
         )
     }
 
     return (
-        <Modal id={props.id} visible={true} onClose={props.onClose} title="User modal" className="max-w-[900px]">
+        <Modal id={props.id} visible={props.visible} onClose={props.onClose} title="User modal" className="max-w-[900px]">
             <div>
                 {renderDetails()}
             </div>
@@ -72,7 +73,9 @@ function UserModal(props) {
 
 UserModal.propTypes = {
     id: PropTypes.string.isRequired,
+    visible: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
     user: PropTypes.array
 }
 
