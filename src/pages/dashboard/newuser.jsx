@@ -21,7 +21,7 @@ export default function NewUserPage() {
         prezime: "",
         email: "",
         jmbg: "",
-        br_telefona: "",
+        brTelefon: "",
         pozicija: BANK_POSITIONS.ADMIN,
     })
 
@@ -46,7 +46,7 @@ export default function NewUserPage() {
                         <TextField placeholder="Prezime" onChange={(e) => handleChange({ prezime: e })} />
                         <TextField placeholder="E-mail" onChange={(e) => handleChange({ email: e })} />
                         <TextField placeholder="JMBG" onChange={(e) => handleChange({ jmbg: e })} />
-                        <TextField placeholder="Broj telefona" onChange={(e) => handleChange({ br_telefona: e })} />
+                        <TextField placeholder="Broj telefona" onChange={(e) => handleChange({ brTelefon: e })} />
                         <Select options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL]} onChange={(e) => handleChange({ pozicija: e })} />
                         <Button label="Register" type="submit" onClick={handleSubmit} />
                     </div>

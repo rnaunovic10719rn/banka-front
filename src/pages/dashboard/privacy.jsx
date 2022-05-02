@@ -52,7 +52,7 @@ export default function PrivacyPage() {
             )}
             <Card title="Šifra">
                 <div>
-                    <Button design={BUTTON_DESIGN.PRIMARY} label="Promenite šifru" onClick={() => navigate("/" + URLS.DASHBOARD.CHANGEPASSWORD)} />
+                    <Button design={BUTTON_DESIGN.PRIMARY} label="Promenite šifru" onClick={() => navigate("/" + URLS.DASHBOARD.CHANGEPASSWORD.REGULAR)} />
                 </div>
             </Card>
             <Card title="2-faktor autentifikacija">
