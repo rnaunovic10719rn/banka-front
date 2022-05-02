@@ -12,7 +12,8 @@ export default function ChangePasswordPage() {
     let navigate = useNavigate();
     const [password1, setPassword1] = useState(null);
     const [password2, setPassword2] = useState(null);
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(null);
+    const [linkPath, setLinkPath] = useState([]);
 
 
     const [id, setId] = useState(null)
@@ -22,8 +23,14 @@ export default function ChangePasswordPage() {
     }
 
     useEffect(() => {
+        console.log(window.location.pathname);
+        setLinkPath(window.location.pathname.split("/"));
         getId()
     }, [])
+
+    useEffect(() => {
+        console.log(linkPath);
+    }, [linkPath])
 
 
     async function changePassword(e) {
@@ -35,9 +42,14 @@ export default function ChangePasswordPage() {
         }
 
         try {
-            await changePasswordById(id,password1)
-            await logoutAction()
-            navigate("/" + URLS.LOGIN)
+            if (linkPath.length == 2) {
+                await changePasswordById(id,password1)
+                navigate("/" + URLS.DASHBOARD.PRIVACY)
+            }
+            else {
+                await logoutAction()
+                navigate("/" + URLS.LOGIN)
+            }
         } catch {
             setError("Failed to change password.")
         }
