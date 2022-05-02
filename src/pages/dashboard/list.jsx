@@ -13,6 +13,7 @@ export default function ListPage() {
     const [rows, setRows] = useState([])
     const [id, setId] = useState(null)
     const [selectedUser, setSelectedUser] = useState(null)
+    const [isSelected, setIsSelected] = useState(false)
 
     async function getId() {
         setId(await getUserId());
@@ -53,7 +54,10 @@ export default function ListPage() {
                     u['jmbg'],
                     u['email'],
                     u['role']['name'],
-                    <Button design="inline" onClick={() => setSelectedUser(u)} label="Edit" />,
+                    <Button design="inline" onClick={() => { 
+                        setSelectedUser(u);
+                        setIsSelected(true);
+                    }} label="Edit" />,
                     u['id'] != id ? 
                         u['aktivan'] ?
                             <Button design="inline" onClick={() => deleteUser(u['id'])} label="Disable" /> :
@@ -73,7 +77,16 @@ export default function ListPage() {
                 </div>
             </div>
             <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija', 'Opcije', '']} rows={rows} />
-            {selectedUser !== null && <UserModal id={selectedUser.id} user={selectedUser} onClose={() => setSelectedUser(null)} />}
+            {selectedUser != null && <UserModal visible={isSelected} id={selectedUser.id} user={selectedUser} onClose={() => {
+                setSelectedUser(null);
+                setIsSelected(false);
+                }} 
+                onChange={() => {
+                    setSelectedUser(null);
+                    setIsSelected(false);
+                    window.location.reload();
+                    }}
+            />}
         </div>
     )
 }

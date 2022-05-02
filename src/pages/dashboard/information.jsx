@@ -4,10 +4,11 @@ import TextField from "../../components/common/TextField";
 import Button from "../../components/common/Button";
 import Alert from "../../components/common/Alert";
 import Select from "../../components/common/Select";
-import { editUserAction } from "../../clients/client";
-import { useSelector } from "react-redux";
+import { editUserAction, getUserApi } from "../../clients/client";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserSelector } from "../../redux/selectors";
 import { BANK_POSITIONS } from "./newuser";
+import { addUserAction } from "../../redux/actions";
 
 export default function InformationPage(props) {
   const user = useSelector(getUserSelector)
@@ -16,12 +17,23 @@ export default function InformationPage(props) {
     prezime: "",
     email: "",
     jmbg: "",
-    br_telefon: "",
+    brTelefon: "",
     pozicija: BANK_POSITIONS.ADMIN,
   });
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
+  const dispatch = useDispatch();
+
+	async function getUser() {
+		const response = await getUserApi();
+		dispatch(addUserAction(response));
+	}
+
+	useEffect(() => {
+		getUser();
+	}, []);
 
   const onChange = (event) => {
     setForm({ ...form, ...event });
@@ -43,7 +55,7 @@ export default function InformationPage(props) {
       prezime: user["prezime"],
       email: user["email"],
       jmbg: user["jmbg"],
-      br_telefon: user["br_telefon"],
+      brTelefon: user["brTelefon"],
       pozicija: user["role"]["name"],
     })
   }, [user])
@@ -115,9 +127,9 @@ export default function InformationPage(props) {
             <div className="w-[100px]">Telefon</div>
             <TextField
               className="grow"
-              onChange={(e) => onChange({ br_telefon: e })}
+              onChange={(e) => onChange({ brTelefon: e })}
               placeholder="Telefon"
-              value={form && form["br_telefon"]}
+              value={form && form["brTelefon"]}
             />
           </div>
           <div>
