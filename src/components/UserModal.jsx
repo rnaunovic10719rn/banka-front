@@ -13,7 +13,7 @@ function UserModal(props) {
         prezime: props.user ? props.user.prezime : "",
         email: props.user ? props.user.email : "",
         jmbg: props.user ? props.user.jmbg : "",
-        br_telefon: props.user ? props.user.br_telefon : "",
+        brTelefon: props.user ? props.user.brTelefon : "",
         pozicija: props.user ? props.user.role.name : BANK_POSITIONS.ADMIN,
     })
 
@@ -50,7 +50,7 @@ function UserModal(props) {
                 </div>
                 <div className="flex justify-between items-center">
                     <div className="w-[75px]">Br. telefona</div>
-                    <TextField className="grow" value={form.br_telefon} onChange={(e) => setForm({ ...form, br_telefona: e })} />
+                    <TextField className="grow" value={form.brTelefon} onChange={(e) => setForm({ ...form, brTelefon: e })} />
                 </div>
                 <div className="flex justify-between items-center">
                     <div className="w-[75px]">Pozicija</div>

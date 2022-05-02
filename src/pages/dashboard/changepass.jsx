@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import Card from "../../components/common/Card"
+import Window from "../../components/common/Window"
 import TextField from "../../components/common/TextField"
 import Button from "../../components/common/Button"
 import { URLS } from "../../routes"
-import { changePasswordById, getUserId } from "../../clients/client"
+import { changePasswordById, getUserId, logoutAction } from "../../clients/client"
 import { useEffect } from 'react';
 
 
@@ -36,21 +36,20 @@ export default function ChangePasswordPage() {
 
         try {
             await changePasswordById(id,password1)
-            navigate("/" + URLS.DASHBOARD.PRIVACY)
+            await logoutAction()
+            navigate("/" + URLS.LOGIN)
         } catch {
             setError("Failed to change password.")
         }
     }
 
     return (
-        <div className="w-[500px] flex-centre">
-            <Card title="PROMENITE ŠIFRU">
-                <form onSubmit={changePassword} className="flex flex-col gap-3">
-                    <TextField type="password" placeholder="Šifra" onChange={setPassword1} />
-                    <TextField type="password" placeholder="Ponovite šifru" onChange={setPassword2} />
-                    <Button label="Promeni sifru" type="submit" disabled={!password1 || !password2 || password1 !== password2} />
-                </form>
-            </Card>
-        </div>
+        <Window title="PROMENITE ŠIFRU" className="mx-auto">
+            <form onSubmit={changePassword} className="flex flex-col gap-3">
+                <TextField type="password" placeholder="Šifra" onChange={setPassword1} />
+                <TextField type="password" placeholder="Ponovite šifru" onChange={setPassword2} />
+                <Button label="Promeni sifru" type="submit" disabled={!password1 || !password2 || password1 !== password2} />
+            </form>
+        </Window>
     )
 }
