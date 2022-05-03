@@ -4,6 +4,7 @@ import Window from "../../components/common/Window"
 import TextField from "../../components/common/TextField"
 import Button from "../../components/common/Button"
 import { URLS } from "../../routes"
+import Alert from "../../components/common/Alert"
 import { changePasswordById, changePasswordViaEmail, getUserId, logoutAction } from "../../clients/client"
 import { useEffect } from 'react';
 
@@ -32,15 +33,63 @@ export default function ChangePasswordPage() {
         console.log(linkPath);
     }, [linkPath])
 
+    function checkPassword(password) {
+        let errorMsg = "Promena šifre nije uspela. Nisu ispunjeni sledeći uslovi:\n";
+        let errorCnt = 0;
+
+        if (password.length < 8) {
+            errorCnt++;
+            errorMsg += "Šifra ima manje od 8 karaktera.\n";
+        }
+
+        let upCnt = 0;
+        let lowCnt = 0;
+        let digCnt = 0;
+
+        for (let i = 0; i < password.length; i++) {
+            const ch = password[i];
+            if (ch >= '0' && ch <= '9') {
+                digCnt++;
+            }
+            else if (ch == ch.toUpperCase()) {
+                upCnt++;
+            }
+            else if (ch == ch.toLowerCase()) {
+                lowCnt++;
+            }
+        }
+
+        if (upCnt == 0) {
+            errorCnt++;
+            errorMsg += "Šifra ne sadrži nijedno veliko slovo.\n";
+        }
+
+        if (lowCnt == 0) {
+            errorCnt++;
+            errorMsg += "Šifra ne sadrži nijedno malo slovo.\n";
+        }
+
+        if (digCnt == 0) {
+            errorCnt++;
+            errorMsg += "Šifra ne sadrži nijednu cifru.\n";
+        }
+
+        if (errorCnt != 0)
+            return errorMsg;
+        
+        return "";
+    }
+
 
     async function changePassword(e) {
         e.preventDefault()
-
-        if (password1 !== password2) {
-            setError("Sifra je pogresna");
+        
+        let errMsg = checkPassword(password1);
+        if (errMsg.length > 0) {
+            setError(errMsg);
             return;
         }
-
+        
         try {
             if (linkPath.length == 2) {
                 await changePasswordById(id,password1)
@@ -56,17 +105,29 @@ export default function ChangePasswordPage() {
                 navigate("/" + URLS.LOGIN);
             }
         } catch {
-            setError("Failed to change password.")
+            setError("Promena šifre nije uspela.")
         }
     }
 
     return (
-        <Window title="PROMENITE ŠIFRU" className="mx-auto">
-            <form onSubmit={changePassword} className="flex flex-col gap-3">
-                <TextField type="password" placeholder="Šifra" onChange={setPassword1} />
-                <TextField type="password" placeholder="Ponovite šifru" onChange={setPassword2} />
-                <Button label="Promeni sifru" type="submit" disabled={!password1 || !password2 || password1 !== password2} />
-            </form>
-        </Window>
+        <>
+            {error && <Alert design="danger" text={error} onDismiss={() => setError(null)} />}
+            <Window title="PROMENITE ŠIFRU" className="mx-auto">
+                <div>
+                    Šifra treba da ispuni sledeće uslove:
+                    <ul>
+                        <li>Da ima minimum 8 karaktera.</li>
+                        <li>Da sadrži barem jedno veliko i jedno malo slovo.</li>
+                        <li>Da sadrži barem 1 cifru.</li>
+                    </ul>
+                </div>
+                <br></br>
+                <form onSubmit={changePassword} className="flex flex-col gap-3">
+                    <TextField type="password" placeholder="Šifra" onChange={setPassword1} />
+                    <TextField type="password" placeholder="Ponovite šifru" onChange={setPassword2} />
+                    <Button label="Promeni sifru" type="submit" disabled={!password1 || !password2 || password1 !== password2} />
+                </form>
+            </Window>
+        </>
     )
 }
