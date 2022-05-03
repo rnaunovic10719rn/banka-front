@@ -4,7 +4,7 @@ import Window from "../../components/common/Window"
 import TextField from "../../components/common/TextField"
 import Button from "../../components/common/Button"
 import { URLS } from "../../routes"
-import { changePasswordById, getUserId, logoutAction } from "../../clients/client"
+import { changePasswordById, changePasswordViaEmail, getUserId, logoutAction } from "../../clients/client"
 import { useEffect } from 'react';
 
 
@@ -47,8 +47,13 @@ export default function ChangePasswordPage() {
                 navigate("/" + URLS.DASHBOARD.PRIVACY)
             }
             else {
-                await logoutAction()
-                navigate("/" + URLS.LOGIN)
+                const body = {
+                    emailToken: "Bearer " + linkPath[2],
+                    newPassword: password1
+                }
+                await changePasswordViaEmail(body);
+                await logoutAction();
+                navigate("/" + URLS.LOGIN);
             }
         } catch {
             setError("Failed to change password.")

@@ -12,8 +12,12 @@ export function postWithoutStringify(url, body = null) {
 	return reqWithoutStringify(url, body);
 }
 
-export function postWithoutToken(url) {
+export function postWithoutTokenAndBody(url) {
 	return reqWithoutTokenAndBody(url);
+}
+
+export function postWithoutToken(url, body) {
+	return reqWithoutToken(url, body);
 }
 
 export function patch(url, body = null) {
@@ -24,6 +28,8 @@ export function patch(url, body = null) {
 export function delete_(url) {
 	return request("DELETE", url);
 }
+
+//TODO: Srediti requestove
 
 async function request(method, url, body) {
 	const token = authGetToken();
@@ -86,6 +92,25 @@ async function reqWithoutTokenAndBody(url) {
 		}
 
 		return await response.json();
+	}
+	catch (e) {
+		throw e;
+	}
+}
+
+async function reqWithoutToken(url, body) {
+	try {
+		const response = await fetch(url, {
+			method: "POST",
+			mode: "cors",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (!response.ok) {
+			throw Error("Request failed");
+		}
 	}
 	catch (e) {
 		throw e;
