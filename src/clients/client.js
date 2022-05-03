@@ -1,4 +1,4 @@
-import { get, post, patch, delete_, postWithoutStringify, postWithoutToken } from "./api";
+import { get, post, patch, delete_, postWithoutStringify, postWithoutTokenAndBody, postWithoutToken } from "./api";
 import { authSaveToken, authGetToken } from "../auth";
 
 const BASE_URL = "http://localhost:8080/api";
@@ -98,7 +98,7 @@ export function resetEmail(email) {
 	const body = {
 		email: email,
 	};
-	return post(url, body);
+	return postWithoutToken(url, body);
 }
 
 export function changePasswordById(id, password) {
@@ -109,9 +109,14 @@ export function changePasswordById(id, password) {
 	return post(url, body);
 }
 
+export function changePasswordViaEmail(body) {
+	let url = new URL(BASE_URL + "/user/change-password");
+	return postWithoutToken(url, body);
+}
+
 export function hasTwoFactor(username) {
 	let url = new URL(BASE_URL + "/otp/has/" + username);
-	return postWithoutToken(url);
+	return postWithoutTokenAndBody(url);
 }
 
 //export async function savePassAction(password1,password2, otp = null){
