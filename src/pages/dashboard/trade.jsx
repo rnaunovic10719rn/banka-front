@@ -89,28 +89,57 @@ export default function TradePage() {
             )}
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                 {   (form.hartijaOdVrednostiTip == "AKCIJA" || form.hartijaOdVrednostiTip == "FUTURES_UGOVOR") &&
-                    (<TextField placeholder="Simbol (npr. AAPL)" onChange={(e) => onChange({symbol: e})}/>)
+                    (
+                    <div>
+                        <div className="pb-1">Simbol</div>
+                        <div className="flex">
+                            <TextField placeholder="npr. AAPL" className="grow" onChange={(e) => onChange({symbol: e})}/>
+                        </div>
+                    </div>
+                    )
                 }
                 {   (form.hartijaOdVrednostiTip == "FOREX") &&
                     (   <div className="flex gap-4">
-                            <TextField placeholder="From" onChange={(e) => onForexChange({from: e})} />
-                            <TextField placeholder="To" onChange={(e) => onForexChange({to: e})} />
+                            <div>
+                                <div className="pb-1">From</div>
+                                <TextField placeholder="npr. USD" onChange={(e) => onForexChange({from: e})} />
+                            </div>
+                            <div>
+                                <div className="pb-1">To</div>
+                                <TextField placeholder="npr. RSD" onChange={(e) => onForexChange({to: e})} />
+                            </div>
                         </div>
                     )
                 }
                 <div className="flex gap-3">
                     <RadioGroup options={["BUY", "SELL"]} onChange={(e) => onChange({akcija: e})} />
-                    <TextField className="grow" placeholder="Kolicina" value={form["kolicina"]} onChange={(e) => onChange({kolicina: e})}  />
+                    <div>
+                        <div className="pb-1">Kolicina</div>
+                        <div className="flex">
+                            <TextField className="grow" value={form["kolicina"]} onChange={(e) => onChange({kolicina: e})}  />
+                        </div>
+                    </div>
                 </div>
-                <Select
-                className="grow"
-                onChange={(e) => onChange({hartijaOdVrednostiTip: e})}
-                options={["AKCIJA", "FOREX", "FUTURES_UGOVOR"]}
-                defValue="AKCIJA"
-                />
+                <div>
+                    <div className="pb-1">Hartija vrednosti</div>
+                    <div className="flex">
+                        <Select
+                        className="grow"
+                        onChange={(e) => onChange({hartijaOdVrednostiTip: e})}
+                        options={["AKCIJA", "FOREX", "FUTURES_UGOVOR"]}
+                        defValue="AKCIJA"
+                        />
+                    </div>
+                </div>
                 <div className="flex gap-4">
-                    <TextField placeholder="Limit" onChange={(e) => onChange({limitValue: e})} value={form["limitValue"]}/>
-                    <TextField placeholder="Stop" onChange={(e) => onChange({stopValue: e})} value={form["stopValue"]}/>
+                    <div>
+                        <div className="pb-1">Limit</div>
+                        <TextField onChange={(e) => onChange({limitValue: e})} value={form["limitValue"]}/>
+                    </div>
+                    <div>
+                        <div className="pb-1">Stop</div>
+                        <TextField onChange={(e) => onChange({stopValue: e})} value={form["stopValue"]}/>
+                    </div>
                 </div>
                 <Checkbox label="All or none" onChange={(e) => onChange({allOrNoneFlag: e})} value={form["allOrNoneFlag"]}/>
                 <Checkbox label="Kniziti na margins nalog" onChange={(e) => onChange({marginFlag: e})} value={form["marginFlag"]}/>
