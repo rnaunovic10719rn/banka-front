@@ -15,7 +15,7 @@ import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
 import OverviewStockPage from "./pages/dashboard/overview-stock";
 import ChangePasswordPage from "./pages/dashboard/changepass";
-import EmailPage from "./pages/enter-email"
+import EmailPage from "./pages/enter-email";
 
 export const URLS = {
 	DASHBOARD: {
@@ -26,7 +26,10 @@ export const URLS = {
 			INDEX: "list",
 			NEW_USER: "list/new-user",
 		},
-		CHANGEPASSWORD: "changepassword",
+		CHANGEPASSWORD: {
+			REGULAR: "changepassword",
+			WITH_TOKEN: "changepassword/:token"
+		},
 		OVERVIEW: {
 			INDEX: "view",
 			STOCK: "view/:id",
@@ -90,16 +93,12 @@ export function AppRoutes() {
 							path={URLS.DASHBOARD.SYSTEM}
 							element={<SystemPage />}
 						/>
-						<Route
-							path={URLS.DASHBOARD.CHANGEPASSWORD}
-							element={<ChangePasswordPage />}
-						/>
 					</Route>
 					<Route element={<PageLayout />}>
 						<Route path={URLS.LOGIN} element={<LoginPage />} />
-					</Route>
-					<Route element={<PageLayout />}>
 						<Route path={URLS.EMAIL} element={<EmailPage />} />
+						<Route path={URLS.DASHBOARD.CHANGEPASSWORD.REGULAR} element={<ChangePasswordPage />} />
+						<Route path={URLS.DASHBOARD.CHANGEPASSWORD.WITH_TOKEN} element={<ChangePasswordPage />} />
 					</Route>
 				</Route>
 			</Routes>

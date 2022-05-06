@@ -18,7 +18,35 @@ function ForexModal(props) {
     }
 
     async function getDataForChart() {
-        const response = await getForexTimeSeriesApi(props.from, props.to, chartFilter)
+        let response = await getForexTimeSeriesApi(props.from, props.to, chartFilter)
+        response.map(r => {
+            const newTime = new Date(r.time);
+            const dates = newTime.toDateString().split(" ");
+            const shortDate = dates[1] + " " + dates[2];
+            const fullDate = dates[1] + " " + dates[2] + " " + dates[3];
+            const times = newTime.toTimeString().split(" ")[0].split(":");
+            const hm = times[0] + ":" + times[1];
+            switch (chartFilter) {
+                case CHART_FILTERS.ONE_DAY:
+                    r.time = hm;
+                    break;
+                case CHART_FILTERS.FIVE_DAYS:
+                    r.time = shortDate + " " + hm;
+                    break;
+                case CHART_FILTERS.ONE_MONTH:
+                    r.time = shortDate;
+                    break;
+                case CHART_FILTERS.SIX_MONTHS:
+                case CHART_FILTERS.ONE_YEAR:
+                case CHART_FILTERS.TWO_YEARS:
+                case CHART_FILTERS.ALL:
+                    r.time = fullDate;
+                    break;
+                default:
+                    break;
+            }
+                
+        });
         if (response[0]['close'] > response[response.length - 1]['close']) {
             setChartColor("colorRed")
         } else {
@@ -83,7 +111,7 @@ function ForexModal(props) {
     }, [chartFilter])
 
     return (
-        <Modal id="forex-modal" visible={true} onClose={props.onClose} title={`${props.from} - ${props.to}`} className="max-w-[900px]">
+        <Modal id="forex-modal" visible={true} onClose={props.onClose} title={`${props.from} - ${props.to}`} className="min-w-[1100px]">
             {details && renderDetails()}
             {!details && renderPlaceholder()}
         </Modal>

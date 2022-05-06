@@ -12,10 +12,10 @@ import {
 } from "../../clients/stocks";
 import StocksModal from "../../components/StocksModal";
 import ForexModal from "../../components/ForexModal";
-import FuturesModal from "../../components/FuturesModal";
 import PlaceholderLoading from "react-placeholder-loading";
 import Button from "../../components/common/Button";
 import TextField from "../../components/common/TextField";
+import Alert from "../../components/common/Alert";
 
 const TABS = {
   STOCKS: "Stocks",
@@ -32,9 +32,11 @@ export default function OverviewPage() {
 
   const [selectedStock, setSelectedStock] = useState(null);
   const [selectedForex, setSelectedForex] = useState(null);
-  const [selectedFuture, setSelectedFuture] = useState(null);
+
+  const [error, setError] = useState(null);
 
   const [searchData, setSearchData] = useState("");
+  const [helpSearchForex, setHelpSearchForex] = useState("");
 
   function createStockRow(r) {
     return [
@@ -94,20 +96,32 @@ export default function OverviewPage() {
 
   function renderFutures() {
     return (
-      <div>
-        <TextField onChange={handleChangeData} type="text" />
-        <Button
-          label="Pretrazi"
-          design="primary"
-          type="submit"
-          onClick={handleSearchData}
-        />
+      <div class="flex flex-col gap-5">
+        <div className="flex justify-start gap-5">
+          <TextField
+            onChange={handleChangeData}
+            type="text"
+            value={searchData}
+            placeholder={"Symbol"}
+          />
+          <Button
+            label="Pretrazi"
+            design="primary"
+            type="submit"
+            onClick={handleSearchData}
+          />
+          <Button
+            label="X"
+            design="inline"
+            type="submit"
+            disabled={searchData == 0}
+            onClick={clearSearchData}
+          />
+        </div>
         <Table
           headings={["Oznaka", "Cena", "Berza", "Poslednje azuriranje"]}
           rows={futuresData}
           pagination
-          clickable
-          onClick={(e) => setSelectedFuture(e[0])}
         />
       </div>
     );
@@ -123,14 +137,34 @@ export default function OverviewPage() {
 
   function renderForex() {
     return (
-      <div>
-        <TextField onChange={handleChangeData} type="text" />
-        <Button
-          label="Pretrazi"
-          design="primary"
-          type="submit"
-          onClick={handleSearchData}
-        />
+      <div class="flex flex-col gap-5">
+        <div className="flex justify-start gap-5">
+          <TextField
+            onChange={handleChangeData}
+            type="text"
+            value={searchData}
+            placeholder={"From"}
+          />
+          <TextField
+            onChange={handleChangeDataForex}
+            type="text"
+            value={helpSearchForex}
+            placeholder={"To"}
+          />
+          <Button
+            label="Pretrazi"
+            design="primary"
+            type="submit"
+            onClick={handleSearchData}
+          />
+          <Button
+            label="X"
+            design="inline"
+            type="submit"
+            disabled={searchData == 0 && helpSearchForex == 0}
+            onClick={clearSearchData}
+          />
+        </div>
         <Table
           headings={[
             "Prodajna valuta",
@@ -153,14 +187,28 @@ export default function OverviewPage() {
       stocksRowData.length > 0 ? stocksRowData : renderPlaceholderRows(6);
 
     return (
-      <div>
-        <TextField onChange={handleChangeData} type="text" />
-        <Button
-          label="Pretrazi"
-          design="primary"
-          type="submit"
-          onClick={handleSearchData}
-        />
+      <div class="flex flex-col gap-5">
+        <div className="flex justify-start gap-5">
+          <TextField
+            onChange={handleChangeData}
+            type="text"
+            value={searchData}
+            placeholder={"Symbol"}
+          />
+          <Button
+            label="Pretrazi"
+            design="primary"
+            type="submit"
+            onClick={handleSearchData}
+          />
+          <Button
+            label="X"
+            design="inline"
+            type="submit"
+            disabled={searchData == 0}
+            onClick={clearSearchData}
+          />
+        </div>
         <Table
           headings={[
             "Oznaka",
@@ -186,35 +234,77 @@ export default function OverviewPage() {
     getFutures();
   }, []);
 
+  const clearSearchData = async () => {
+    if (activeTab == TABS.STOCKS) {
+      resetInputField();
+      getStocks();
+    } else if (activeTab == TABS.FOREX) {
+      resetInputField();
+      resetInputFieldForex();
+      getForex();
+    } else if (activeTab == TABS.FUTURES) {
+      resetInputField();
+      getFutures();
+    }
+  };
+
+  const resetInputField = () => {
+    setSearchData("");
+  };
+
+  const resetInputFieldForex = () => {
+    setHelpSearchForex("");
+  };
+
   const handleSearchData = async () => {
     console.log(searchData);
     if (activeTab == TABS.STOCKS) {
-      const response = await getStocksSearchApi(searchData);
-      let tmp = [];
-      tmp.push(createStockRow(response));
-      setStocksRowData(tmp);
+      try {
+        const response = await getStocksSearchApi(searchData);
+        let tmp = [];
+        tmp.push(createStockRow(response));
+        setStocksRowData(tmp);
+      } catch (e) {
+        setError(true);
+      }
     } else if (activeTab == TABS.FOREX) {
-      const myArray = searchData.split(" ");
-      const response = await getForexSearchApi(myArray[0], myArray[1]);
-      let tmp = [];
-      tmp.push(createForexRow(response));
-      setForexData(tmp);
+      try {
+        const response = await getForexSearchApi(searchData, helpSearchForex);
+        let tmp = [];
+        tmp.push(createForexRow(response));
+        setForexData(tmp);
+      } catch (e) {
+        setError(true);
+      }
     } else {
-      const response = await getFuturesSearchApi(searchData);
-      let tmp = [];
-      tmp.push(createFuturesRow(response));
-      setFuturesData(tmp);
+      try {
+        const response = await getFuturesSearchApi(searchData);
+        let tmp = [];
+        tmp.push(createFuturesRow(response));
+        setFuturesData(tmp);
+      } catch (e) {
+        setError(true);
+      }
     }
   };
 
   const handleChangeData = (e) => {
-    console.log(e);
-    console.log(searchData);
     setSearchData(e);
+  };
+
+  const handleChangeDataForex = (e) => {
+    setHelpSearchForex(e);
   };
 
   return (
     <div>
+      {error && (
+        <Alert
+          design="danger"
+          text="Nema podataka za datu pretragu"
+          onDismiss={() => setError(null)}
+        ></Alert>
+      )}
       <Tab
         tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
         onChange={(e) => setActiveTab(e)}
@@ -233,12 +323,6 @@ export default function OverviewPage() {
           from={selectedForex[0]}
           to={selectedForex[1]}
           onClose={() => setSelectedForex(null)}
-        />
-      )}
-      {selectedFuture !== null && (
-        <FuturesModal
-          future={selectedFuture}
-          onClose={() => setSelectedFuture(null)}
         />
       )}
     </div>

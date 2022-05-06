@@ -13,6 +13,7 @@ export default function ListPage() {
     const [rows, setRows] = useState([])
     const [id, setId] = useState(null)
     const [selectedUser, setSelectedUser] = useState(null)
+    const [isSelected, setIsSelected] = useState(false)
 
     async function getId() {
         setId(await getUserId());
@@ -22,10 +23,16 @@ export default function ListPage() {
         setUsers(await getUsersAction())
     }
 
-    function deleteUser(id) {
+    async function deleteUser(id) {
         console.log(id);
-        deleteUserAction(id);
+        await deleteUserAction(id);
         setSelectedUser(null);
+        window.location.reload();
+    }
+
+    async function enableUser(id) {
+        console.log(id);
+        //TODO: implementirati enable user action
     }
 
     useEffect(() => {
@@ -40,7 +47,6 @@ export default function ListPage() {
         let r = []
         users.map(u => {
             console.log(u);
-            if (u['aktivan'])
                 r.push([
                     u['id'],
                     u['username'],
@@ -48,7 +54,15 @@ export default function ListPage() {
                     u['jmbg'],
                     u['email'],
                     u['role']['name'],
-                    u['id'] != id ? <Button design="inline" onClick={() => deleteUser(u['id'])} label="Disable" /> : null
+                    <Button design="inline" onClick={() => { 
+                        setSelectedUser(u);
+                        setIsSelected(true);
+                    }} label="Edit" />,
+                    u['id'] != id ? 
+                        u['aktivan'] ?
+                            <Button design="inline" onClick={() => deleteUser(u['id'])} label="Disable" /> :
+                            <Button design="inline" onClick={() => enableUser(u['id'])} label="Enable" />
+                        : null
                 ]);
         })
         setRows(r)
@@ -62,8 +76,17 @@ export default function ListPage() {
                     <Button design={BUTTON_DESIGN.SECONDARY} label="Dodaj novog zaposlenog" onClick={() => navigate("/" + URLS.DASHBOARD.LIST.NEW_USER)} />
                 </div>
             </div>
-            <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija', '']} clickable={true} onClick={e => setSelectedUser(e[0])} rows={rows} />
-            {selectedUser !== null && <UserModal id={selectedUser.id} onClose={() => setSelectedUser(null)} />}
+            <Table headings={['ID', 'Username', 'Ime i prezime', 'JMBG', 'Email', 'Pozicija', 'Opcije', '']} rows={rows} />
+            {selectedUser != null && <UserModal visible={isSelected} id={selectedUser.id} user={selectedUser} onClose={() => {
+                setSelectedUser(null);
+                setIsSelected(false);
+                }} 
+                onChange={() => {
+                    setSelectedUser(null);
+                    setIsSelected(false);
+                    window.location.reload();
+                    }}
+            />}
         </div>
     )
 }
