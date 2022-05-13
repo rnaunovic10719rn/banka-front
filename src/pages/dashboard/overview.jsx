@@ -307,7 +307,10 @@ export default function OverviewPage() {
       )}
       <Tab
         tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
-        onChange={(e) => setActiveTab(e)}
+        onChange={function (e) {
+          setActiveTab(e);
+          clearSearchData(e);
+        }}
       />
       {activeTab === TABS.STOCKS && renderStocks()}
       {activeTab === TABS.FOREX && renderForex()}
