@@ -14,6 +14,7 @@ services:
       - "3000:3000"
     environment:
       - CHOKIDAR_USEPOLLING=true
+    profiles: ["all", "frontend"]
 
   storybook:
     container_name: storybook
@@ -28,6 +29,7 @@ services:
       - "6006:6006"
     environment:
       - CHOKIDAR_USEPOLLING=true
+    profiles: ["all", "frontend"]
 
   # TEMPORARY SOLUTION
   artemis:
@@ -38,7 +40,7 @@ services:
       ARTEMIS_PASSWORD: banka1234
     ports:
       - "61616:61616/tcp"
-    profiles: ["all"]
+    profiles: ["all", "backend"]
 
   db-user:
     image: postgres
@@ -51,7 +53,7 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - db-user:/var/lib/postgresql/data
-    profiles: ["all"]
+    profiles: ["all", "backend"]
 
   db-berza:
     image: postgres
@@ -64,7 +66,7 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - db-berza:/var/lib/postgresql/data
-    profiles: ["all"]
+    profiles: ["all", "backend"]
 
   db-influx:
     image: influxdb:2.1.1
@@ -81,7 +83,7 @@ services:
     volumes:
       - influx-data:/var/lib/influxdb2
       - influx-config:/etc/influxdb2
-    profiles: ["all"]
+    profiles: ["all", "backend"]
 
   influx-scrapper:
     image: ghcr.io/raf-si-2021/banka-influx-scrapper:latest
@@ -92,7 +94,7 @@ services:
       - db-influx
     depends_on:
       - db-influx
-    profiles: ["all"]
+    profiles: ["all", "backend"]
 
   korisnicki-servis:
     image: ghcr.io/raf-si-2021/banka-user-service:latest
@@ -108,7 +110,7 @@ services:
     depends_on:
       - db-user
       - artemis
-    profiles: ["all"]
+    profiles: ["all", "backend"]
 
   email-servis:
     image: ghcr.io/raf-si-2021/banka-mail-service:latest
@@ -123,7 +125,7 @@ services:
       - artemis
     depends_on:
       - artemis
-    profiles: ["all"]
+    profiles: ["all", "backend"]
 
   berza:
     image: ghcr.io/raf-si-2021/banka-berza:latest
@@ -141,7 +143,7 @@ services:
     depends_on:
       - db-berza
       - influx-scrapper
-    profiles: ["all"]
+    profiles: ["all", "backend"]
 
 volumes:
   db-user:

@@ -9,18 +9,20 @@ jobs:
             - name: Check out code 🛎
               uses: actions/checkout@v2
             - name: Build docker compose
-              run: docker-compose --profile=all up -d
+              run: docker-compose --profile=backend up -d
+            - name: docker ps
+              run: docker-compose ps
             - name: Run E2E tests 🧪
               uses: cypress-io/github-action@v2
               with:
-                  #   install: true
-                  #   build: docker-compose --profile=all up -d
+                  install: true
                   start: npm start
-    # unit-tests:
-    #     permissions: write-all
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #         - uses: actions/checkout@v1
-    #         - uses: ArtiomTr/jest-coverage-report-action@v2
-    #           with:
-    #               test-script: npm run test:coverage -- --watchAll=false --silent
+                  wait-on: "http://localhost:3000"
+    unit-tests:
+        permissions: write-all
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: ArtiomTr/jest-coverage-report-action@v2
+              with:
+                  test-script: npm run test:coverage -- --watchAll=false --silent
