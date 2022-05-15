@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Area, ResponsiveContainer } from 'recharts'
-import { getStockInfo, getStockTimeSeriesApi } from "../clients/stocks";
-import Alert, { ALERT_TYPES } from "./common/Alert";
 import RadioGroup from "./common/RadioGroup";
+import classNames from "classnames";
+import EmptyState from "./common/EmptyState";
 
 export const CHART_FILTERS = {
     ONE_DAY: "1d",
@@ -22,19 +22,67 @@ export const CHART_COLORS = {
 }
 
 function StockChart(props) {
+    const [chartTimeframe, setChartTimeframe] = useState(CHART_FILTERS.ONE_DAY)
+    const [data, setData] = useState([])
+    const [color, setColor] = useState(CHART_COLORS.GREEN)
+
+    const style = classNames(
+        props.className,
+    )
+
+    function handleChartChange(e) {
+        setChartTimeframe(e)
+        props.onChange(e)
+    }
+
+    useEffect(() => {
+        if (!props.data || props.data.length === 0) return
+
+        const temp = props.data
+
+        if (temp[0]['close'] > temp[temp.length - 1]['close']) {
+            setColor(CHART_COLORS.RED)
+        } else {
+            setColor(CHART_COLORS.GREEN)
+        }
+
+        temp.map(item => {
+            switch (chartTimeframe) {
+                case CHART_FILTERS.ONE_DAY:
+                    item['time'] = moment(item['time']).format("HH:mm")
+                    break
+                case CHART_FILTERS.FIVE_DAYS:
+                    item['time'] = moment(item['time']).format("D MMM")
+                    break
+                case CHART_FILTERS.ONE_MONTH:
+                    item['time'] = moment(item['time']).format("D MMM")
+                    break
+                default:
+                    item['time'] = moment(item['time']).format("MMM YYYY")
+            }
+        })
+        setData(temp)
+    }, [props.data])
+
     return (
-        <div className={props.className}>
-            <div className="mb-5">
-                <RadioGroup name="chart" options={['1d', '5d', '1m', '6m', '1y', '2y', 'ytd']} onChange={props.onChange} />
+        <div className={style}>
+            <div className="mb-5 flex justify-end">
+                <RadioGroup name="chart" options={[
+                    CHART_FILTERS.ONE_DAY,
+                    CHART_FILTERS.FIVE_DAYS,
+                    CHART_FILTERS.ONE_MONTH,
+                    CHART_FILTERS.SIX_MONTHS,
+                    CHART_FILTERS.ONE_YEAR,
+                    CHART_FILTERS.ALL,
+                ]} onChange={handleChartChange} />
             </div>
             <ResponsiveContainer height={250}>
                 <AreaChart
                     width={730}
                     height={250}
-                    data={props.data}
-                    margin={{
-                        top: 20, right: 20, bottom: 20, left: 20,
-                    }}>
+                    data={data}
+                    padding={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                >
                     <defs>
                         <linearGradient id="colorRed" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="10%" stopColor="#EF4444" stopOpacity={0.05} />
@@ -45,10 +93,11 @@ function StockChart(props) {
                             <stop offset="80%" stopColor="#10B981" stopOpacity={0.3} />
                         </linearGradient>
                     </defs>
-                    <XAxis dataKey="time" />
-                    <YAxis domain={['dataMin', 'dataMax']} />
-                    {props.color === "colorRed" && <Area type="monotone" dataKey="high" stroke="#EF4444" fillOpacity={1} fill={`url(#${props.color})`} />}
-                    {props.color === "colorGreen" && <Area type="monotone" dataKey="high" stroke="#10B981" fillOpacity={1} fill={`url(#${props.color})`} />}
+                    <XAxis dataKey="time" minTickGap={50} />
+                    <YAxis type="number" domain={['dataMin', 'dataMax']} tickCount={5} tickFormatter={(value) => value.toFixed(props.decimals)} scale="linear" interval="preserveStart" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    {color === CHART_COLORS.RED && <Area type="monotone" dataKey="high" stroke="#EF4444" fillOpacity={1} fill={`url(#${color})`} />}
+                    {color === CHART_COLORS.GREEN && <Area type="monotone" dataKey="high" stroke="#10B981" fillOpacity={1} fill={`url(#${color})`} />}
                     <Tooltip />
                 </AreaChart>
             </ResponsiveContainer>
@@ -59,14 +108,14 @@ function StockChart(props) {
 StockChart.propTypes = {
     ticker: PropTypes.string.isRequired,
     data: PropTypes.array.isRequired,
-    color: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    decimals: PropTypes.number,
     className: PropTypes.string,
 }
 
 StockChart.defaultProps = {
-    color: "colorGreen",
     ticker: "IBM",
+    decimals: 0,
     className: "",
 }
 

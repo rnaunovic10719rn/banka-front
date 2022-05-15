@@ -4,13 +4,13 @@ import "@testing-library/jest-dom";
 import UserModal from "./UserModal";
 
 test("<UserModal/> => render", async () => {
-	render(<UserModal id="modal-id" onClose={() => {}} />);
+	render(<UserModal id="modal-id" onClose={() => {}} visible={true} />);
 	const element = screen.getByTestId("common-modal");
 	expect(element).toBeVisible();
 });
 
 test("<UserModal/> => render => form", async () => {
-	render(<UserModal id="modal-id" onClose={() => {}} />);
+	render(<UserModal id="modal-id" onClose={() => {}} visible={true} />);
 	const element = screen.getByTestId("common-modal");
 	const elements = screen.getAllByTestId("common-text-field");
 	// fireEvent.change(element, { target: { value: "test" } });
@@ -18,7 +18,7 @@ test("<UserModal/> => render => form", async () => {
 });
 
 test("<UserModal/> => action => fill form", async () => {
-	render(<UserModal id="modal-id" onClose={() => {}} />);
+	render(<UserModal id="modal-id" onClose={() => {}} visible={true} />);
 
 	const elements = screen.getAllByTestId("common-text-field");
 	elements.map((e) => {
@@ -36,8 +36,8 @@ test("<UserModal/> => action => fill form", async () => {
 
 test("<UserModal/> => action => submit", async () => {
 	const mockCallBack = jest.fn();
-	render(<UserModal id="modal-id" onClose={mockCallBack} />);
-	const element = screen.getByText("Register");
+	render(<UserModal id="modal-id" onClose={mockCallBack} visible={true} />);
+	const element = screen.getByText("Izmeni");
 	fireEvent.click(element);
 	expect(mockCallBack.mock.calls.length).toEqual(0);
 });

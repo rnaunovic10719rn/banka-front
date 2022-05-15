@@ -78,11 +78,11 @@ test("postValidationCodeApi()", async () => {
 	expect(apiMock.mock.calls.length).toBe(1);
 });
 
-test("resetEmail()", async () => {
-	const apiMock = jest.spyOn(api, "post");
-	client.resetEmail("email");
-	expect(apiMock.mock.calls.length).toBe(1);
-});
+// test("resetEmail()", async () => {
+// 	const apiMock = jest.spyOn(api, "post");
+// 	client.resetEmail("email");
+// 	expect(apiMock.mock.calls.length).toBe(1);
+// });
 
 test("changePasswordById()", async () => {
 	const apiMock = jest.spyOn(api, "post");
