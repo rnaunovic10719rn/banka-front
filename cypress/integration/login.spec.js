@@ -71,6 +71,6 @@ describe("Login Page", () => {
 			.click();
 		cy.get('[data-testid="common-alert"]')
 			.should("have.length", 1)
-			.should("have.text", "Fai");
+			.should("have.text", "Failed to send email.");
 	});
 });
