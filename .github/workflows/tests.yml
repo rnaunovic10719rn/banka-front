@@ -3,7 +3,7 @@ name: Tests
 on: push
 
 jobs:
-    e2e-tests:
+    integration-tests:
         runs-on: ubuntu-20.04
         steps:
             - name: Check out code 🛎
@@ -12,7 +12,7 @@ jobs:
               run: docker-compose --profile=backend up -d
             - name: docker ps
               run: docker-compose ps
-            - name: Run E2E tests 🧪
+            - name: Run integration tests 🧪
               uses: cypress-io/github-action@v2
               with:
                   install: true
