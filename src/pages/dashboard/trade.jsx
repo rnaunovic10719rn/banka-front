@@ -86,20 +86,20 @@ export default function TradePage() {
             onDismiss={() => setSuccess(null)}
           ></Alert>
         )}
-        <div className="flex gap-3">
-          <div>
-            <div className="pb-1">Hartija vrednosti</div>
-            <div className="flex">
-              <Select
-                className="grow"
-                onChange={(e) => onChange({ hartijaOdVrednostiTip: e })}
-                options={["Akcija", "Forex", "Futures Ugovori"]}
-                defValue="Akcija"
-              />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+          <div className="flex gap-3">
+            <div style={{ minWidth: "213px" }}>
+              <div className="pb-1">Hartija vrednosti</div>
+              <div className="flex">
+                <Select
+                  className="grow"
+                  onChange={(e) => onChange({ hartijaOdVrednostiTip: e })}
+                  options={["Akcija", "Forex", "Futures Ugovori"]}
+                  defValue="Akcija"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           {(form.hartijaOdVrednostiTip == "Akcija" ||
             form.hartijaOdVrednostiTip == "Futures Ugovori") && (
             <div className="flex gap-3">
