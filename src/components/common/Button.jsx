@@ -30,7 +30,7 @@ function Button(props) {
   )
 
   const inlineStyle = classNames(
-    "text-blue-500 hover:text-blue-700 font-bold text-base hover:underline", // text
+    "text-indigo-500 hover:text-indigo-700 font-bold text-base hover:underline", // text
     "transition ease-in-out", // effects
     { 'opacity-60 text-gray-400 hover:text-gray-400  cursor-not-allowed': props.disabled },
     props.className // custom style

@@ -31,20 +31,24 @@ function TextField(props) {
   }, [props.value]);
 
   return (
-    <input
-      data-testid="common-text-field"
-      value={value}
-      type={props.type}
-      placeholder={props.placeholder}
-      className={classes}
-      onChange={handleChange}
-    />
+    <div className="flex flex-col justify-start">
+      <div className="text-sm text-slate-500 pb-1 text-left">{props.label}</div>
+      <input
+        data-testid="common-text-field"
+        value={value}
+        type={props.type}
+        placeholder={props.placeholder}
+        className={classes}
+        onChange={handleChange}
+      />
+    </div>
   );
 }
 
 TextField.propTypes = {
   value: PropTypes.string,
   type: PropTypes.oneOf([TEXT_FIELD_TYPE.TEXT, TEXT_FIELD_TYPE.PASSWORD]),
+  label: PropTypes.string,
   placeholder: PropTypes.string,
   className: PropTypes.string,
   onChange: PropTypes.func,

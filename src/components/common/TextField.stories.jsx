@@ -12,6 +12,7 @@ const Template = (args) => <TextField {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   placeholder: "Placeholder",
+  label: "Label",
 };
 
 export const Password = Template.bind({});
