@@ -7,19 +7,25 @@ function Block(props) {
         "p-8",
         "rounded",
         "drop-shadow-lg",
+        "drop-shadow-lg-t",
         "bg-white",
+        "border",
         props.className,
     )
 
     return (
-        <div className={style} >
-            {props.children}
+        <div>
+            <h1 className="font-extrabold text-2xl mb-2">{props.title}</h1>
+            <div className={style} >
+                {props.children}
+            </div>
         </div>
     );
 }
 
 Block.propTypes = {
     children: PropTypes.any,
+    title: PropTypes.string,
     className: PropTypes.string,
 }
 

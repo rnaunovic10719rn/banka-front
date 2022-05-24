@@ -16,6 +16,7 @@ import PlaceholderLoading from "react-placeholder-loading";
 import Button from "../../components/common/Button";
 import TextField from "../../components/common/TextField";
 import Alert from "../../components/common/Alert";
+import Block from "../../components/common/Block";
 
 const TABS = {
   STOCKS: "Stocks",
@@ -97,26 +98,27 @@ export default function OverviewPage() {
   function renderFutures() {
     return (
       <div class="flex flex-col gap-5">
-        <div className="flex justify-start gap-5">
+        <div className="flex justify-start">
           <TextField
             onChange={handleChangeData}
             type="text"
+            className="rounded-r-none"
             value={searchData}
             placeholder={"Symbol"}
           />
           <Button
             label="Pretrazi"
             design="primary"
+            className="rounded-l-none"
             type="submit"
             onClick={handleSearchData}
           />
-          <Button
-            label="X"
+          {searchData.length > 1 && <Button
+            label="Clear"
             design="inline"
             type="submit"
-            disabled={searchData == 0}
             onClick={clearSearchData}
-          />
+          />}
         </div>
         <Table
           headings={["Oznaka", "Cena", "Berza", "Poslednje azuriranje"]}
@@ -157,13 +159,12 @@ export default function OverviewPage() {
             type="submit"
             onClick={handleSearchData}
           />
-          <Button
-            label="X"
+          {searchData.length > 1 && <Button
+            label="Clear"
             design="inline"
             type="submit"
-            disabled={searchData == 0 && helpSearchForex == 0}
             onClick={clearSearchData}
-          />
+          />}
         </div>
         <Table
           headings={[
@@ -188,26 +189,30 @@ export default function OverviewPage() {
 
     return (
       <div class="flex flex-col gap-5">
-        <div className="flex justify-start gap-5">
-          <TextField
-            onChange={handleChangeData}
-            type="text"
-            value={searchData}
-            placeholder={"Symbol"}
-          />
-          <Button
-            label="Pretrazi"
-            design="primary"
-            type="submit"
-            onClick={handleSearchData}
-          />
-          <Button
-            label="X"
+        <div className="flex justify-start gap-0">
+          <div className="flex">
+            <TextField
+              onChange={handleChangeData}
+              type="text"
+              value={searchData}
+              className="rounded-r-none"
+              placeholder={"Symbol"}
+            />
+            <Button
+              label="Pretrazi"
+              design="primary"
+              type="submit"
+              className="rounded-l-none"
+              onClick={handleSearchData}
+            />
+          </div>
+          {searchData.length > 1 && <Button
+            label="Clear"
+            className="ml-3"
             design="inline"
             type="submit"
-            disabled={searchData == 0}
             onClick={clearSearchData}
-          />
+          />}
         </div>
         <Table
           headings={[
@@ -257,7 +262,6 @@ export default function OverviewPage() {
   };
 
   const handleSearchData = async () => {
-    console.log(searchData);
     if (activeTab == TABS.STOCKS) {
       try {
         const response = await getStocksSearchApi(searchData);
@@ -305,16 +309,18 @@ export default function OverviewPage() {
           onDismiss={() => setError(null)}
         ></Alert>
       )}
-      <Tab
-        tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
-        onChange={function (e) {
-          setActiveTab(e);
-          clearSearchData(e);
-        }}
-      />
-      {activeTab === TABS.STOCKS && renderStocks()}
-      {activeTab === TABS.FOREX && renderForex()}
-      {activeTab === TABS.FUTURES && renderFutures()}
+      <Block title="Berza">
+        <Tab
+          tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
+          onChange={function (e) {
+            setActiveTab(e);
+            clearSearchData(e);
+          }}
+        />
+        {activeTab === TABS.STOCKS && renderStocks()}
+        {activeTab === TABS.FOREX && renderForex()}
+        {activeTab === TABS.FUTURES && renderFutures()}
+      </Block>
       {selectedStock !== null && (
         <StocksModal
           ticker={selectedStock}

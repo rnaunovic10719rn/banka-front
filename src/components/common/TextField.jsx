@@ -32,7 +32,7 @@ function TextField(props) {
 
   return (
     <div className="flex flex-col justify-start">
-      <div className="text-sm text-slate-500 pb-1 text-left">{props.label}</div>
+      {props.label && <div className="text-sm text-slate-500 pb-1 text-left">{props.label}</div>}
       <input
         data-testid="common-text-field"
         value={value}

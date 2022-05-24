@@ -12,4 +12,5 @@ const Template = (args) => <Block {...args} />;
 export const Default = Template.bind({});
 Default.args = {
     children: "Placeholder text",
+    title: "Placeholder title",
 };
