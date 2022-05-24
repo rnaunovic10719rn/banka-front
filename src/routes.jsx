@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardPageLayout from "./components/DashboardPageLayout";
 import HeaderPageLayout from "./components/HeaderPageLayout";
 import InformationPage from "./pages/dashboard/information";
-import PrivacyPage from "./pages/dashboard/privacy";
+import ProfilePrivacy from "./components/privacy";
 import ListPage from "./pages/dashboard/list";
 import PageLayout from "./components/PageLayout";
 import App from "./App";
@@ -54,16 +54,6 @@ export function AppRoutes() {
 							element={<OverviewPage />}
 						/>
 					</Route>
-					<Route element={<DashboardPageLayout />}>
-						<Route
-							path={URLS.DASHBOARD.INFORMATION}
-							element={<InformationPage />}
-						/>
-						<Route
-							path={URLS.DASHBOARD.PRIVACY}
-							element={<PrivacyPage />}
-						/>
-					</Route>
 					<Route element={<HeaderPageLayout />}>
 						<Route
 							path={URLS.DASHBOARD.LIST.INDEX}
@@ -92,6 +82,10 @@ export function AppRoutes() {
 						<Route
 							path={URLS.DASHBOARD.SYSTEM}
 							element={<SystemPage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.INFORMATION}
+							element={<InformationPage />}
 						/>
 					</Route>
 					<Route element={<PageLayout />}>

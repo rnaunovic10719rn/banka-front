@@ -42,6 +42,7 @@ function HoverMenu(props) {
         "drop-shadow-xl",
         "right-0",
         "absolute",
+        "z-[1000]",
         { "hidden": !hovered }
     )
 
