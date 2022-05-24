@@ -39,7 +39,7 @@ function Header(props) {
                     <Link to={`${URLS.DASHBOARD.ORDERS}`}>Narudzbine</Link>
                     <Link to={`${URLS.DASHBOARD.LIST.INDEX}`}>Spisak zaposlenih</Link>
                 </div>
-                <HoverMenu className="mr-3" text={username}>
+                <HoverMenu className="mr-5" text={username}>
                     <HoverMenuItem text="Profile" to={`${URLS.DASHBOARD.INFORMATION}`} />
                     <HoverMenuItem text="Logout" to={`${URLS.DASHBOARD.INDEX}`} onClick={() => logoutAction()} />
                 </HoverMenu>

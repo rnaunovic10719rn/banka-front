@@ -17,6 +17,10 @@ import Button from "../../components/common/Button";
 import TextField from "../../components/common/TextField";
 import Alert from "../../components/common/Alert";
 import Block from "../../components/common/Block";
+import { useDispatch } from "react-redux";
+import { addForexAction, addStocksAction } from "../../redux/actions";
+import StockTickerWrapper from "../../components/StockTickerWrapper";
+import ForexTickerWrapper from "../../components/ForexTickerWrapper";
 
 const TABS = {
   STOCKS: "Stocks",
@@ -25,6 +29,7 @@ const TABS = {
 };
 
 export default function OverviewPage() {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(TABS.STOCKS);
 
   const [stocksRowData, setStocksRowData] = useState([]);
@@ -70,6 +75,7 @@ export default function OverviewPage() {
 
   async function getStocks() {
     const response = await getStocksApi();
+    dispatch(addStocksAction(response))
     let tmp = [];
     response.map((r) => {
       tmp.push(createStockRow(r));
@@ -79,6 +85,7 @@ export default function OverviewPage() {
 
   async function getForex() {
     const response = await getForexApi();
+    dispatch(addForexAction(response))
     let tmp = [];
     response.map((r) => {
       tmp.push(createForexRow(r));
@@ -309,6 +316,8 @@ export default function OverviewPage() {
           onDismiss={() => setError(null)}
         ></Alert>
       )}
+      {activeTab === TABS.STOCKS && <StockTickerWrapper />}
+      {activeTab === TABS.FOREX && <ForexTickerWrapper />}
       <Block title="Berza">
         <Tab
           tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
