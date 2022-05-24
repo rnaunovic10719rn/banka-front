@@ -12,12 +12,12 @@ function TextField(props) {
     "border-2 border-gray-300",
     "min-widht",
     "font-sans",
-    "text-base",
-    "bg-white-50", // background
-    "text-gray text-base", // text
+    "dark:text-slate-900 bg-white-50", // background
+    "text-base", // text
     "py-2 px-4", //spacing
     "rounded", // border
     "transition ease-in-out", // effects
+    "placeholder:text-gray-300",
     props.className // custom style
   );
 
