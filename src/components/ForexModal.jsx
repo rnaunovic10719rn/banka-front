@@ -5,6 +5,7 @@ import StocksChart, { CHART_FILTERS } from "./StockChart";
 import Card from "./common/Card";
 import PlaceholderLoading from 'react-placeholder-loading'
 import { getForexDetalsApi, getForexTimeSeriesApi } from "../clients/stocks";
+import EmptyState from "./common/EmptyState";
 
 function ForexModal(props) {
     const [details, setDetails] = useState(null)
@@ -19,39 +20,6 @@ function ForexModal(props) {
 
     async function getDataForChart() {
         let response = await getForexTimeSeriesApi(props.from, props.to, chartFilter)
-        response.map(r => {
-            const newTime = new Date(r.time);
-            const dates = newTime.toDateString().split(" ");
-            const shortDate = dates[1] + " " + dates[2];
-            const fullDate = dates[1] + " " + dates[2] + " " + dates[3];
-            const times = newTime.toTimeString().split(" ")[0].split(":");
-            const hm = times[0] + ":" + times[1];
-            switch (chartFilter) {
-                case CHART_FILTERS.ONE_DAY:
-                    r.time = hm;
-                    break;
-                case CHART_FILTERS.FIVE_DAYS:
-                    r.time = shortDate + " " + hm;
-                    break;
-                case CHART_FILTERS.ONE_MONTH:
-                    r.time = shortDate;
-                    break;
-                case CHART_FILTERS.SIX_MONTHS:
-                case CHART_FILTERS.ONE_YEAR:
-                case CHART_FILTERS.TWO_YEARS:
-                case CHART_FILTERS.ALL:
-                    r.time = fullDate;
-                    break;
-                default:
-                    break;
-            }
-                
-        });
-        if (response[0]['close'] > response[response.length - 1]['close']) {
-            setChartColor("colorRed")
-        } else {
-            setChartColor("colorGreen")
-        }
         setChartData(response)
     }
 
@@ -71,7 +39,8 @@ function ForexModal(props) {
         return (
             <div>
                 <Card title="Chart">
-                    <StocksChart data={chartData} color={chartColor} onChange={(e) => { setChartFilter(e); }} />
+                    {chartData.length !== 0 && <StocksChart data={chartData} onChange={(e) => { setChartFilter(e); }} decimals={3} />}
+                    {chartData.length === 0 && <EmptyState text="No data." />}
                 </Card>
                 <Card title="Details">
                     <p className="text-lg font-bold pb-5 text-gray-600">

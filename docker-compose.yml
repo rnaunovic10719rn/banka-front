@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   ui:
+    container_name: ui
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,7 +14,10 @@ services:
       - "3000:3000"
     environment:
       - CHOKIDAR_USEPOLLING=true
+    profiles: ["all", "frontend"]
+
   storybook:
+    container_name: storybook
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,3 +29,124 @@ services:
       - "6006:6006"
     environment:
       - CHOKIDAR_USEPOLLING=true
+    profiles: ["all", "frontend"]
+
+  # TEMPORARY SOLUTION
+  artemis:
+    image: vromero/activemq-artemis:latest-alpine
+    container_name: api_activemq
+    environment:
+      ARTEMIS_USERNAME: banka
+      ARTEMIS_PASSWORD: banka1234
+    ports:
+      - "61616:61616/tcp"
+    profiles: ["all", "backend"]
+
+  db-user:
+    image: postgres
+    container_name: api_db_user
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: postgres
+    volumes:
+      - db-user:/var/lib/postgresql/data
+    profiles: ["all", "backend"]
+
+  db-berza:
+    image: postgres
+    container_name: api_db_berza
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: postgres
+    volumes:
+      - db-berza:/var/lib/postgresql/data
+    profiles: ["all", "backend"]
+
+  db-influx:
+    image: influxdb:2.1.1
+    container_name: api_db_influx
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: raf
+      DOCKER_INFLUXDB_INIT_PASSWORD: 12345678
+      DOCKER_INFLUXDB_INIT_ORG: raf
+      DOCKER_INFLUXDB_INIT_BUCKET: stocks
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: mytoken
+    ports:
+      - "8086:8086"
+    volumes:
+      - influx-data:/var/lib/influxdb2
+      - influx-config:/etc/influxdb2
+    profiles: ["all", "backend"]
+
+  influx-scrapper:
+    image: ghcr.io/raf-si-2021/banka-influx-scrapper:latest
+    container_name: api_influx_scrapper
+    ports:
+      - "8000:80"
+    links:
+      - db-influx
+    depends_on:
+      - db-influx
+    profiles: ["all", "backend"]
+
+  korisnicki-servis:
+    image: ghcr.io/raf-si-2021/banka-user-service:latest
+    container_name: api_user_service
+    environment:
+      spring.datasource.hikari.jdbcUrl: jdbc:postgresql://db-user:5432/postgres
+      spring.activemq.broker-url: tcp://artemis:61616
+    ports:
+      - "8080:8080"
+    links:
+      - db-user
+      - artemis
+    depends_on:
+      - db-user
+      - artemis
+    profiles: ["all", "backend"]
+
+  email-servis:
+    image: ghcr.io/raf-si-2021/banka-mail-service:latest
+    container_name: api_email_service
+    environment:
+      spring.mail.username: "email"
+      spring.mail.password: "password"
+      spring.activemq.broker-url: tcp://artemis:61616
+    ports:
+      - "8081:8081"
+    links:
+      - artemis
+    depends_on:
+      - artemis
+    profiles: ["all", "backend"]
+
+  berza:
+    image: ghcr.io/raf-si-2021/banka-berza:latest
+    container_name: api_berza
+    environment:
+      spring.datasource.hikari.jdbcUrl: jdbc:postgresql://db-berza:5432/postgres
+      berza.influxscrapper.endpoint: http://influx-scrapper/
+      berza.berze.csv: berze.csv
+      berza.inflacije.csv: inflacije.csv
+    ports:
+      - "8082:8082"
+    links:
+      - db-berza
+      - influx-scrapper
+    depends_on:
+      - db-berza
+      - influx-scrapper
+    profiles: ["all", "backend"]
+
+volumes:
+  db-user:
+  db-berza:
+  influx-data:
+  influx-config:

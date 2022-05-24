@@ -45,7 +45,7 @@ export default function OverviewPage() {
       r["volume"],
       r["change"],
       r["changePercent"],
-      moment(r["time"]).format("DD/MM/YYYY - HH:MM"),
+      moment(r["time"]).format("DD.MM.YYYY HH:mm"),
     ];
   }
 
@@ -54,7 +54,7 @@ export default function OverviewPage() {
       r["fromCurrency"],
       r["toCurrency"],
       r["exchangeRate"],
-      moment(r["time"]).format("DD/MM/YYYY - HH:MM"),
+      moment(r["time"]).format("DD.MM.YYYY HH:mm"),
     ];
   }
 
@@ -63,7 +63,7 @@ export default function OverviewPage() {
       r["symbol"],
       r["high"],
       "EUREX",
-      moment(r["time"]).format("DD/MM/YYYY - HH:MM"),
+      moment(r["time"]).format("DD.MM.YYYY HH:mm"),
     ];
   }
 
@@ -307,7 +307,10 @@ export default function OverviewPage() {
       )}
       <Tab
         tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
-        onChange={(e) => setActiveTab(e)}
+        onChange={function (e) {
+          setActiveTab(e);
+          clearSearchData(e);
+        }}
       />
       {activeTab === TABS.STOCKS && renderStocks()}
       {activeTab === TABS.FOREX && renderForex()}

@@ -30,13 +30,15 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"start": "react-scripts -r @cypress/instrument-cra start",
+		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"test:coverage": "react-scripts test --coverage",
 		"eject": "react-scripts eject",
 		"storybook": "start-storybook -p 6006 -s public",
-		"build-storybook": "build-storybook -s public"
+		"build-storybook": "build-storybook -s public",
+		"cypress": "cypress open",
+		"cypress:run": "cypress run"
 	},
 	"eslintConfig": {
 		"extends": [
