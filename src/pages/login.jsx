@@ -45,7 +45,6 @@ export default function LoginPage() {
         e.preventDefault()
         try {
             const has2fa = await hasTwoFactor(username);
-            console.log(has2fa);
             if (!has2fa) {
                 await loginAction(username, password)
                 await getUser()
@@ -62,9 +61,6 @@ export default function LoginPage() {
     async function loginWith2fa(e) {
         e.preventDefault()
         try {
-            console.log(username);
-            console.log(password);
-            console.log(otp);
             await loginAction(username, password, otp)
             await getUser()
             navigate(URLS.DASHBOARD.INDEX)
@@ -133,7 +129,7 @@ export default function LoginPage() {
         <div className="mt-10 grid grid-cols-4">
             <div className="max-w-xl col-span-2 col-start-2 text-center">
                 <div className="mb-8">
-                    <Logo className="flex justify-center text-indigo-500" size={24} />
+                    <Logo className="flex justify-center text-indigo-500" size={32} />
                     <h1 className="text-3xl font-extrabold">Dobro dosli!</h1>
                 </div>
                 <Block className="">
