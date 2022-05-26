@@ -26,7 +26,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState(null)
     const [otp, setOtp] = useState(null)
     const [error, setError] = useState(null)
-    const [email, setEmail] = useState(null)
+    const [email, setEmail] = useState("")
 
 
     const dispatch = useDispatch();
@@ -96,8 +96,7 @@ export default function LoginPage() {
 
     function renderForgotPassword() {
         function disableCta() {
-            if (email == null) return true
-            return false
+            return email.length === 0;
         }
 
         async function emailRes(e) {

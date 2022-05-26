@@ -16,9 +16,12 @@ function Block(props) {
     return (
         <div>
             <div className={style} >
-                {props.title &&
+                <div className="flex justify-between">
                     <h1 className="font-extrabold text-4xl mb-8">{props.title}</h1>
-                }
+                    <div>
+                        {props.cta}
+                    </div>
+                </div>
                 {props.children}
             </div>
         </div>
@@ -28,6 +31,7 @@ function Block(props) {
 Block.propTypes = {
     children: PropTypes.any,
     title: PropTypes.string,
+    cta: PropTypes.any,
     className: PropTypes.string,
 }
 

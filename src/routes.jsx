@@ -13,7 +13,6 @@ import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
 import OverviewStockPage from "./pages/dashboard/overview-stock";
 import ChangePasswordPage from "./pages/dashboard/changepass";
-import EmailPage from "./pages/enter-email";
 
 export const URLS = {
 	DASHBOARD: {
@@ -90,7 +89,6 @@ export function AppRoutes() {
 					</Route>
 					<Route element={<PageLayout />}>
 						<Route path={URLS.LOGIN} element={<LoginPage />} />
-						<Route path={URLS.EMAIL} element={<EmailPage />} />
 						<Route path={URLS.DASHBOARD.CHANGEPASSWORD.REGULAR} element={<ChangePasswordPage />} />
 						<Route path={URLS.DASHBOARD.CHANGEPASSWORD.WITH_TOKEN} element={<ChangePasswordPage />} />
 					</Route>
