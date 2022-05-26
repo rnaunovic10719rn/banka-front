@@ -1,9 +1,8 @@
 
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import TextField from "../components/common/TextField"
+import TextField, { VALIDATION_PATTERN } from "../components/common/TextField"
 import Button from "../components/common/Button"
-import Alert from "../components/common/Alert"
 import { hasTwoFactor, loginAction } from "../clients/client"
 import { URLS } from "../routes"
 import { useDispatch } from "react-redux";
@@ -11,6 +10,8 @@ import { getUserApi, resetEmail } from "../clients/client";
 import { addUserAction } from "../redux/actions";
 import Block from "../components/common/Block"
 import Logo from "../components/common/Logo"
+import Form from "../components/common/Form"
+import { Store } from 'react-notifications-component';
 
 const STATE = {
     DEFAULT: 'default',
@@ -21,12 +22,11 @@ const STATE = {
 export default function LoginPage() {
     let navigate = useNavigate();
     const [currentState, setCurrentState] = useState(STATE.DEFAULT)
-    const [is2fa, setis2fa] = useState(false);
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null)
     const [otp, setOtp] = useState(null)
-    const [error, setError] = useState(null)
     const [email, setEmail] = useState("")
+    const [formValid, setFormValid] = useState(false)
 
 
     const dispatch = useDispatch();
@@ -34,11 +34,6 @@ export default function LoginPage() {
     async function getUser() {
         const response = await getUserApi();
         dispatch(addUserAction(response));
-    }
-
-    function disableCta() {
-        if (username == null || password == null) return true
-        return false
     }
 
     async function login(e) {
@@ -51,10 +46,15 @@ export default function LoginPage() {
                 navigate(URLS.DASHBOARD.INDEX)
             }
             else {
-                setis2fa(true);
+                setCurrentState(STATE.TWO_FA)
             }
         } catch {
-            setError("Failed to login.")
+            Store.addNotification({
+                title: "Netacni podaci",
+                message: "Probajte ponovo",
+                type: "danger",
+                container: "top-right",
+            });
         }
     }
 
@@ -65,39 +65,39 @@ export default function LoginPage() {
             await getUser()
             navigate(URLS.DASHBOARD.INDEX)
         } catch {
-            setError("Failed to login.")
+            Store.addNotification({
+                title: "Netacni podaci",
+                message: "Probajte ponovo",
+                type: "danger",
+                container: "top-right",
+            });
         }
     }
 
     function renderRegular() {
         return (
-            <form onSubmit={login} className="flex flex-col gap-3">
-                {error && <Alert design="danger" text={error} onDismiss={() => setError(null)} />}
-                <TextField label="Username" placeholder="username" onChange={setUsername} />
-                <TextField type="password" label="Password" placeholder="********" onChange={setPassword} />
+            <Form onSubmit={login} className="flex flex-col gap-3" onValid={setFormValid}>
+                <TextField label="Username" placeholder="username" onChange={setUsername} required />
+                <TextField type="password" label="Password" placeholder="********" onChange={setPassword} required />
                 <div className="flex justify-end">
                     <Button design="inline" label={"Zaboravili ste sifru?"} onClick={() => setCurrentState(STATE.FORGOT)} />
                 </div>
-                <Button type="submit" label={"Nastavite"} disabled={disableCta()} />
-            </form>
+                <Button type="submit" label={"Nastavite"} disabled={!formValid} />
+            </Form>
         )
     }
 
     function render2FA() {
         return (
-            <form onSubmit={loginWith2fa} className="flex flex-col gap-3">
-                {error && <Alert design="danger" text={error} onDismiss={() => setError(null)} />}
+            <Form onSubmit={loginWith2fa} className="flex flex-col gap-3" onValid={setFormValid}>
                 <div>Treba da unesete 6-cifreni kod iz Google authenticatora kako biste pristupili Vašem nalogu.</div>
-                <TextField placeholder="Kod" onChange={setOtp} />
-                <Button type="submit" label={"Nastavite"} />
-            </form>
+                <TextField placeholder="Kod" onChange={setOtp} required />
+                <Button type="submit" label={"Nastavite"} disabled={!formValid} />
+            </Form>
         )
     }
 
     function renderForgotPassword() {
-        function disableCta() {
-            return email.length === 0;
-        }
 
         async function emailRes(e) {
             e.preventDefault()
@@ -105,7 +105,12 @@ export default function LoginPage() {
                 await resetEmail(email)
                 navigate("/" + URLS.LOGIN)
             } catch {
-                setError("Failed to send email.")
+                Store.addNotification({
+                    title: "Neuspesno slanje imejla",
+                    message: "Probajte ponovo",
+                    type: "danger",
+                    container: "top-right",
+                });
             }
         }
 
@@ -115,12 +120,11 @@ export default function LoginPage() {
                     <p className="text-left font-semibold">Resetujte sifru.</p>
                     <p className="text-left">Unesite email i poslacemo vam link za resetovanje sifre..</p>
                 </div>
-                <form onSubmit={emailRes} className="flex flex-col gap-3">
-                    {error && <Alert design="danger" text={error} onDismiss={() => setError(null)} />}
-                    <TextField label="E-mail" placeholder="user@email.com" onChange={setEmail} />
-                    <Button type="submit" label="Posaljite email" disabled={disableCta()} />
+                <Form onSubmit={emailRes} className="flex flex-col gap-3" onValid={setFormValid}>
+                    <TextField label="E-mail" placeholder="user@email.com" onChange={setEmail} validation={VALIDATION_PATTERN.EMAIL} required />
+                    <Button type="submit" label="Posaljite email" disabled={!formValid} />
                     <Button design="inline" label="Nazad" onClick={() => setCurrentState(STATE.DEFAULT)} />
-                </form>
+                </Form>
             </div>
         )
     }

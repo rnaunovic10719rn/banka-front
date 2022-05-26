@@ -21,7 +21,7 @@ function Form(props) {
     })
 
     return (
-        <form action="" ref={formRef} onSubmit={props.onSubmit} className={props.clasName}>
+        <form action="" ref={formRef} onSubmit={props.onSubmit} className={props.className}>
             {props.children}
         </form>
     )
@@ -31,7 +31,12 @@ Form.propTypes = {
     children: PropTypes.any,
     onSubmit: PropTypes.func,
     onValid: PropTypes.func,
-    clasName: PropTypes.string,
+    className: PropTypes.string,
+}
+
+Form.defaultProps = {
+    onSubmit: () => { },
+    onValid: () => { },
 }
 
 export default Form

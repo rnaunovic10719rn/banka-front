@@ -7,10 +7,8 @@ import Button from "../../components/common/Button";
 import Select from "../../components/common/Select";
 import { getUserId } from "../../clients/client";
 import { buySellStocks } from "../../clients/stocks";
-import Alert from "../../components/common/Alert";
 import { Store } from 'react-notifications-component';
 import Block from "../../components/common/Block";
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 import Form from "../../components/common/Form";
 
 const TYPE = {
