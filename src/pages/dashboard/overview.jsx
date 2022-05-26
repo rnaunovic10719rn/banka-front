@@ -328,7 +328,7 @@ export default function OverviewPage() {
       )}
       {activeTab === TABS.STOCKS && <StockTickerWrapper />}
       {activeTab === TABS.FOREX && <ForexTickerWrapper />}
-      <Block title="">
+      <Block title="Berza">
         <Tab
           tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
           onChange={function (e) {

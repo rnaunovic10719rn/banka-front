@@ -18,6 +18,7 @@ function TextField(props) {
     "rounded", // border
     "transition ease-in-out", // effects
     "placeholder:text-gray-300",
+    "outline-none",
     props.className // custom style
   );
 

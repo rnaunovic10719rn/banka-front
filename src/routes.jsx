@@ -1,9 +1,7 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DashboardPageLayout from "./components/DashboardPageLayout";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HeaderPageLayout from "./components/HeaderPageLayout";
 import InformationPage from "./pages/dashboard/information";
-import ProfilePrivacy from "./components/privacy";
 import ListPage from "./pages/dashboard/list";
 import PageLayout from "./components/PageLayout";
 import App from "./App";
@@ -20,6 +18,7 @@ import EmailPage from "./pages/enter-email";
 export const URLS = {
 	DASHBOARD: {
 		INDEX: "/",
+		STOCK: "berza",
 		INFORMATION: "information",
 		PRIVACY: "privacy",
 		LIST: {
@@ -48,9 +47,10 @@ export function AppRoutes() {
 		<BrowserRouter>
 			<Routes>
 				<Route element={<App />}>
+					<Route path={URLS.DASHBOARD.INDEX} element={<Navigate to={URLS.DASHBOARD.STOCK} replace />} />
 					<Route element={<HeaderPageLayout />}>
 						<Route
-							path={URLS.DASHBOARD.INDEX}
+							path={URLS.DASHBOARD.STOCK}
 							element={<OverviewPage />}
 						/>
 					</Route>

@@ -40,13 +40,11 @@ function HoverMenu(props) {
     const hoverWidgetStyle = classNames(
         "rounded",
         "drop-shadow-xl",
-        "right-0",
+        "right-0 left-0",
         "absolute",
         "z-[1000]",
         { "hidden": !hovered }
     )
-
-    console.log(hovered)
 
     return (
         <div
@@ -62,7 +60,7 @@ function HoverMenu(props) {
 }
 
 HoverMenu.propTypes = {
-    text: PropTypes.string,
+    text: PropTypes.any,
     children: PropTypes.any,
     className: PropTypes.string,
 }

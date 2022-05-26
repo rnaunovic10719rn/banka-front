@@ -15,8 +15,10 @@ function Block(props) {
 
     return (
         <div>
-            <h1 className="font-extrabold text-2xl mb-2">{props.title}</h1>
             <div className={style} >
+                {props.title &&
+                    <h1 className="font-extrabold text-4xl mb-8">{props.title}</h1>
+                }
                 {props.children}
             </div>
         </div>

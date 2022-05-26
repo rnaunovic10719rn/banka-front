@@ -24,14 +24,12 @@ export default function ListPage() {
     }
 
     async function deleteUser(id) {
-        console.log(id);
         await deleteUserAction(id);
         setSelectedUser(null);
         window.location.reload();
     }
 
     async function enableUser(id) {
-        console.log(id);
         //TODO: implementirati enable user action
     }
 
@@ -46,24 +44,23 @@ export default function ListPage() {
         getId()
         let r = []
         users.map(u => {
-            console.log(u);
-                r.push([
-                    u['id'],
-                    u['username'],
-                    u['ime'] + " " + u['prezime'],
-                    u['jmbg'],
-                    u['email'],
-                    u['role']['name'],
-                    <Button design="inline" onClick={() => { 
-                        setSelectedUser(u);
-                        setIsSelected(true);
-                    }} label="Edit" />,
-                    u['id'] != id ? 
-                        u['aktivan'] ?
-                            <Button design="inline" onClick={() => deleteUser(u['id'])} label="Disable" /> :
-                            <Button design="inline" onClick={() => enableUser(u['id'])} label="Enable" />
-                        : null
-                ]);
+            r.push([
+                u['id'],
+                u['username'],
+                u['ime'] + " " + u['prezime'],
+                u['jmbg'],
+                u['email'],
+                u['role']['name'],
+                <Button design="inline" onClick={() => {
+                    setSelectedUser(u);
+                    setIsSelected(true);
+                }} label="Edit" />,
+                u['id'] != id ?
+                    u['aktivan'] ?
+                        <Button design="inline" onClick={() => deleteUser(u['id'])} label="Disable" /> :
+                        <Button design="inline" onClick={() => enableUser(u['id'])} label="Enable" />
+                    : null
+            ]);
         })
         setRows(r)
     }, [id, users])
@@ -80,12 +77,12 @@ export default function ListPage() {
             {selectedUser != null && <UserModal visible={isSelected} id={selectedUser.id} user={selectedUser} onClose={() => {
                 setSelectedUser(null);
                 setIsSelected(false);
-                }} 
+            }}
                 onChange={() => {
                     setSelectedUser(null);
                     setIsSelected(false);
                     window.location.reload();
-                    }}
+                }}
             />}
         </div>
     )
