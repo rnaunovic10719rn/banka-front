@@ -5,16 +5,16 @@ import { Link } from "react-router-dom";
 
 export function HoverMenuItem(props) {
     const style = classNames(
-        "py-2 px-3",
+        "flex justify-center items-center",
+        "h-12",
+        "text-center",
         "text-slate-800",
         "bg-white hover:bg-gray-300",
         "first:rounded-t last:rounded-b",
         "cursor-pointer",
     )
     return (
-        <div className={style}>
-            <Link to={props.to} onClick={props.onClick}>{props.text}</Link>
-        </div>
+        <Link className={style} to={props.to} onClick={props.onClick}>{props.text}</Link>
     )
 }
 
