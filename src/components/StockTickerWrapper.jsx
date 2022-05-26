@@ -14,6 +14,7 @@ function StockTickerWrapper() {
         <div className="-mx-10 -mt-10 mb-10 h-20 flex">
             <Ticker>
                 {stocks.map(stock => {
+                    if (!stock) return null;
                     const change = stock['price'] > stock['previousClose']
                     return <FinancialTicker id={stock['berzaId']} change={change} symbol={stock['ticker']} lastPrice={stock['previousClose']} percentage={`${stock['changePercent'].toFixed(2)}%`} currentPrice={stock['price']} />
                 })}

@@ -21,6 +21,7 @@ import { useDispatch } from "react-redux";
 import { addForexAction, addStocksAction } from "../../redux/actions";
 import StockTickerWrapper from "../../components/StockTickerWrapper";
 import ForexTickerWrapper from "../../components/ForexTickerWrapper";
+import classNames from "classnames";
 
 const TABS = {
   STOCKS: "Stocks",
@@ -45,12 +46,19 @@ export default function OverviewPage() {
   const [helpSearchForex, setHelpSearchForex] = useState("");
 
   function createStockRow(r) {
+    const priceStyle = classNames(
+      "font-bold",
+      { "text-green-500": r['change'] >= 0 },
+      { "text-red-500": r['change'] < 0 },
+    )
+
+
     return [
       r["ticker"],
       r["price"],
       r["volume"],
-      r["change"],
-      r["changePercent"],
+      <span className={priceStyle}>{r["change"]}</span>,
+      <span className={priceStyle}>{r["changePercent"]}</span>,
       moment(r["time"]).format("DD.MM.YYYY HH:mm"),
     ];
   }
@@ -197,7 +205,7 @@ export default function OverviewPage() {
     return (
       <div class="flex flex-col gap-5">
         <div className="flex justify-start gap-0">
-          <div className="flex">
+          <form className="flex">
             <TextField
               onChange={handleChangeData}
               type="text"
@@ -212,7 +220,7 @@ export default function OverviewPage() {
               className="rounded-l-none"
               onClick={handleSearchData}
             />
-          </div>
+          </form>
           {searchData.length > 1 && <Button
             label="Clear"
             className="ml-3"
@@ -268,7 +276,9 @@ export default function OverviewPage() {
     setHelpSearchForex("");
   };
 
-  const handleSearchData = async () => {
+  const handleSearchData = async (e) => {
+    e.preventDefault();
+
     if (activeTab == TABS.STOCKS) {
       try {
         const response = await getStocksSearchApi(searchData);
@@ -318,7 +328,7 @@ export default function OverviewPage() {
       )}
       {activeTab === TABS.STOCKS && <StockTickerWrapper />}
       {activeTab === TABS.FOREX && <ForexTickerWrapper />}
-      <Block title="Berza">
+      <Block title="">
         <Tab
           tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
           onChange={function (e) {
