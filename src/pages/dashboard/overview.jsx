@@ -86,6 +86,7 @@ export default function OverviewPage() {
     dispatch(addStocksAction(response))
     let tmp = [];
     response.map((r) => {
+      if (r === null) return;
       tmp.push(createStockRow(r));
     });
     setStocksRowData(tmp);
@@ -96,6 +97,7 @@ export default function OverviewPage() {
     dispatch(addForexAction(response))
     let tmp = [];
     response.map((r) => {
+      if (r === null) return;
       tmp.push(createForexRow(r));
     });
     setForexData(tmp);
@@ -105,6 +107,7 @@ export default function OverviewPage() {
     const response = await getFuturesApi();
     let tmp = [];
     response.map((r) => {
+      if (r === null) return;
       tmp.push(createFuturesRow(r));
     });
     setFuturesData(tmp);
