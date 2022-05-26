@@ -11,28 +11,33 @@ function Select(props) {
   );
 
   return (
-    <select
-      data-testid="common-select"
-      className={style}
-      onChange={(e) => props.onChange(e.target.value)}
-    >
-      {props.options.map((o) =>
-        o == props.defValue ? (
-          <option data-testid="common-select-option" key={o} value={o} selected>
-            {o}
-          </option>
-        ) : (
-          <option data-testid="common-select-option" key={o} value={o}>
-            {o}
-          </option>
-        )
-      )}
-    </select>
+    <div>
+      {props.label && <div className="text-sm text-slate-500 pb-1 text-left">{props.label}</div>}
+      <select
+        data-testid="common-select"
+        className={style}
+        onChange={(e) => props.onChange(e.target.value)}
+      >
+        {props.options.map((o) =>
+          o == props.defValue ? (
+            <option data-testid="common-select-option" key={o} value={o} selected>
+              {o}
+            </option>
+          ) : (
+            <option data-testid="common-select-option" key={o} value={o}>
+              {o}
+            </option>
+          )
+        )}
+      </select>
+    </div>
+
   );
 }
 
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  label: PropTypes.string,
   onChange: PropTypes.func,
   className: PropTypes.string,
   defValue: PropTypes.string,

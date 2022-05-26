@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Card from "../../components/common/Card";
-import TextField from "../../components/common/TextField";
+import TextField, { VALIDATION_PATTERN } from "../../components/common/TextField";
 import RadioGroup from "../../components/common/RadioGroup";
 import Checkbox from "../../components/common/Checkbox";
 import Button from "../../components/common/Button";
@@ -8,19 +8,24 @@ import Select from "../../components/common/Select";
 import { getUserId } from "../../clients/client";
 import { buySellStocks } from "../../clients/stocks";
 import Alert from "../../components/common/Alert";
+import { Store } from 'react-notifications-component';
+import Block from "../../components/common/Block";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
+import Form from "../../components/common/Form";
 
-const TABS = {
+const TYPE = {
   STOCKS: "Stocks",
   FOREX: "Forex",
   FUTURES: "Futures",
 };
 
 export default function TradePage() {
+  const [formValid, setFormValid] = useState(false);
   const [form, setForm] = useState({
     symbol: "",
     userId: 1,
-    hartijaOdVrednostiTip: "Akcija",
-    kolicina: 0,
+    hartijaOdVrednostiTip: TYPE.STOCKS,
+    kolicina: null,
     akcija: "BUY",
     limitValue: 0,
     stopValue: 0,
@@ -32,9 +37,6 @@ export default function TradePage() {
     from: "",
     to: "",
   });
-
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
 
   const [id, setId] = useState(null);
 
@@ -54,9 +56,19 @@ export default function TradePage() {
     e.preventDefault();
     try {
       const msg = await buySellStocks(form);
-      setSuccess(true);
+      Store.addNotification({
+        title: "",
+        message: `Uspesno ste izvrsili trgovinu.`,
+        type: "success",
+        container: "top-right",
+      });
     } catch (e) {
-      setError(true);
+      Store.addNotification({
+        title: "Doslo je do greske",
+        message: `${e}`,
+        type: "danger",
+        container: "top-right",
+      });
     }
   }
 
@@ -72,146 +84,134 @@ export default function TradePage() {
   function renderStocks() {
     return (
       <>
-        {error && (
-          <Alert
-            design="danger"
-            text="Neuspesna kupovina"
-            onDismiss={() => setError(null)}
-          ></Alert>
-        )}
-        {success && (
-          <Alert
-            design="success"
-            text="Uspesna kupovina"
-            onDismiss={() => setSuccess(null)}
-          ></Alert>
-        )}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <div className="flex gap-3">
-            <div style={{ minWidth: "213px" }}>
-              <div className="pb-1">Hartija vrednosti</div>
-              <div className="flex">
-                <Select
-                  className="grow"
-                  onChange={(e) => onChange({ hartijaOdVrednostiTip: e })}
-                  options={["Akcija", "Forex", "Futures Ugovori"]}
-                  defValue="Akcija"
-                />
-              </div>
-            </div>
-          </div>
-          {(form.hartijaOdVrednostiTip == "Akcija" ||
-            form.hartijaOdVrednostiTip == "Futures Ugovori") && (
-            <div className="flex gap-3">
-              <div>
-                <div className="pb-1">Simbol</div>
-                <div className="flex">
-                  <TextField
-                    placeholder="npr. AAPL"
-                    className="grow"
-                    onChange={(e) => onChange({ symbol: e })}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-          {form.hartijaOdVrednostiTip == "Forex" && (
-            <div>
-              <div className="flex gap-4">
-                <div>
-                  <div className="pb-1">From</div>
-                  <TextField
-                    placeholder="npr. USD"
-                    onChange={(e) => onForexChange({ from: e })}
-                  />
-                </div>
-                <div>
-                  <div className="pb-1">To</div>
-                  <TextField
-                    placeholder="npr. RSD"
-                    onChange={(e) => onForexChange({ to: e })}
-                  />
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <div>
-                  <div className="pb-1">Kolicina</div>
-                  <div className="flex">
-                    <TextField
-                      className="grow"
-                      value={form["kolicina"]}
-                      onChange={(e) => onChange({ kolicina: e })}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          {(form.hartijaOdVrednostiTip == "Akcija" ||
-            form.hartijaOdVrednostiTip == "Futures Ugovori") && (
-            <div className="flex gap-3">
-              <div>
-                <div className="pb-1">Kolicina</div>
-                <div className="flex gap-3">
-                  <TextField
-                    className="grow"
-                    value={form["kolicina"]}
-                    onChange={(e) => onChange({ kolicina: e })}
-                  />
-                  <RadioGroup
-                    options={["BUY", "SELL"]}
-                    onChange={(e) => onChange({ akcija: e })}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-          <div className="flex gap-3">
-            <div>
-              <div className="pb-1">Limit</div>
-              <TextField
-                onChange={(e) => onChange({ limitValue: e })}
-                value={form["limitValue"]}
-              />
-            </div>
-            <div>
-              <div className="pb-1">Stop</div>
-              <TextField
-                onChange={(e) => onChange({ stopValue: e })}
-                value={form["stopValue"]}
-              />
-            </div>
-          </div>
-          <div>
-            <div className="text-xs">
-              * Ako su oba 0 onda se radi Market Order
-            </div>
-            <div className="text-xs">
-              * Ako je jedan stavljen, a drugi 0, radi se šta ste odabrail
-              (Limit ili Stop Order)
-            </div>
-            <div className="text-xs">
-              * Ako su oba stavljena, radi se Stop-Limit order
-            </div>
-          </div>
-          <Checkbox
-            label="All or none"
-            onChange={(e) => onChange({ allOrNoneFlag: e })}
-            value={form["allOrNoneFlag"]}
+        <div className="flex">
+          <TextField
+            label="Simbol"
+            placeholder="npr. AAPL"
+            className="grow"
+            onChange={(e) => onChange({ symbol: e })}
+            required
+          />
+        </div>
+        <div className="flex items-end gap-3">
+          <TextField
+            label="Kolicina"
+            className="grow"
+            value={form["kolicina"]}
+            onChange={(e) => onChange({ kolicina: e })}
+            validation={VALIDATION_PATTERN.NUMBER}
+            required
           />
           <div>
-            <Button label="Naruci" type="submit" />
+            <RadioGroup
+              options={["BUY", "SELL"]}
+              onChange={(e) => onChange({ akcija: e })}
+            />
           </div>
-        </form>
+        </div>
+      </>
+    )
+  }
+
+  function renderForex() {
+    return (
+      <>
+        <div className="flex gap-4">
+          <TextField
+            label="From"
+            placeholder="npr. USD"
+            onChange={(e) => onForexChange({ from: e })}
+            required
+          />
+          <TextField
+            label="To"
+            placeholder="npr. RSD"
+            onChange={(e) => onForexChange({ to: e })}
+            required
+          />
+        </div>
+        <div className="flex">
+          <TextField
+            label="Kolicina"
+            className="grow"
+            value={form["kolicina"]}
+            onChange={(e) => onChange({ kolicina: e })}
+            validation={VALIDATION_PATTERN.NUMBER}
+            required
+          />
+        </div>
+      </>
+    )
+  }
+
+  function renderShared() {
+    return (
+      <>
+        <div className="flex gap-3">
+          <TextField
+            label="Limit"
+            onChange={(e) => onChange({ limitValue: e })}
+            value={form["limitValue"]}
+            validation={VALIDATION_PATTERN.NUMBER}
+            required
+          />
+          <TextField
+            label="Stop"
+            onChange={(e) => onChange({ stopValue: e })}
+            value={form["stopValue"]}
+            validation={VALIDATION_PATTERN.NUMBER}
+            required
+          />
+        </div>
+        <div>
+          <div className="text-xs">
+            * Ako su oba 0 onda se radi Market Order
+          </div>
+          <div className="text-xs">
+            * Ako je jedan stavljen, a drugi 0, radi se šta ste odabrail
+            (Limit ili Stop Order)
+          </div>
+          <div className="text-xs">
+            * Ako su oba stavljena, radi se Stop-Limit order
+          </div>
+        </div>
+        <Checkbox
+          label="All or none"
+          onChange={(e) => onChange({ allOrNoneFlag: e })}
+          value={form["allOrNoneFlag"]}
+        />
+      </>
+    )
+  }
+
+
+  function renderForm() {
+    return (
+      <>
+        {(form.hartijaOdVrednostiTip === TYPE.STOCKS || form.hartijaOdVrednostiTip === TYPE.FUTURES) && renderStocks()}
+        {form.hartijaOdVrednostiTip === TYPE.FOREX && renderForex()}
+        {renderShared()}
       </>
     );
   }
 
   return (
-    <div>
-      <Card title="Trgovina" className="w-1/2">
-        {renderStocks()}
-      </Card>
-    </div>
+    <Block title="Trgovina">
+      <Form onSubmit={handleSubmit} onValid={setFormValid}>
+        <div className="flex flex-col gap-3">
+          <Select
+            label="Hartija vrednosti"
+            className="grow"
+            onChange={(e) => onChange({ hartijaOdVrednostiTip: e })}
+            options={[TYPE.STOCKS, TYPE.FOREX, TYPE.FUTURES]}
+            defValue={TYPE.STOCKS}
+          />
+          {form.hartijaOdVrednostiTip && renderForm()}
+          <div>
+            <Button label="Naruci" type="submit" disabled={!formValid} />
+          </div>
+        </div>
+      </Form>
+    </Block>
   );
 }
