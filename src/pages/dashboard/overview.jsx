@@ -16,6 +16,12 @@ import PlaceholderLoading from "react-placeholder-loading";
 import Button from "../../components/common/Button";
 import TextField from "../../components/common/TextField";
 import Alert from "../../components/common/Alert";
+import Block from "../../components/common/Block";
+import { useDispatch } from "react-redux";
+import { addForexAction, addStocksAction } from "../../redux/actions";
+import StockTickerWrapper from "../../components/StockTickerWrapper";
+import ForexTickerWrapper from "../../components/ForexTickerWrapper";
+import classNames from "classnames";
 
 const TABS = {
   STOCKS: "Stocks",
@@ -24,6 +30,7 @@ const TABS = {
 };
 
 export default function OverviewPage() {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(TABS.STOCKS);
 
   const [stocksRowData, setStocksRowData] = useState([]);
@@ -39,12 +46,19 @@ export default function OverviewPage() {
   const [helpSearchForex, setHelpSearchForex] = useState("");
 
   function createStockRow(r) {
+    const priceStyle = classNames(
+      "font-bold",
+      { "text-green-500": r['change'] >= 0 },
+      { "text-red-500": r['change'] < 0 },
+    )
+
+
     return [
       r["ticker"],
       r["price"],
       r["volume"],
-      r["change"],
-      r["changePercent"],
+      <span className={priceStyle}>{r["change"]}</span>,
+      <span className={priceStyle}>{r["changePercent"]}</span>,
       moment(r["time"]).format("DD.MM.YYYY HH:mm"),
     ];
   }
@@ -69,8 +83,10 @@ export default function OverviewPage() {
 
   async function getStocks() {
     const response = await getStocksApi();
+    dispatch(addStocksAction(response))
     let tmp = [];
     response.map((r) => {
+      if (r === null) return;
       tmp.push(createStockRow(r));
     });
     setStocksRowData(tmp);
@@ -78,8 +94,10 @@ export default function OverviewPage() {
 
   async function getForex() {
     const response = await getForexApi();
+    dispatch(addForexAction(response))
     let tmp = [];
     response.map((r) => {
+      if (r === null) return;
       tmp.push(createForexRow(r));
     });
     setForexData(tmp);
@@ -89,6 +107,7 @@ export default function OverviewPage() {
     const response = await getFuturesApi();
     let tmp = [];
     response.map((r) => {
+      if (r === null) return;
       tmp.push(createFuturesRow(r));
     });
     setFuturesData(tmp);
@@ -97,26 +116,27 @@ export default function OverviewPage() {
   function renderFutures() {
     return (
       <div class="flex flex-col gap-5">
-        <div className="flex justify-start gap-5">
+        <div className="flex justify-start">
           <TextField
             onChange={handleChangeData}
             type="text"
+            className="rounded-r-none"
             value={searchData}
             placeholder={"Symbol"}
           />
           <Button
             label="Pretrazi"
             design="primary"
+            className="rounded-l-none"
             type="submit"
             onClick={handleSearchData}
           />
-          <Button
-            label="X"
+          {searchData.length > 1 && <Button
+            label="Clear"
             design="inline"
             type="submit"
-            disabled={searchData == 0}
             onClick={clearSearchData}
-          />
+          />}
         </div>
         <Table
           headings={["Oznaka", "Cena", "Berza", "Poslednje azuriranje"]}
@@ -157,13 +177,12 @@ export default function OverviewPage() {
             type="submit"
             onClick={handleSearchData}
           />
-          <Button
-            label="X"
+          {searchData.length > 1 && <Button
+            label="Clear"
             design="inline"
             type="submit"
-            disabled={searchData == 0 && helpSearchForex == 0}
             onClick={clearSearchData}
-          />
+          />}
         </div>
         <Table
           headings={[
@@ -188,26 +207,30 @@ export default function OverviewPage() {
 
     return (
       <div class="flex flex-col gap-5">
-        <div className="flex justify-start gap-5">
-          <TextField
-            onChange={handleChangeData}
-            type="text"
-            value={searchData}
-            placeholder={"Symbol"}
-          />
-          <Button
-            label="Pretrazi"
-            design="primary"
-            type="submit"
-            onClick={handleSearchData}
-          />
-          <Button
-            label="X"
+        <div className="flex justify-start gap-0">
+          <form className="flex">
+            <TextField
+              onChange={handleChangeData}
+              type="text"
+              value={searchData}
+              className="rounded-r-none"
+              placeholder={"Symbol"}
+            />
+            <Button
+              label="Pretrazi"
+              design="primary"
+              type="submit"
+              className="rounded-l-none"
+              onClick={handleSearchData}
+            />
+          </form>
+          {searchData.length > 1 && <Button
+            label="Clear"
+            className="ml-3"
             design="inline"
             type="submit"
-            disabled={searchData == 0}
             onClick={clearSearchData}
-          />
+          />}
         </div>
         <Table
           headings={[
@@ -256,8 +279,9 @@ export default function OverviewPage() {
     setHelpSearchForex("");
   };
 
-  const handleSearchData = async () => {
-    console.log(searchData);
+  const handleSearchData = async (e) => {
+    e.preventDefault();
+
     if (activeTab == TABS.STOCKS) {
       try {
         const response = await getStocksSearchApi(searchData);
@@ -305,16 +329,20 @@ export default function OverviewPage() {
           onDismiss={() => setError(null)}
         ></Alert>
       )}
-      <Tab
-        tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
-        onChange={function (e) {
-          setActiveTab(e);
-          clearSearchData(e);
-        }}
-      />
-      {activeTab === TABS.STOCKS && renderStocks()}
-      {activeTab === TABS.FOREX && renderForex()}
-      {activeTab === TABS.FUTURES && renderFutures()}
+      {activeTab === TABS.STOCKS && <StockTickerWrapper />}
+      {activeTab === TABS.FOREX && <ForexTickerWrapper />}
+      <Block title="Berza">
+        <Tab
+          tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
+          onChange={function (e) {
+            setActiveTab(e);
+            clearSearchData(e);
+          }}
+        />
+        {activeTab === TABS.STOCKS && renderStocks()}
+        {activeTab === TABS.FOREX && renderForex()}
+        {activeTab === TABS.FUTURES && renderFutures()}
+      </Block>
       {selectedStock !== null && (
         <StocksModal
           ticker={selectedStock}

@@ -1,19 +1,41 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { URLS } from "../routes";
-import Button, { BUTTON_DESIGN } from "./common/Button";
 import { useSelector } from "react-redux";
 import { getUserSelector } from "../redux/selectors";
 import { logoutAction } from "../clients/client";
+import Logo from "./common/Logo";
+import HoverMenu, { HoverMenuItem } from "./common/HoverMenu";
 
-function Header(props) {
+function HeaderItem(props) {
+    const location = useLocation()
+
+    const style = classNames(
+        "px-4 mx-1",
+        "rounded",
+        "hover:bg-indigo-700",
+        { "!bg-indigo-900": location.pathname === `/${props.path}` },
+    )
+
+    return (
+        <Link className={style} to={`${props.path}`}>{props.text}</Link>
+    )
+}
+
+HeaderItem.propTypes = {
+    path: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+}
+
+function Header() {
     const user = useSelector(getUserSelector)
     const [username, setUsername] = useState("Username")
 
     const style = classNames(
         "inset-x-0 top-0", //position
-        "bg-gray-400", // background
+        "bg-indigo-500", // background
         "text-base leading-9 text-white font-semibold", // font
         "py-3", // spacing
     )
@@ -22,25 +44,37 @@ function Header(props) {
         if (user) setUsername(user['username'])
     }, [user])
 
+    const userItem = (
+        <div className="flex items-center">
+            <div className="mr-3">
+                {username}
+            </div>
+            <div className="bg-white rounded-full p-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="color-white" viewBox="0 0 24 24" stroke="color-indigo-500" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+            </div>
+        </div>
+    )
 
     return (
         <div data-testid="component-header" className={style}>
             <div className="flex justify-between">
-                <div className="flex gap-8">
-                    <div className="w-60 pl-5 mr-2">
-                        <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M14.6667 30.1667V37.9167M25 30.1667V37.9167M35.3333 30.1667V37.9167M1.75 48.25H48.25M1.75 19.8333H48.25M1.75 12.0833L25 1.75L48.25 12.0833H1.75ZM4.33333 19.8333H45.6667V48.25H4.33333V19.8333Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                <div className="flex">
+                    <div className="pl-5 mr-2">
+                        <Link to={`${URLS.DASHBOARD.STOCK}`}>
+                            <Logo size={10} />
+                        </Link>
                     </div>
-                    <Link to={`${URLS.DASHBOARD.INDEX}`}>Pocetna</Link>
-                    <Link to={`${URLS.DASHBOARD.TRADE}`}>Trgovina</Link>
-                    <Link to={`${URLS.DASHBOARD.ORDERS}`}>Narudzbine</Link>
-                    <Link to={`${URLS.DASHBOARD.LIST.INDEX}`}>Spisak zaposlenih</Link>
+                    <HeaderItem path={URLS.DASHBOARD.STOCK} text="Berza" />
+                    <HeaderItem path={URLS.DASHBOARD.TRADE} text="Trgovina" />
+                    <HeaderItem path={URLS.DASHBOARD.ORDERS} text="Narudzbine" />
+                    <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni" />
                 </div>
-                <div className="flex gap-4">
-                    <Link to={`${URLS.DASHBOARD.INFORMATION}`} className="pr-8 !text-white" > {username} </Link>
-                    <Link to={`${URLS.DASHBOARD.INDEX}`} className="pr-8 !text-white" onClick={() => logoutAction()}>Logout</Link>
-                </div>
+                <HoverMenu className="mr-5" text={userItem}>
+                    <HoverMenuItem text="Profile" to={`${URLS.DASHBOARD.INFORMATION}`} />
+                    <HoverMenuItem text="Logout" to={`${URLS.DASHBOARD.INDEX}`} onClick={() => logoutAction()} />
+                </HoverMenu>
             </div>
         </div>
     );

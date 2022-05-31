@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 function RadioButton(props) {
     const style = classNames(
-        "p-3",
+        "px-3 py-2",
         "cursor-pointer",
         "border first:border-l border-l-0 border-gray-300 first:rounded-l last:rounded-r border-collapse",
         "bg-white hover:bg-gray-100",

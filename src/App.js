@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUserApi } from "./clients/client";
 import { addUserAction } from "./redux/actions";
+import nightwind from "nightwind/helper";
 
 function App(props) {
 	const dispatch = useDispatch();
@@ -17,7 +18,8 @@ function App(props) {
 	}, []);
 
 	return (
-		<div data-testid="app" className="h-screen ">
+		<div data-testid="app" className="h-screen bg-slate-50 text-slate-700">
+			<script dangerouslySetInnerHTML={{ __html: nightwind.init() }} />
 			<Outlet />
 		</div>
 	);

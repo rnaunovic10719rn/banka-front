@@ -1,9 +1,7 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DashboardPageLayout from "./components/DashboardPageLayout";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HeaderPageLayout from "./components/HeaderPageLayout";
 import InformationPage from "./pages/dashboard/information";
-import PrivacyPage from "./pages/dashboard/privacy";
 import ListPage from "./pages/dashboard/list";
 import PageLayout from "./components/PageLayout";
 import App from "./App";
@@ -15,11 +13,11 @@ import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
 import OverviewStockPage from "./pages/dashboard/overview-stock";
 import ChangePasswordPage from "./pages/dashboard/changepass";
-import EmailPage from "./pages/enter-email";
 
 export const URLS = {
 	DASHBOARD: {
 		INDEX: "/",
+		STOCK: "berza",
 		INFORMATION: "information",
 		PRIVACY: "privacy",
 		LIST: {
@@ -48,20 +46,11 @@ export function AppRoutes() {
 		<BrowserRouter>
 			<Routes>
 				<Route element={<App />}>
+					<Route path={URLS.DASHBOARD.INDEX} element={<Navigate to={URLS.DASHBOARD.STOCK} replace />} />
 					<Route element={<HeaderPageLayout />}>
 						<Route
-							path={URLS.DASHBOARD.INDEX}
+							path={URLS.DASHBOARD.STOCK}
 							element={<OverviewPage />}
-						/>
-					</Route>
-					<Route element={<DashboardPageLayout />}>
-						<Route
-							path={URLS.DASHBOARD.INFORMATION}
-							element={<InformationPage />}
-						/>
-						<Route
-							path={URLS.DASHBOARD.PRIVACY}
-							element={<PrivacyPage />}
 						/>
 					</Route>
 					<Route element={<HeaderPageLayout />}>
@@ -93,10 +82,13 @@ export function AppRoutes() {
 							path={URLS.DASHBOARD.SYSTEM}
 							element={<SystemPage />}
 						/>
+						<Route
+							path={URLS.DASHBOARD.INFORMATION}
+							element={<InformationPage />}
+						/>
 					</Route>
 					<Route element={<PageLayout />}>
 						<Route path={URLS.LOGIN} element={<LoginPage />} />
-						<Route path={URLS.EMAIL} element={<EmailPage />} />
 						<Route path={URLS.DASHBOARD.CHANGEPASSWORD.REGULAR} element={<ChangePasswordPage />} />
 						<Route path={URLS.DASHBOARD.CHANGEPASSWORD.WITH_TOKEN} element={<ChangePasswordPage />} />
 					</Route>

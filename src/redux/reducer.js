@@ -1,5 +1,7 @@
 import {
 	ADD_ERROR_ACTION,
+	ADD_FOREX_ACTION,
+	ADD_STOCKS_ACTION,
 	ADD_USER_ACTION,
 	CLEAR_ERROR_ACTION,
 } from "./actions";
@@ -7,6 +9,8 @@ import {
 const initialState = {
 	user: null,
 	error: null,
+	stocks: [],
+	forex: [],
 };
 
 function addUser(state, action) {
@@ -30,6 +34,20 @@ function clearError(state) {
 	};
 }
 
+function addStocks(state, action) {
+	return {
+		...state,
+		stocks: action.value,
+	};
+}
+
+function addForex(state, action) {
+	return {
+		...state,
+		forex: action.value,
+	};
+}
+
 const appReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ADD_USER_ACTION:
@@ -38,6 +56,10 @@ const appReducer = (state = initialState, action) => {
 			return addError(state, action);
 		case CLEAR_ERROR_ACTION:
 			return clearError(state);
+		case ADD_STOCKS_ACTION:
+			return addStocks(state, action);
+		case ADD_FOREX_ACTION:
+			return addForex(state, action);
 		default:
 			return state;
 	}

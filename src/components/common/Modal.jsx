@@ -39,7 +39,7 @@ function Modal(props) {
                         {props.children}
                         {props.cta &&
                             <div className="flex justify-end mt-5">
-                                <Button label={"Click"} />
+                                <Button label={props.ctaText} onClick={props.cta} />
                             </div>
                         }
                     </div>
@@ -55,8 +55,13 @@ Modal.propTypes = {
     title: PropTypes.string.isRequired,
     children: PropTypes.node,
     cta: PropTypes.func,
+    ctaText: PropTypes.string,
     onClose: PropTypes.func.isRequired,
     className: PropTypes.string,
+}
+
+Modal.defaultProps = {
+    ctaText: "Click",
 }
 
 export default Modal

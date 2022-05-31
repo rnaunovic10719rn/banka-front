@@ -1,0 +1,4 @@
+export const BANK_POSITIONS = {
+	ADMIN_GL: "ROLE_GL_ADMIN",
+	ADMIN: "ROLE_ADMIN",
+};
