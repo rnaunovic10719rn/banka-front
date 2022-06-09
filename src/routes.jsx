@@ -13,6 +13,7 @@ import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
 import OverviewStockPage from "./pages/dashboard/overview-stock";
 import ChangePasswordPage from "./pages/dashboard/changepass";
+import ApproveTransactionPage from "./pages/dashboard/transactionappr";
 
 export const URLS = {
 	DASHBOARD: {
@@ -35,6 +36,7 @@ export const URLS = {
 		TRADE: "trade",
 		ORDERS: "orders",
 		SYSTEM: "system",
+		APPROVE_TRANSACTION: "approve-transaction",
 	},
 	LOGIN: "login",
 	REGISTER: "register",
@@ -85,6 +87,10 @@ export function AppRoutes() {
 						<Route
 							path={URLS.DASHBOARD.INFORMATION}
 							element={<InformationPage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.APPROVE_TRANSACTION}
+							element={<ApproveTransactionPage />}
 						/>
 					</Route>
 					<Route element={<PageLayout />}>
