@@ -11,7 +11,6 @@ import TradePage from "./pages/dashboard/trade";
 import OverviewPage from "./pages/dashboard/overview";
 import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
-import OverviewStockPage from "./pages/dashboard/overview-stock";
 import ChangePasswordPage from "./pages/dashboard/changepass";
 
 export const URLS = {
@@ -70,10 +69,6 @@ export function AppRoutes() {
 							path={URLS.DASHBOARD.OVERVIEW.INDEX}
 							element={<OverviewPage />}
 						></Route>
-						<Route
-							path={URLS.DASHBOARD.OVERVIEW.STOCK}
-							element={<OverviewStockPage />}
-						/>
 						<Route
 							path={URLS.DASHBOARD.ORDERS}
 							element={<OrdersPage />}

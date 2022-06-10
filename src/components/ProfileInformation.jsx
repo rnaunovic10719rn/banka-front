@@ -19,6 +19,7 @@ function ProfileInformation() {
         jmbg: "",
         brTelefon: "",
         pozicija: BANK_POSITIONS.ADMIN,
+        limit: "",
     });
 
     const [error, setError] = useState(null);
@@ -57,6 +58,7 @@ function ProfileInformation() {
             jmbg: user["jmbg"],
             brTelefon: user["brTelefon"],
             pozicija: user["role"]["name"],
+            limit: user["limit"]
         })
     }, [user])
 
@@ -76,6 +78,12 @@ function ProfileInformation() {
                     onDismiss={() => setSuccess(null)}
                 ></Alert>
             )}
+            <div className="flex items-center">
+                <div className="w-[100px]">Limit</div>
+                <div>
+                    {form && form["limit"]}
+                </div>
+            </div>
             <Card title="Osnovno">
                 <div class="flex flex-col gap-5">
                     <div className="flex justify-between items-center">
