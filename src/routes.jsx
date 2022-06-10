@@ -14,6 +14,9 @@ import OrdersPage from "./pages/dashboard/order";
 import OverviewStockPage from "./pages/dashboard/overview-stock";
 import ChangePasswordPage from "./pages/dashboard/changepass";
 import PaymentPage from "./pages/dashboard/payment";
+import CapitalPage from "./pages/dashboard/capital";
+import ApproveTransactionPage from "./pages/dashboard/transactionappr";
+import CapitalSecurityPage from "./pages/dashboard/capitalsecurity";
 
 export const URLS = {
   DASHBOARD: {
@@ -37,6 +40,11 @@ export const URLS = {
     ORDERS: "orders",
     SYSTEM: "system",
     PAYMENT: "payment",
+	APPROVE_TRANSACTION: "approve-transaction",
+	CAPITAL: {
+    INDEX: "capital",
+    SPECIFIC: "capital/:security"
+  },
   },
   LOGIN: "login",
   REGISTER: "register",
@@ -74,6 +82,14 @@ export function AppRoutes() {
 			<Route
 				path={URLS.DASHBOARD.APPROVE_TRANSACTION}
 				element={<ApproveTransactionPage />}
+			/>
+			<Route
+				path={URLS.DASHBOARD.CAPITAL.INDEX}
+				element={<CapitalPage />}
+			/>
+      <Route
+				path={URLS.DASHBOARD.CAPITAL.SPECIFIC}
+				element={<CapitalSecurityPage />}
 			/>
             <Route path={URLS.DASHBOARD.SYSTEM} element={<SystemPage />} />
             <Route
