@@ -11,6 +11,7 @@ import { BANK_POSITIONS } from "../utils";
 import { addUserAction } from "../redux/actions";
 
 function ProfileInformation() {
+
     const user = useSelector(getUserSelector)
     const [form, setForm] = useState({
         ime: "",
@@ -22,32 +23,32 @@ function ProfileInformation() {
         limit: "",
     });
 
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    async function getUser() {
-        const response = await getUserApi();
-        dispatch(addUserAction(response));
+  async function getUser() {
+    const response = await getUserApi();
+    dispatch(addUserAction(response));
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const onChange = (event) => {
+    setForm({ ...form, ...event });
+  };
+
+  async function onSubmit() {
+    try {
+      await editUserAction(form);
+      setSuccess(true);
+    } catch (e) {
+      setError(true);
     }
-
-    useEffect(() => {
-        getUser();
-    }, []);
-
-    const onChange = (event) => {
-        setForm({ ...form, ...event });
-    };
-
-    async function onSubmit() {
-        try {
-            await editUserAction(form);
-            setSuccess(true);
-        } catch (e) {
-            setError(true);
-        }
-    }
+  }
 
     useEffect(() => {
         if (!user) return
@@ -149,8 +150,8 @@ function ProfileInformation() {
                     </div>
                 </div>
             </Card>
-        </div>
-    );
+    </div>
+  );
 }
 
-export default ProfileInformation
+export default ProfileInformation;
