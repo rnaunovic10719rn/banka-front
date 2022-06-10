@@ -30,8 +30,7 @@ export default function ListPage() {
         window.location.reload();
     }
 
-    async function resetLimit(id){
-        console.log("nesto")
+    async function resetLimit(id) {
         await resetLimitUser(id);
     }
 

@@ -32,9 +32,6 @@ function UserModal(props) {
     } catch (e) {}
   }
 
-
-
-
     const user = useSelector(getUserSelector);
     const dispatch = useDispatch();
 
@@ -46,55 +43,6 @@ function UserModal(props) {
     useEffect(() => {
         getUser();
     }, []);
-
-
-    function renderDetails() {
-
-        console.log(props.user);
-
-        return (
-            <div className="flex flex-col gap-5">
-                <div className="flex justify-between items-center">
-                    <div className="w-[75px]">Ime</div>
-                    <TextField className="grow" value={form.ime} onChange={(e) => setForm({ ...form, ime: e })} />
-                </div>
-                <div className="flex justify-between items-center">
-                    <div className="w-[75px]">Prezime</div>
-                    <TextField className="grow" value={form.prezime} onChange={(e) => setForm({ ...form, prezime: e })} />
-                </div>
-                <div className="flex justify-between items-center">
-                    <div className="w-[75px]">E-mail</div>
-                    <TextField className="grow" value={form.email} onChange={(e) => setForm({ ...form, email: e })} />
-                </div>
-                <div className="flex justify-between items-center">
-                    <div className="w-[75px]">JMBG</div>
-                    <TextField className="grow" value={form.jmbg} onChange={(e) => setForm({ ...form, jmbg: e })} />
-                </div>
-                <div className="flex justify-between items-center">
-                    <div className="w-[75px]">Br. telefona</div>
-                    <TextField className="grow" value={form.brTelefon} onChange={(e) => setForm({ ...form, brTelefon: e })} />
-                </div>
-                <div className="flex justify-between items-center">
-                    <div className="w-[75px]">Limit</div>
-                    {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_SUPERVISOR") &&
-                        <TextField className="grow" value={form.limit} onChange={(e) => setForm({...form, limit: e})}/>}
-                </div>
-                <div className="flex justify-between items-center">
-                    <div className="w-[75px]">Pozicija</div>
-                    <Select className="grow" options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL]} defValue={form.pozicija} onChange={(e) => setForm({ ...form, pozicija: e })} />
-                </div>
-                <div className="flex justify-between items-center">
-                    <div className="w-[75px]"></div>
-                    {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_SUPERVISOR") && <Checkbox
-                        label="Zahtevati odobravanje svake porudžbine"
-                        value={form.needsSupervisorPermission}
-                        onChange={(e) => setForm({...form, needsSupervisorPermission: e})}
-                    />}
-                </div>
-                <Button label="Izmeni" onClick={handleSubmit} />
-            </div>
-        )
-    }
 
   function renderDetails() {
     console.log(props.user);
@@ -142,6 +90,11 @@ function UserModal(props) {
           />
         </div>
         <div className="flex justify-between items-center">
+          <div className="w-[75px]">Limit</div>
+            {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_SUPERVISOR") &&
+              <TextField className="grow" value={form.limit} onChange={(e) => setForm({...form, limit: e})}/>}
+        </div>
+        <div className="flex justify-between items-center">
           <div className="w-[75px]">Pozicija</div>
           <Select
             className="grow"
@@ -154,6 +107,14 @@ function UserModal(props) {
             defValue={form.pozicija}
             onChange={(e) => setForm({ ...form, pozicija: e })}
           />
+        </div>
+        <div className="flex justify-between items-center">
+          <div className="w-[75px]"></div>
+          {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_SUPERVISOR") && <Checkbox
+              label="Zahtevati odobravanje svake porudžbine"
+              value={form.needsSupervisorPermission}
+              onChange={(e) => setForm({...form, needsSupervisorPermission: e})}
+          />}
         </div>
         <Button label="Izmeni" onClick={handleSubmit} />
       </div>

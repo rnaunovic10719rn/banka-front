@@ -119,7 +119,7 @@ function ProfileInformation() {
                         <Select
                             className="grow"
                             onChange={(e) => onChange({ pozicija: e })}
-                            options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL]}
+                            options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL, BANK_POSITIONS.ROLE_AGENT,  BANK_POSITIONS.ROLE_SUPERVISOR ]}
                             defValue={form && form["pozicija"]}
                         />
                     </div>
