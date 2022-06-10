@@ -80,7 +80,7 @@ function ProfileInformation() {
                 ></Alert>
             )}
             <div className="flex items-center">
-                <div className="w-[100px]">Limit</div>
+                <div className="w-[200px]">Limit</div>
                 <div>
                     {form && form["limit"]}
                 </div>
