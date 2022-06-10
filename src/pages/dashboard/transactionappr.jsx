@@ -27,7 +27,7 @@ export default function ApproveTransactionPage() {
         <>
         {  user && (user["role"]["name"] != "ROLE_ADMIN") &&
         (<Block className="flex flex-col gap-4" title="Odobravanje porudžbina" cta={<Select className="grow" options={["Sve", "Završene", "Odobrene", "Odbijene", "Na čekanju"]}/>}>
-            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Odobrena', 'Odobrio', 'Završena', 'Posl. modifikacija']} />
+            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Odobrena', 'Odobrio', 'Završena', 'Posl. modifikacija', 'Opcije', '']} />
         </Block>)
         }
         </>
