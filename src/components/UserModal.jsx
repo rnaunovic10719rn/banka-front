@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Modal from "./common/Modal";
-import { editUserByIdAction } from "../clients/client";
+import {editUserByIdAction, getUserApi} from "../clients/client";
 import { BANK_POSITIONS } from "../pages/dashboard/newuser";
 import TextField from "../components/common/TextField";
 import Button from "../components/common/Button";
 import Select from "../components/common/Select";
+import Checkbox from "./common/Checkbox";
+import {useDispatch, useSelector} from "react-redux";
+import {addUserAction} from "../redux/actions";
+import {getUserSelector} from "../redux/selectors";
+
 
 function UserModal(props) {
-  const [form, setForm] = useState({
-    ime: props.user ? props.user.ime : "",
-    prezime: props.user ? props.user.prezime : "",
-    email: props.user ? props.user.email : "",
-    jmbg: props.user ? props.user.jmbg : "",
-    brTelefon: props.user ? props.user.brTelefon : "",
-    pozicija: props.user ? props.user.role.name : BANK_POSITIONS.ADMIN,
-  });
+
+    const [form, setForm] = useState({
+        ime: props.user ? props.user.ime : "",
+        prezime: props.user ? props.user.prezime : "",
+        email: props.user ? props.user.email : "",
+        jmbg: props.user ? props.user.jmbg : "",
+        brTelefon: props.user ? props.user.brTelefon : "",
+        limit:props.user ? props.user.limit : "",
+        pozicija: props.user ? props.user.role.name : BANK_POSITIONS.ADMIN,
+        needsSupervisorPermission: props.user ? props.user.needsSupervisorPermission : false,
+    })
 
   async function handleSubmit() {
     try {
@@ -23,6 +31,18 @@ function UserModal(props) {
       props.onChange();
     } catch (e) {}
   }
+
+    const user = useSelector(getUserSelector);
+    const dispatch = useDispatch();
+
+    async function getUser() {
+        const response = await getUserApi();
+        dispatch(addUserAction(response));
+    }
+
+    useEffect(() => {
+        getUser();
+    }, []);
 
   function renderDetails() {
     console.log(props.user);
@@ -70,6 +90,11 @@ function UserModal(props) {
           />
         </div>
         <div className="flex justify-between items-center">
+          <div className="w-[75px]">Limit</div>
+            {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_SUPERVISOR") &&
+              <TextField className="grow" value={form.limit} onChange={(e) => setForm({...form, limit: e})}/>}
+        </div>
+        <div className="flex justify-between items-center">
           <div className="w-[75px]">Pozicija</div>
           <Select
             className="grow"
@@ -82,6 +107,14 @@ function UserModal(props) {
             defValue={form.pozicija}
             onChange={(e) => setForm({ ...form, pozicija: e })}
           />
+        </div>
+        <div className="flex justify-between items-center">
+          <div className="w-[75px]"></div>
+          {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_SUPERVISOR") && <Checkbox
+              label="Zahtevati odobravanje svake porudžbine"
+              value={form.needsSupervisorPermission}
+              onChange={(e) => setForm({...form, needsSupervisorPermission: e})}
+          />}
         </div>
         <Button label="Izmeni" onClick={handleSubmit} />
       </div>

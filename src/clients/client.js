@@ -119,7 +119,12 @@ export function hasTwoFactor(username) {
 	return postWithoutTokenAndBody(url);
 }
 
-//export async function savePassAction(password1,password2, otp = null){
-//	let url = new URL(BASE_URL + "/login");
-//	let params = new URLSearchParams(url.search);
-//}
+export function resetLimitUser(id) {
+	let url = new URL(BASE_URL + "/limit-reset/" + id);
+	return patch(url, id);
+}
+//
+// //export async function savePassAction(password1,password2, otp = null){
+// //	let url = new URL(BASE_URL + "/login");
+// //	let params = new URLSearchParams(url.search);
+// //}
