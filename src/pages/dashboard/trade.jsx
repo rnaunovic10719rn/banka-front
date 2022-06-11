@@ -21,9 +21,9 @@ const TYPE = {
 
 export default function TradePage() {
   const [formValid, setFormValid] = useState(false);
+  const [securityType, setSecurityType] = useState(TYPE.STOCKS);
   const [form, setForm] = useState({
     symbol: "",
-    userId: 1,
     hartijaOdVrednostiTip: TYPE.STOCKS,
     kolicina: null,
     akcija: "BUY",
@@ -54,7 +54,9 @@ export default function TradePage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     try {
+      console.log(form);
       const msg = await buySellStocks(form);
       Store.addNotification({
         title: "",
@@ -80,6 +82,20 @@ export default function TradePage() {
   useEffect(() => {
     setForm({ ...form, symbol: forexForm.from + " " + forexForm.to });
   }, [forexForm]);
+
+  useEffect(() => {
+    switch (securityType) {
+      case TYPE.STOCKS:
+        setForm({...form, hartijaOdVrednostiTip: "AKCIJA"})
+        break;
+      case TYPE.FOREX:
+        setForm({...form, hartijaOdVrednostiTip: "FOREX"})
+        break;
+      case TYPE.FUTURES:
+        setForm({...form, hartijaOdVrednostiTip: "FUTURES_UGOVOR"})
+        break;
+    }
+  }, [securityType]);
 
   function renderStocks() {
     return (
@@ -187,10 +203,10 @@ export default function TradePage() {
   function renderForm() {
     return (
       <>
-        {(form.hartijaOdVrednostiTip === TYPE.STOCKS ||
-          form.hartijaOdVrednostiTip === TYPE.FUTURES) &&
+        {(securityType === TYPE.STOCKS ||
+          securityType === TYPE.FUTURES) &&
           renderStocks()}
-        {form.hartijaOdVrednostiTip === TYPE.FOREX && renderForex()}
+        {securityType === TYPE.FOREX && renderForex()}
         {renderShared()}
       </>
     );
@@ -203,11 +219,11 @@ export default function TradePage() {
           <Select
             label="Hartija vrednosti"
             className="grow"
-            onChange={(e) => onChange({ hartijaOdVrednostiTip: e })}
+            onChange={(e) => setSecurityType(e)}
             options={[TYPE.STOCKS, TYPE.FOREX, TYPE.FUTURES]}
             defValue={TYPE.STOCKS}
           />
-          {form.hartijaOdVrednostiTip && renderForm()}
+          {securityType && renderForm()}
           <div>
             <Button label="Naruci" type="submit" disabled={!formValid} />
           </div>
