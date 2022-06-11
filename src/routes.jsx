@@ -23,7 +23,6 @@ export const URLS = {
     INDEX: "/",
     STOCK: "berza",
     INFORMATION: "information",
-    PRIVACY: "privacy",
     LIST: {
       INDEX: "list",
       NEW_USER: "list/new-user",

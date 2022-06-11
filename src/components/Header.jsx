@@ -77,7 +77,7 @@ function Header() {
           <HeaderItem path={URLS.DASHBOARD.STOCK} text="Berza" />
           <HeaderItem path={URLS.DASHBOARD.TRADE} text="Trgovina" />
           <HeaderItem path={URLS.DASHBOARD.ORDERS} text="Narudzbine" />
-          <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni" />
+          {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_GL_ADMIN") && <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni" />}
           <HeaderItem path={URLS.DASHBOARD.PAYMENT} text="Placanja" />
         </div>
         <HoverMenu className="mr-5" text={userItem}>
