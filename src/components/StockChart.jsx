@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Area, ResponsiveContainer } from 'recharts'
-import RadioGroup from "./common/RadioGroup";
 import classNames from "classnames";
-import EmptyState from "./common/EmptyState";
 
 export const CHART_FILTERS = {
     ONE_DAY: "1d",
@@ -22,18 +20,12 @@ export const CHART_COLORS = {
 }
 
 function StockChart(props) {
-    const [chartTimeframe, setChartTimeframe] = useState(CHART_FILTERS.ONE_DAY)
     const [data, setData] = useState([])
     const [color, setColor] = useState(CHART_COLORS.GREEN)
 
     const style = classNames(
         props.className,
     )
-
-    function handleChartChange(e) {
-        setChartTimeframe(e)
-        props.onChange(e)
-    }
 
     useEffect(() => {
         if (!props.data || props.data.length === 0) return
@@ -47,7 +39,7 @@ function StockChart(props) {
         }
 
         temp.map(item => {
-            switch (chartTimeframe) {
+            switch (props.chartTimeframe) {
                 case CHART_FILTERS.ONE_DAY:
                     item['time'] = moment(item['time']).format("HH:mm")
                     break
@@ -66,16 +58,6 @@ function StockChart(props) {
 
     return (
         <div className={style}>
-            <div className="mb-5 flex justify-end">
-                <RadioGroup name="chart" options={[
-                    CHART_FILTERS.ONE_DAY,
-                    CHART_FILTERS.FIVE_DAYS,
-                    CHART_FILTERS.ONE_MONTH,
-                    CHART_FILTERS.SIX_MONTHS,
-                    CHART_FILTERS.ONE_YEAR,
-                    CHART_FILTERS.ALL,
-                ]} onChange={handleChartChange} />
-            </div>
             <ResponsiveContainer height={250}>
                 <AreaChart
                     width={730}
@@ -109,6 +91,7 @@ StockChart.propTypes = {
     ticker: PropTypes.string.isRequired,
     data: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,
+    chartTimeframe: PropTypes.any,
     decimals: PropTypes.number,
     className: PropTypes.string,
 }
