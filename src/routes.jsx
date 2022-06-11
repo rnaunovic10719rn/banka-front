@@ -14,13 +14,15 @@ import OrdersPage from "./pages/dashboard/order";
 
 import ChangePasswordPage from "./pages/dashboard/changepass";
 import PaymentPage from "./pages/dashboard/payment";
+import CapitalPage from "./pages/dashboard/capital";
+import ApproveTransactionPage from "./pages/dashboard/transactionappr";
+import CapitalSecurityPage from "./pages/dashboard/capitalsecurity";
 
 export const URLS = {
   DASHBOARD: {
     INDEX: "/",
     STOCK: "berza",
     INFORMATION: "information",
-    PRIVACY: "privacy",
     LIST: {
       INDEX: "list",
       NEW_USER: "list/new-user",
@@ -36,7 +38,12 @@ export const URLS = {
     TRADE: "trade",
     ORDERS: "orders",
     SYSTEM: "system",
-    PAYEMNT: "payment",
+    PAYMENT: "payment",
+	APPROVE_TRANSACTION: "approve-transaction",
+	CAPITAL: {
+    INDEX: "capital",
+    SPECIFIC: "capital/:security"
+  },
   },
   LOGIN: "login",
   REGISTER: "register",
@@ -67,12 +74,24 @@ export function AppRoutes() {
               element={<OverviewPage />}
             ></Route>
             <Route path={URLS.DASHBOARD.ORDERS} element={<OrdersPage />} />
+			<Route
+				path={URLS.DASHBOARD.APPROVE_TRANSACTION}
+				element={<ApproveTransactionPage />}
+			/>
+			<Route
+				path={URLS.DASHBOARD.CAPITAL.INDEX}
+				element={<CapitalPage />}
+			/>
+      <Route
+				path={URLS.DASHBOARD.CAPITAL.SPECIFIC}
+				element={<CapitalSecurityPage />}
+			/>
             <Route path={URLS.DASHBOARD.SYSTEM} element={<SystemPage />} />
             <Route
               path={URLS.DASHBOARD.INFORMATION}
               element={<InformationPage />}
             />
-            <Route path={URLS.DASHBOARD.PAYEMNT} element={<PaymentPage />} />
+            <Route path={URLS.DASHBOARD.PAYMENT} element={<PaymentPage />} />
           </Route>
           <Route element={<PageLayout />}>
             <Route path={URLS.LOGIN} element={<LoginPage />} />

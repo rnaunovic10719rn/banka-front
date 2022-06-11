@@ -43,7 +43,7 @@ export default function OrdersPage() {
     
         return (
             <div className="flex flex-col">
-            <h3 className="text-xl text-gray-500 pb-5">Pregled</h3>
+            <h3 className="text-xl text-gray-500 pb-5">Pregled svih narudžbina</h3>
             <Table
                 headings={[
                     "Tip hartije",
@@ -52,7 +52,7 @@ export default function OrdersPage() {
                     "Kolicina",
                     "Cena",
                   ]}
-                  rows={data}
+                  rows={ordersRowData}
                 pagination
             />
            </div>
