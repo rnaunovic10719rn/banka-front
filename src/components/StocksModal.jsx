@@ -10,6 +10,7 @@ import EmptyState from "./common/EmptyState";
 import classNames from "classnames";
 import moment from "moment";
 import numeral from "numeral";
+import RadioGroup from "./common/RadioGroup";
 
 function StocksModal(props) {
     const [details, setDetails] = useState(null)
@@ -28,6 +29,11 @@ function StocksModal(props) {
 
     function toCurrency(number) {
         return numeral(number).format("$0,0.00")
+    }
+
+    function handleChartChange(e) {
+        setChartFilter(e)
+        props.onChange(e)
     }
 
     function renderDetails() {
@@ -57,22 +63,31 @@ function StocksModal(props) {
                             <div className="text-lg">{details.opisHartije}</div>
                             <div className={"text-4xl font-bold"}>{toCurrency(details.price)}</div>
                             <div className={priceStyle + " font-bold text-lg"}>{details.changePercent}% - danas</div>
-                            <div className="text-sm">Last updated: <span className="italic">{moment(details.time).format("D MMM YYYY HH:MM")}</span></div>
+                            <div className="text-sm">Poslednje ažuriranje: <span className="italic">{moment(details.time).format("D MMM YYYY HH:mm")}</span></div>
                         </div>
                         <div className="col-span-2">
-
-                            {chartData.length !== 0 && <StocksChart ticker={props.ticker} data={chartData} onChange={(e) => { setChartFilter(e); }} />}
+                        <div className="mb-5 flex justify-end">
+                            <RadioGroup name="chart" options={[
+                                CHART_FILTERS.ONE_DAY,
+                                CHART_FILTERS.FIVE_DAYS,
+                                CHART_FILTERS.ONE_MONTH,
+                                CHART_FILTERS.SIX_MONTHS,
+                                CHART_FILTERS.ONE_YEAR,
+                                CHART_FILTERS.ALL,
+                            ]} onChange={handleChartChange} />
+                        </div>
+                            {chartData.length !== 0 && <StocksChart ticker={props.ticker} data={chartData} chartTimeframe={chartFilter} onChange={(e) => { setChartFilter(e); }} />}
                             {chartData.length === 0 && <EmptyState text="No data." />}
                         </div>
                     </div>
                 </Card>
                 <Card title="Details" className="grid grid-cols-2 gap-10">
                     <div className="flex flex-col">
-                        {renderRow("Change:", <span className={priceStyle}>${toCurrency(details['change'])} (${details['changePercent']}%)</span>)}
+                        {renderRow("Change:", <span className={priceStyle}>{toCurrency(details['change'])} ({details['changePercent']}%)</span>)}
                         {renderRow("Open:", toCurrency(details['open']))}
                         {renderRow("Low:", toCurrency(details['low']))}
                         {renderRow("High:", toCurrency(details['high']))}
-                        {renderRow("Previous close:", details['previousClose'])}
+                        {renderRow("Previous close:", toCurrency(details['previousClose']))}
                     </div >
                     <div>
                         {renderRow("Day range:", `${toCurrency(details['low'])} - ${toCurrency(details['high'])}`)}
