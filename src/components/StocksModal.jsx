@@ -63,7 +63,7 @@ function StocksModal(props) {
                             <div className="text-lg">{details.opisHartije}</div>
                             <div className={"text-4xl font-bold"}>{toCurrency(details.price)}</div>
                             <div className={priceStyle + " font-bold text-lg"}>{details.changePercent}% - danas</div>
-                            <div className="text-sm">Poslednje ažuriranje: <span className="italic">{moment(details.time).format("D MMM YYYY HH:MM")}</span></div>
+                            <div className="text-sm">Poslednje ažuriranje: <span className="italic">{moment(details.time).format("D MMM YYYY HH:mm")}</span></div>
                         </div>
                         <div className="col-span-2">
                         <div className="mb-5 flex justify-end">

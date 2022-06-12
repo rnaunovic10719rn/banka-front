@@ -127,11 +127,11 @@ export default function OverviewPage() {
           <Button
             label="Pretrazi"
             design="primary"
-            className="rounded-l ml-2"
+            className="rounded-l ml-2 mr-2"
             type="submit"
             onClick={handleSearchData}
           />
-          {searchData.length > 1 && (
+          {searchData.length > 0 && (
             <Button
               label="Clear"
               design="inline"
@@ -179,7 +179,7 @@ export default function OverviewPage() {
             type="submit"
             onClick={handleSearchData}
           />
-          {searchData.length > 1 && (
+          {searchData.length > 0 && (
             <Button
               label="Clear"
               design="inline"
@@ -228,7 +228,7 @@ export default function OverviewPage() {
               onClick={handleSearchData}
             />
           </form>
-          {searchData.length > 1 && (
+          {searchData.length > 0 && (
             <Button
               label="Clear"
               className="ml-3"
