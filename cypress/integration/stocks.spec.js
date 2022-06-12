@@ -1,4 +1,4 @@
-describe("Login Page", () => {
+describe("Stocks Page", () => {
     before(() => {
         cy.login()
     })
