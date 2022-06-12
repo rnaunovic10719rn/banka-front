@@ -1,6 +1,9 @@
 import React from "react"
 import Table from "../../components/common/Table"
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { securityCapitalListing } from "../../clients/capital";
+import { useState } from "react";
 
 const testExample = [
     ["Akcija", "1000"],
@@ -8,11 +11,23 @@ const testExample = [
 ];
 
 export default function CapitalPage() {
+    const [table, setTable] = useState([]); 
+
     const navigate = useNavigate();
+
+    async function getCapitals() {
+        const list = await securityCapitalListing();
+        setTable(list);
+        console.log(list);
+    }
 
     const routeChange = (e) => {
         navigate(e);
     }
+
+    useEffect(() => {
+        getCapitals();
+    });
 
     return (
         <div className="flex flex-col">
@@ -22,7 +37,7 @@ export default function CapitalPage() {
                     "Tip",
                     "Ukupno",
                   ]}
-                rows={testExample}
+                rows={table.length > 0 ? table : testExample}
                 clickable={true}
                 onClick={(e) => routeChange(e[0])}
             />

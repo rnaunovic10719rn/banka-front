@@ -19,6 +19,7 @@ export default function ApproveTransactionPage() {
         wholeList += respTrue;
         wholeList += respFalse;
         setOrderData(wholeList);
+        console.log(wholeList);
     };
 
     useEffect(() => {
@@ -28,7 +29,7 @@ export default function ApproveTransactionPage() {
     
     return (
         <>
-        {  user && (user["role"]["name"] != "ROLE_ADMIN") &&
+        {  user && (user["role"]["name"] == "ROLE_SUPERVISOR") &&
         (<Block className="flex flex-col gap-4" title="Odobravanje porudžbina" cta={<Select className="grow" options={["Sve", "Završene", "Odobrene", "Odbijene", "Na čekanju"]}/>}>
             <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Odobrena', 'Odobrio', 'Završena', 'Posl. modifikacija', 'Opcije', '']} rows={orderData} />
         </Block>)

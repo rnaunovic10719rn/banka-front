@@ -75,9 +75,11 @@ function Header() {
             </Link>
           </div>
           <HeaderItem path={URLS.DASHBOARD.STOCK} text="Berza" />
+          <HeaderItem path={URLS.DASHBOARD.CAPITAL.INDEX} text="Kapital" />
           <HeaderItem path={URLS.DASHBOARD.TRADE} text="Trgovina" />
           <HeaderItem path={URLS.DASHBOARD.ORDERS} text="Narudzbine" />
           {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_GL_ADMIN") && <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni" />}
+          {user && (user["role"]["name"] == "ROLE_SUPERVISOR") && <HeaderItem path={URLS.DASHBOARD.APPROVE_TRANSACTION} text="Odobravanje" />}
           <HeaderItem path={URLS.DASHBOARD.PAYMENT} text="Placanja" />
         </div>
         <HoverMenu className="mr-5" text={userItem}>

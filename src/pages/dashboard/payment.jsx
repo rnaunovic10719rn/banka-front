@@ -9,10 +9,14 @@ import Alert from "../../components/common/Alert";
 export default function PaymentPage() {
   const [error, setError] = useState(null);
   const [form, setForm] = useState({
-    brojRacuna: "",
-    iznos: "",
-    opis: "",
-    valutaOznaka: "",
+      "opis": "",
+      "valutaOznaka": "USD",
+      "orderId": 0,
+      "uplata": 100000,
+      "isplata": 0,
+      "rezervisano": 0,
+      "lastSegment": true,
+      "type": "NOVAC"
   });
 
   function handleChange(e) {
@@ -41,13 +45,13 @@ export default function PaymentPage() {
         <Card title="Uplata/Isplata sredstava">
           <div className="flex flex-col gap-3">
             <TextField
-              label="Iznos"
               placeholder="Iznos"
               onChange={(e) => handleChange({ iznos: e })}
             />
-            <div className="flex flex-row gap-16">
-              <Select
-                options={["RSD", "EUR"]}
+            <div className="flex flex-row gap-3">
+              <TextField
+                className={"max-w-[50px]"}
+                placeholder="Valuta"
                 onChange={(e) => handleChange({ valutaOznaka: e })}
               />
               <Button label="Register" type="submit" onClick={handleSubmit} />
