@@ -1,33 +1,36 @@
 import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux";
-import { getUserApi } from "../../clients/client";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { getOrdersForApprovalFalse, getOrdersForApprovalTrue } from "../../clients/stocks";
 import Block from "../../components/common/Block";
 import Select from "../../components/common/Select";
 import Table from "../../components/common/Table";
-import { addUserAction } from "../../redux/actions";
 import { getUserSelector } from "../../redux/selectors";
 
 export default function ApproveTransactionPage() {
 
     const user = useSelector(getUserSelector);
-    const dispatch = useDispatch();
+    const [orderData, setOrderData] = useState([]);
 
-    async function getUser() {
-        const response = await getUserApi();
-        dispatch(addUserAction(response));
-    }
+    async function getData() {
+        let wholeList = [];
+        const respTrue = await getOrdersForApprovalTrue();
+        const respFalse = await getOrdersForApprovalFalse();
+        wholeList += respTrue;
+        wholeList += respFalse;
+        setOrderData(wholeList);
+    };
 
     useEffect(() => {
-        getUser();
+        getData();
     }, []);
 
-    console.log(user);
     
     return (
         <>
         {  user && (user["role"]["name"] != "ROLE_ADMIN") &&
         (<Block className="flex flex-col gap-4" title="Odobravanje porudžbina" cta={<Select className="grow" options={["Sve", "Završene", "Odobrene", "Odbijene", "Na čekanju"]}/>}>
-            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Odobrena', 'Odobrio', 'Završena', 'Posl. modifikacija', 'Opcije', '']} />
+            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Odobrena', 'Odobrio', 'Završena', 'Posl. modifikacija', 'Opcije', '']} rows={orderData} />
         </Block>)
         }
         </>

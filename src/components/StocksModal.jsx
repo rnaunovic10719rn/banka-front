@@ -10,6 +10,7 @@ import EmptyState from "./common/EmptyState";
 import classNames from "classnames";
 import moment from "moment";
 import numeral from "numeral";
+import RadioGroup from "./common/RadioGroup";
 
 function StocksModal(props) {
     const [details, setDetails] = useState(null)
@@ -28,6 +29,11 @@ function StocksModal(props) {
 
     function toCurrency(number) {
         return numeral(number).format("$0,0.00")
+    }
+
+    function handleChartChange(e) {
+        setChartFilter(e)
+        props.onChange(e)
     }
 
     function renderDetails() {
@@ -60,8 +66,17 @@ function StocksModal(props) {
                             <div className="text-sm">Last updated: <span className="italic">{moment(details.time).format("D MMM YYYY HH:MM")}</span></div>
                         </div>
                         <div className="col-span-2">
-
-                            {chartData.length !== 0 && <StocksChart ticker={props.ticker} data={chartData} onChange={(e) => { setChartFilter(e); }} />}
+                        <div className="mb-5 flex justify-end">
+                            <RadioGroup name="chart" options={[
+                                CHART_FILTERS.ONE_DAY,
+                                CHART_FILTERS.FIVE_DAYS,
+                                CHART_FILTERS.ONE_MONTH,
+                                CHART_FILTERS.SIX_MONTHS,
+                                CHART_FILTERS.ONE_YEAR,
+                                CHART_FILTERS.ALL,
+                            ]} onChange={handleChartChange} />
+                        </div>
+                            {chartData.length !== 0 && <StocksChart ticker={props.ticker} data={chartData} chartTimeframe={chartFilter} onChange={(e) => { setChartFilter(e); }} />}
                             {chartData.length === 0 && <EmptyState text="No data." />}
                         </div>
                     </div>
