@@ -98,7 +98,7 @@ export default function ApproveTransactionPage() {
                 <Select className="grow" options={["Sve", "Završene", "Odobrene", "Odbijene", "Na čekanju"]} onChange={(e) => setTypeOfOrder(e)}/>
             </div>
         }>
-            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Status', 'Završena', 'Posl. modifikacija', 'Opcije', '']} rows={orderData} />
+            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Status', 'Završena', 'Posl. modifikacija', 'Opcije', '']} rows={orderData} pagination />
         </Block>)
         }
         </>
