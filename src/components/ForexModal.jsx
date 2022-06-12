@@ -6,6 +6,7 @@ import Card from "./common/Card";
 import PlaceholderLoading from 'react-placeholder-loading'
 import { getForexDetalsApi, getForexTimeSeriesApi } from "../clients/stocks";
 import EmptyState from "./common/EmptyState";
+import RadioGroup from "./common/RadioGroup";
 
 function ForexModal(props) {
     const [details, setDetails] = useState(null)
@@ -21,6 +22,11 @@ function ForexModal(props) {
     async function getDataForChart() {
         let response = await getForexTimeSeriesApi(props.from, props.to, chartFilter)
         setChartData(response)
+    }
+
+    function handleChartChange(e) {
+        setChartFilter(e)
+        props.onChange(e)
     }
 
     function renderDetails() {
@@ -39,7 +45,17 @@ function ForexModal(props) {
         return (
             <div>
                 <Card title="Chart">
-                    {chartData.length !== 0 && <StocksChart data={chartData} onChange={(e) => { setChartFilter(e); }} decimals={3} />}
+                    <div className="mb-5 flex justify-end">
+                        <RadioGroup name="chart" options={[
+                            CHART_FILTERS.ONE_DAY,
+                            CHART_FILTERS.FIVE_DAYS,
+                            CHART_FILTERS.ONE_MONTH,
+                            CHART_FILTERS.SIX_MONTHS,
+                            CHART_FILTERS.ONE_YEAR,
+                            CHART_FILTERS.ALL,
+                        ]} onChange={handleChartChange} />
+                    </div>
+                    {chartData.length !== 0 && <StocksChart data={chartData} chartTimeframe={chartFilter} onChange={(e) => { setChartFilter(e); }} decimals={3} />}
                     {chartData.length === 0 && <EmptyState text="No data." />}
                 </Card>
                 <Card title="Details">

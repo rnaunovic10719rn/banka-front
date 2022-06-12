@@ -48,18 +48,18 @@ export default function OverviewPage() {
   function createStockRow(r) {
     const priceStyle = classNames(
       "font-bold",
-      { "text-green-500": r['change'] >= 0 },
-      { "text-red-500": r['change'] < 0 },
-    )
-
+      "text-right",
+      { "text-green-500": r["change"] >= 0 },
+      { "text-red-500": r["change"] < 0 }
+    );
 
     return [
       r["ticker"],
-      r["price"],
-      r["volume"],
-      <span className={priceStyle}>{r["change"]}</span>,
-      <span className={priceStyle}>{r["changePercent"]}</span>,
-      moment(r["time"]).format("DD.MM.YYYY HH:mm"),
+      <div class="text-right">{parseFloat(r["price"]).toFixed(2)}</div>,
+      <div class="text-right">{r["volume"]}</div>,
+      <div className={priceStyle}>{parseFloat(r["change"]).toFixed(4)}</div>,
+      <div className={priceStyle}>{parseFloat(r["changePercent"]).toFixed(4)}</div>,
+      <div class="text-center">{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
     ];
   }
 
@@ -67,23 +67,23 @@ export default function OverviewPage() {
     return [
       r["fromCurrency"],
       r["toCurrency"],
-      r["exchangeRate"],
-      moment(r["time"]).format("DD.MM.YYYY HH:mm"),
+      <div class="text-right">{parseFloat(r["exchangeRate"]).toFixed(6)}</div>,
+      <div class="text-center">{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
     ];
   }
 
   function createFuturesRow(r) {
     return [
-      r["symbol"],
-      r["high"],
-      "EUREX",
-      moment(r["time"]).format("DD.MM.YYYY HH:mm"),
+      <div class="text-center">{r["symbol"]}</div>,
+      <div class="text-right">{r["high"]}</div>,
+      <div class="text-center">EUREX</div>,
+      <div class="text-center">{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
     ];
   }
 
   async function getStocks() {
     const response = await getStocksApi();
-    dispatch(addStocksAction(response))
+    dispatch(addStocksAction(response));
     let tmp = [];
     response.map((r) => {
       if (r === null) return;
@@ -94,7 +94,7 @@ export default function OverviewPage() {
 
   async function getForex() {
     const response = await getForexApi();
-    dispatch(addForexAction(response))
+    dispatch(addForexAction(response));
     let tmp = [];
     response.map((r) => {
       if (r === null) return;
@@ -120,23 +120,25 @@ export default function OverviewPage() {
           <TextField
             onChange={handleChangeData}
             type="text"
-            className="rounded-r-none"
+            className="rounded-r"
             value={searchData}
             placeholder={"Symbol"}
           />
           <Button
             label="Pretrazi"
             design="primary"
-            className="rounded-l-none"
+            className="rounded-l ml-2 mr-2"
             type="submit"
             onClick={handleSearchData}
           />
-          {searchData.length > 1 && <Button
-            label="Clear"
-            design="inline"
-            type="submit"
-            onClick={clearSearchData}
-          />}
+          {searchData.length > 0 && (
+            <Button
+              label="Clear"
+              design="inline"
+              type="submit"
+              onClick={clearSearchData}
+            />
+          )}
         </div>
         <Table
           headings={["Oznaka", "Cena", "Berza", "Poslednje azuriranje"]}
@@ -177,12 +179,14 @@ export default function OverviewPage() {
             type="submit"
             onClick={handleSearchData}
           />
-          {searchData.length > 1 && <Button
-            label="Clear"
-            design="inline"
-            type="submit"
-            onClick={clearSearchData}
-          />}
+          {searchData.length > 0 && (
+            <Button
+              label="Clear"
+              design="inline"
+              type="submit"
+              onClick={clearSearchData}
+            />
+          )}
         </div>
         <Table
           headings={[
@@ -213,24 +217,26 @@ export default function OverviewPage() {
               onChange={handleChangeData}
               type="text"
               value={searchData}
-              className="rounded-r-none"
+              className="rounded-r"
               placeholder={"Symbol"}
             />
             <Button
               label="Pretrazi"
               design="primary"
               type="submit"
-              className="rounded-l-none"
+              className="rounded-l ml-2"
               onClick={handleSearchData}
             />
           </form>
-          {searchData.length > 1 && <Button
-            label="Clear"
-            className="ml-3"
-            design="inline"
-            type="submit"
-            onClick={clearSearchData}
-          />}
+          {searchData.length > 0 && (
+            <Button
+              label="Clear"
+              className="ml-3"
+              design="inline"
+              type="submit"
+              onClick={clearSearchData}
+            />
+          )}
         </div>
         <Table
           headings={[
@@ -322,40 +328,43 @@ export default function OverviewPage() {
 
   return (
     <div>
-      {error && (
-        <Alert
-          design="danger"
-          text="Nema podataka za datu pretragu"
-          onDismiss={() => setError(null)}
-        ></Alert>
-      )}
       {activeTab === TABS.STOCKS && <StockTickerWrapper />}
       {activeTab === TABS.FOREX && <ForexTickerWrapper />}
-      <Block title="Berza">
-        <Tab
-          tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
-          onChange={function (e) {
-            setActiveTab(e);
-            clearSearchData(e);
-          }}
-        />
-        {activeTab === TABS.STOCKS && renderStocks()}
-        {activeTab === TABS.FOREX && renderForex()}
-        {activeTab === TABS.FUTURES && renderFutures()}
-      </Block>
-      {selectedStock !== null && (
-        <StocksModal
-          ticker={selectedStock}
-          onClose={() => setSelectedStock(null)}
-        />
-      )}
-      {selectedForex !== null && (
-        <ForexModal
-          from={selectedForex[0]}
-          to={selectedForex[1]}
-          onClose={() => setSelectedForex(null)}
-        />
-      )}
+      <div className="flex flex-col gap-3">
+        {error && (
+          <Alert
+            design="danger"
+            text="Nema podataka za datu pretragu"
+            onDismiss={() => setError(null)}
+          ></Alert>
+        )}
+        <Block title="Berza">
+          <Tab
+            tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
+            onChange={function (e) {
+              setActiveTab(e);
+              clearSearchData(e);
+              setError(false);
+            }}
+          />
+          {activeTab === TABS.STOCKS && renderStocks()}
+          {activeTab === TABS.FOREX && renderForex()}
+          {activeTab === TABS.FUTURES && renderFutures()}
+        </Block>
+        {selectedStock !== null && (
+          <StocksModal
+            ticker={selectedStock}
+            onClose={() => setSelectedStock(null)}
+          />
+        )}
+        {selectedForex !== null && (
+          <ForexModal
+            from={selectedForex[0]}
+            to={selectedForex[1]}
+            onClose={() => setSelectedForex(null)}
+          />
+        )}
+      </div>
     </div>
   );
 }
