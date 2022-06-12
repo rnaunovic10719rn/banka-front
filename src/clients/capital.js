@@ -7,12 +7,12 @@ export function performPayment(body) {
 }
 
 export function securityCapitalListing() {
-    let url = new URL(BASE_URL + "/racun/sredstva-kapital");
+    let url = new URL(BASE_URL + "/racun/kapitalStanje");
     return get(url);
 }
 
-export function boughtSecurity(id) {
-    let url = new URL(BASE_URL + "/racun/hartijaOdVrednosti/" + id);
+export function boughtSecurity(kapType) {
+    let url = new URL(BASE_URL + "/kapitalStanje/" + kapType);
     return get(url);
 }
 

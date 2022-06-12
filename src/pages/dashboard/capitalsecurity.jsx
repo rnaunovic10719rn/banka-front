@@ -1,4 +1,7 @@
 import React from "react"
+import { useState } from "react";
+import { useEffect } from "react";
+import { boughtSecurity } from "../../clients/capital";
 import Block from "../../components/common/Block";
 import Table from "../../components/common/Table";
 
@@ -12,6 +15,20 @@ const testExample = [
 export default function CapitalSecurityPage() {
     const title = window.location.pathname.split("/")[2];
 
+    const [data, setData] = useState([]);
+
+    async function loadData() {
+        let harType = "";
+        // ovde treba switch da se korektno pozove api
+        const ls = await boughtSecurity(title);
+        setData(ls);
+        console.log(ls);
+    }
+
+    useEffect(() => {
+        loadData();
+    });
+
     return (
         <div>
             <Block title={title}>
@@ -24,7 +41,7 @@ export default function CapitalSecurityPage() {
                     "Plaćeno",
                     "Razlika"
                   ]}
-                rows={testExample}
+                rows={data.length > 0 ? data : testExample}
             />
             </Block>
         </div>
