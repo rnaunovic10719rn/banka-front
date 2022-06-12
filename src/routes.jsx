@@ -11,11 +11,9 @@ import TradePage from "./pages/dashboard/trade";
 import OverviewPage from "./pages/dashboard/overview";
 import SystemPage from "./pages/dashboard/system";
 import ChangePasswordPage from "./pages/dashboard/changepass";
-import PaymentPage from "./pages/dashboard/payment";
 import CapitalPage from "./pages/dashboard/capital";
 import ApproveTransactionPage from "./pages/dashboard/transactionappr";
 import CapitalSecurityPage from "./pages/dashboard/capitalsecurity";
-import PortfolioPage from "./pages/dashboard/portfolio";
 
 
 export const URLS = {
@@ -23,7 +21,6 @@ export const URLS = {
         INDEX: "/",
         STOCK: "berza",
         INFORMATION: "information",
-        PORTFOLIO: "portfolio",
         LIST: {
             INDEX: "list",
             NEW_USER: "list/new-user",
@@ -38,7 +35,6 @@ export const URLS = {
         },
         TRADE: "trade",
         SYSTEM: "system",
-        PAYMENT: "payment",
         APPROVE_TRANSACTION: "approve-transaction",
         CAPITAL: {
             INDEX: "capital",
@@ -90,11 +86,6 @@ export function AppRoutes() {
                             path={URLS.DASHBOARD.INFORMATION}
                             element={<InformationPage/>}
                         />
-                        <Route
-                            path={URLS.DASHBOARD.PORTFOLIO}
-                            element={<PortfolioPage/>}
-                        />
-                        <Route path={URLS.DASHBOARD.PAYMENT} element={<PaymentPage/>}/>
                     </Route>
                     <Route element={<PageLayout/>}>
                         <Route path={URLS.LOGIN} element={<LoginPage/>}/>

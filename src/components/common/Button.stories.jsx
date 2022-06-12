@@ -20,6 +20,7 @@ Primary.args = {
   label: "Button",
   design: BUTTON_DESIGN.PRIMARY,
   disabled: false,
+  loading: false
 };
 
 export const Secondary = Template.bind({});
@@ -27,6 +28,7 @@ Secondary.args = {
   label: "Button",
   design: BUTTON_DESIGN.SECONDARY,
   disabled: false,
+  loading: false
 };
 
 export const Inline = Template.bind({});
@@ -34,4 +36,13 @@ Inline.args = {
   label: 'Inline',
   design: BUTTON_DESIGN.INLINE,
   disabled: false,
+  loading: false
+};
+
+export const Spinner = Template.bind({});
+Spinner.args = {
+  label: "Button",
+  design: BUTTON_DESIGN.PRIMARY,
+  disabled: false,
+  loading: true
 };

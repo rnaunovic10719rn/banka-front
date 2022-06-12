@@ -77,10 +77,8 @@ function Header() {
           <HeaderItem path={URLS.DASHBOARD.STOCK} text="Berza" />
           <HeaderItem path={URLS.DASHBOARD.CAPITAL.INDEX} text="Kapital" />
           <HeaderItem path={URLS.DASHBOARD.TRADE} text="Trgovina" />
-          {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_GL_ADMIN") && <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni" />}
           <HeaderItem path={URLS.DASHBOARD.APPROVE_TRANSACTION} text="Porudžbine" />
-          <HeaderItem path={URLS.DASHBOARD.PAYMENT} text="Placanja" />
-            <HeaderItem path={URLS.DASHBOARD.PORTFOLIO} text="Portfolio" />
+          {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_GL_ADMIN") && <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni" />}
         </div>
         <HoverMenu className="mr-5" text={userItem}>
           <HoverMenuItem text="Profile" to={`${URLS.DASHBOARD.INFORMATION}`} />

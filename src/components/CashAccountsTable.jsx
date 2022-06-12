@@ -68,8 +68,6 @@ function CashAccountsTable() {
 
     return (
         <>
-            <h3 className="text-2xl font-bold">Keš nalog</h3>
-            <hr className="pb-5" />
             <Table headings={['Valuta', 'Ukupno', 'Rezervisano', 'Raspolozivo']} rows={cashAccountToTableRow()} clickable onClick={setSelected} />
             {!!selected &&
                 <Modal visible title={selected[0]} onClose={handleCloseModal}>

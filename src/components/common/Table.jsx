@@ -38,7 +38,7 @@ function Table(props) {
   const [startRange, setStartRange] = useState(0)
   const [endRange, setEndRange] = useState(0)
 
-  const headerClassnames = classNames("border-b bg-indigo-50 text-center", cellSpacing, borderColor)
+  const headerClassnames = classNames("border-b bg-indigo-50", cellSpacing, borderColor)
   const tableClassnames = classNames(
     "border-collapse border", borderColor, // border
     "w-full", // width
