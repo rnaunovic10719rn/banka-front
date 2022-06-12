@@ -93,11 +93,6 @@ export function getOrdersApi() {
 	return get(url);
 }
 
-export function getOrdersForApprovalTrue() {
-	let url = new URL(BASE_URL + `/berza/order/ON_HOLD/true`);
-	return get(url);
-}
-
 export function getOrdersForApprovalFalse() {
 	let url = new URL(BASE_URL + `/berza/order/ON_HOLD/false`);
 	return get(url);

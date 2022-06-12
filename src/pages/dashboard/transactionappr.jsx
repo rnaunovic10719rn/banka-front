@@ -13,13 +13,9 @@ export default function ApproveTransactionPage() {
     const [orderData, setOrderData] = useState([]);
 
     async function getData() {
-        let wholeList = [];
-        const respTrue = await getOrdersForApprovalTrue();
         const respFalse = await getOrdersForApprovalFalse();
-        wholeList += respTrue;
-        wholeList += respFalse;
-        setOrderData(wholeList);
-        console.log(wholeList);
+        setOrderData(respFalse);
+        console.log(respFalse);
     };
 
     useEffect(() => {

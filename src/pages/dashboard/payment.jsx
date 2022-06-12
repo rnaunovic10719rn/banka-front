@@ -5,18 +5,13 @@ import Button from "../../components/common/Button";
 import Select from "../../components/common/Select";
 import { performPayment } from "../../clients/capital";
 import Alert from "../../components/common/Alert";
+import Block from "../../components/common/Block";
 
 export default function PaymentPage() {
   const [error, setError] = useState(null);
   const [form, setForm] = useState({
-      "opis": "",
-      "valutaOznaka": "USD",
-      "orderId": 0,
-      "uplata": 100000,
-      "isplata": 0,
-      "rezervisano": 0,
-      "lastSegment": true,
-      "type": "NOVAC"
+      valutaOznaka: "",
+      iznos: 0
   });
 
   function handleChange(e) {
@@ -25,8 +20,17 @@ export default function PaymentPage() {
 
   async function handleSubmit() {
     try {
-      console.log(form);
-      await performPayment(form);
+      const tmp = {
+        "opis": form.iznos >= 0 ? "Uplata sredstava" : "Isplata sredstava",
+        "valutaOznaka": form.valutaOznaka,
+        "uplata": form.iznos >= 0 ? form.iznos : 0,
+        "isplata": form.iznos < 0 ? -1*form.iznos : 0,
+        "rezervisano": 0,
+        "lastSegment": false,
+        "type": "NOVAC"
+      };
+      console.log(tmp);
+      await performPayment(tmp);
     } catch (e) {
       setError(true);
     }
@@ -34,7 +38,6 @@ export default function PaymentPage() {
 
   return (
     <div>
-      <div className="w-[290px]">
         {error && (
           <Alert
             design="danger"
@@ -42,23 +45,27 @@ export default function PaymentPage() {
             onDismiss={() => setError(null)}
           ></Alert>
         )}
-        <Card title="Uplata/Isplata sredstava">
+        <Block title="Uplata/Isplata sredstava">
           <div className="flex flex-col gap-3">
             <TextField
-              placeholder="Iznos"
+              className={"max-w-[300px]"}
+              label="Iznos"
               onChange={(e) => handleChange({ iznos: e })}
             />
-            <div className="flex flex-row gap-3">
-              <TextField
-                className={"max-w-[50px]"}
-                placeholder="Valuta"
+            <TextField
+                className={"max-w-[300px]"}
+                label="Valuta"
+                placeholder="RSD"
                 onChange={(e) => handleChange({ valutaOznaka: e })}
-              />
-              <Button label="Register" type="submit" onClick={handleSubmit} />
+              /> 
+            <div className="flex flex-row gap-3">
+              
+            </div>
+            <div className="flex flex-row gap-3">
+              <Button label="Realizuj" type="submit" onClick={handleSubmit} />
             </div>
           </div>
-        </Card>
-      </div>
+        </Block>
     </div>
   );
 }
