@@ -10,7 +10,6 @@ import LoginPage from "./pages/login";
 import TradePage from "./pages/dashboard/trade";
 import OverviewPage from "./pages/dashboard/overview";
 import SystemPage from "./pages/dashboard/system";
-import OrdersPage from "./pages/dashboard/order";
 
 import ChangePasswordPage from "./pages/dashboard/changepass";
 import PaymentPage from "./pages/dashboard/payment";
@@ -36,7 +35,6 @@ export const URLS = {
       STOCK: "view/:id",
     },
     TRADE: "trade",
-    ORDERS: "orders",
     SYSTEM: "system",
     PAYMENT: "payment",
 	APPROVE_TRANSACTION: "approve-transaction",
@@ -73,7 +71,6 @@ export function AppRoutes() {
               path={URLS.DASHBOARD.OVERVIEW.INDEX}
               element={<OverviewPage />}
             ></Route>
-            <Route path={URLS.DASHBOARD.ORDERS} element={<OrdersPage />} />
 			<Route
 				path={URLS.DASHBOARD.APPROVE_TRANSACTION}
 				element={<ApproveTransactionPage />}
