@@ -13,7 +13,8 @@ const testExample = [
 ];
 
 export default function CapitalSecurityPage() {
-    const title = window.location.pathname.split("/")[2];
+    let title = window.location.pathname.split("/")[2];
+    title = title.replace("_", " ");
 
     const [data, setData] = useState([]);
 

@@ -17,8 +17,18 @@ export default function CapitalPage() {
 
     async function getCapitals() {
         const list = await securityCapitalListing();
-        setTable(list);
-        console.log(list);
+        let tmp = [];
+        list.map((r) => {
+          tmp.push(createCapitalRow(r));
+        });
+        setTable(tmp);
+    }
+
+    function createCapitalRow(r) {
+        return [
+          r["kapitalType"],
+          r["ukupno"]
+        ];
     }
 
     const routeChange = (e) => {
@@ -27,7 +37,7 @@ export default function CapitalPage() {
 
     useEffect(() => {
         getCapitals();
-    });
+    }, []);
 
     return (
         <div className="flex flex-col">
