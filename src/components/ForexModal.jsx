@@ -7,7 +7,6 @@ import PlaceholderLoading from 'react-placeholder-loading'
 import { getForexDetalsApi, getForexTimeSeriesApi } from "../clients/stocks";
 import EmptyState from "./common/EmptyState";
 import RadioGroup from "./common/RadioGroup";
-import numeral from "numeral";
 
 function ForexModal(props) {
     const [details, setDetails] = useState(null)

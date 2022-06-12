@@ -65,8 +65,8 @@ export default function OverviewPage() {
 
   function createForexRow(r) {
     return [
-      <div class="text-center">{r["fromCurrency"]}</div>,
-      <div class="text-center">{r["toCurrency"]}</div>,
+      r["fromCurrency"],
+      r["toCurrency"],
       <div class="text-right">{parseFloat(r["exchangeRate"]).toFixed(6)}</div>,
       <div class="text-center">{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
     ];
