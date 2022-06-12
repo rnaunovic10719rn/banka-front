@@ -83,7 +83,7 @@ function StocksModal(props) {
                 </Card>
                 <Card title="Details" className="grid grid-cols-2 gap-10">
                     <div className="flex flex-col">
-                        {renderRow("Change:", <span className={priceStyle}>{toCurrency(details['change'])} (${details['changePercent']}%)</span>)}
+                        {renderRow("Change:", <span className={priceStyle}>{toCurrency(details['change'])} ({details['changePercent']}%)</span>)}
                         {renderRow("Open:", toCurrency(details['open']))}
                         {renderRow("Low:", toCurrency(details['low']))}
                         {renderRow("High:", toCurrency(details['high']))}
