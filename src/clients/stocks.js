@@ -97,3 +97,28 @@ export function getOrdersForApprovalFalse() {
 	let url = new URL(BASE_URL + `/berza/order/ON_HOLD/false`);
 	return get(url);
 }
+
+export function getOrdersApprovedFalse() {
+	let url = new URL(BASE_URL + `/berza/order/APPROVED/false`);
+	return get(url);
+}
+
+export function getOrdersApprovedTrue() {
+	let url = new URL(BASE_URL + `/berza/order/APPROVED/true`);
+	return get(url);
+}
+
+export function getOrdersRejectedFalse() {
+	let url = new URL(BASE_URL + `/berza/order/REJECTED/false`);
+	return get(url);
+}
+
+export function postApproveOrder(id) {
+	let url = new URL(BASE_URL + "/berza/order/approve/" + id);
+	return post(url);
+}
+
+export function postRejectOrder(id) {
+	let url = new URL(BASE_URL + "/berza/order/reject/" + id);
+	return post(url);
+}
