@@ -93,6 +93,7 @@ export default function LoginPage() {
                 <div>Treba da unesete 6-cifreni kod iz Google authenticatora kako biste pristupili Vašem nalogu.</div>
                 <TextField placeholder="Kod" onChange={setOtp} required />
                 <Button type="submit" label={"Nastavite"} disabled={!formValid} />
+                <Button design="inline" label="Nazad" onClick={() => setCurrentState(STATE.DEFAULT)} />
             </Form>
         )
     }

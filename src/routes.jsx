@@ -13,12 +13,14 @@ import SystemPage from "./pages/dashboard/system";
 import OrdersPage from "./pages/dashboard/order";
 import OverviewStockPage from "./pages/dashboard/overview-stock";
 import ChangePasswordPage from "./pages/dashboard/changepass";
+import PortfolioPage from "./pages/dashboard/portfolio";
 
 export const URLS = {
 	DASHBOARD: {
 		INDEX: "/",
 		STOCK: "berza",
 		INFORMATION: "information",
+		PORTFOLIO: "portfolio",
 		PRIVACY: "privacy",
 		LIST: {
 			INDEX: "list",
@@ -85,6 +87,10 @@ export function AppRoutes() {
 						<Route
 							path={URLS.DASHBOARD.INFORMATION}
 							element={<InformationPage />}
+						/>
+						<Route
+							path={URLS.DASHBOARD.PORTFOLIO}
+							element={<PortfolioPage />}
 						/>
 					</Route>
 					<Route element={<PageLayout />}>

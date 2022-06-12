@@ -69,6 +69,7 @@ function Header() {
                     <HeaderItem path={URLS.DASHBOARD.STOCK} text="Berza" />
                     <HeaderItem path={URLS.DASHBOARD.TRADE} text="Trgovina" />
                     <HeaderItem path={URLS.DASHBOARD.ORDERS} text="Narudzbine" />
+                    <HeaderItem path={URLS.DASHBOARD.PORTFOLIO} text="Portfolio" />
                     <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni" />
                 </div>
                 <HoverMenu className="mr-5" text={userItem}>

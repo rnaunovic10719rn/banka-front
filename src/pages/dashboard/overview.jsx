@@ -115,7 +115,7 @@ export default function OverviewPage() {
 
   function renderFutures() {
     return (
-      <div class="flex flex-col gap-5">
+      <div className="flex flex-col gap-5">
         <div className="flex justify-start">
           <TextField
             onChange={handleChangeData}
@@ -157,7 +157,7 @@ export default function OverviewPage() {
 
   function renderForex() {
     return (
-      <div class="flex flex-col gap-5">
+      <div className="flex flex-col gap-5">
         <div className="flex justify-start gap-5">
           <TextField
             onChange={handleChangeData}
@@ -206,7 +206,7 @@ export default function OverviewPage() {
       stocksRowData.length > 0 ? stocksRowData : renderPlaceholderRows(6);
 
     return (
-      <div class="flex flex-col gap-5">
+      <div className="flex flex-col gap-5">
         <div className="flex justify-start gap-0">
           <form className="flex">
             <TextField

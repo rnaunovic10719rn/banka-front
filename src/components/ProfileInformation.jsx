@@ -77,7 +77,7 @@ function ProfileInformation() {
                 ></Alert>
             )}
             <Card title="Osnovno">
-                <div class="flex flex-col gap-5">
+                <div className="flex flex-col gap-5">
                     <div className="flex justify-between items-center">
                         <div className="w-[100px]">Ime</div>
                         <TextField
