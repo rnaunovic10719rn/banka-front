@@ -23,7 +23,7 @@ export default function OrdersPage() {
           r["kolicina"],
           r["ukupnaCena"],
         ];
-      }
+    }
 
       useEffect(() => {
         getOrders();
