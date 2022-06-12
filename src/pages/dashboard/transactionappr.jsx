@@ -8,6 +8,7 @@ import Select from "../../components/common/Select";
 import Table from "../../components/common/Table";
 import { getUserSelector } from "../../redux/selectors";
 import Button from "../../components/common/Button";
+import classNames from "classnames";
 
 export default function ApproveTransactionPage() {
 
@@ -53,6 +54,21 @@ export default function ApproveTransactionPage() {
         window.location.reload();
     }
 
+    function determineOrderStatus(status) {
+        const priceStyle = classNames(
+            "font-bold",
+            { "text-green-500": status === "APPROVED" },
+            { "text-red-500": status === "REJECTED" }
+        );
+        if(status === "ON_HOLD") {
+            return <span className={priceStyle}>Na čekanju</span>;
+        } else if (status === "APPROVED") {
+            return <span className={priceStyle}>Odobrena</span>;
+        } else {
+            return <span className={priceStyle}>Odbijena</span>;
+        }
+    }
+
     function createOrderRow(r) {
         return [
           r["hartijaOdVrednosti"],
@@ -60,7 +76,7 @@ export default function ApproveTransactionPage() {
           r["hartijaOdVrednostiSymbol"],
           r["kolicina"],
           r["predvidjenaCena"],
-          r["orderStatus"] === "ON_HOLD" ? "Ne" : "Da",
+          determineOrderStatus(r["orderStatus"]),
           r["done"] ? "Da" : "Ne",
           moment(r["lastModified"]).format("DD.MM.YYYY HH:mm"),
           r["orderStatus"] == "ON_HOLD" ? <Button design="inline" onClick={() => approveOrder(r['id'])} label="Odobri"/> : null,
@@ -79,7 +95,7 @@ export default function ApproveTransactionPage() {
         (<Block className="flex flex-col gap-4" title="Odobravanje porudžbina" cta={
             <Select className="grow" options={["Sve", "Završene", "Odobrene", "Odbijene", "Na čekanju"]} onChange={(e) => setTypeOfOrder(e)}/>
         }>
-            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Odobrena', 'Završena', 'Posl. modifikacija', 'Opcije', '']} rows={orderData} />
+            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Status', 'Završena', 'Posl. modifikacija', 'Opcije', '']} rows={orderData} />
         </Block>)
         }
         </>
