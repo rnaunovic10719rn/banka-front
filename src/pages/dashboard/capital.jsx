@@ -4,11 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { securityCapitalListing } from "../../clients/capital";
 import { useState } from "react";
-
-const testExample = [
-    ["Akcija", "1000"],
-    ["Futures", "1000"]
-];
+import Block from "../../components/common/Block";
 
 export default function CapitalPage() {
     const [table, setTable] = useState([]); 
@@ -17,8 +13,18 @@ export default function CapitalPage() {
 
     async function getCapitals() {
         const list = await securityCapitalListing();
-        setTable(list);
-        console.log(list);
+        let tmp = [];
+        list.map((r) => {
+          tmp.push(createCapitalRow(r));
+        });
+        setTable(tmp);
+    }
+
+    function createCapitalRow(r) {
+        return [
+          r["kapitalType"],
+          r["ukupno"]
+        ];
     }
 
     const routeChange = (e) => {
@@ -27,20 +33,21 @@ export default function CapitalPage() {
 
     useEffect(() => {
         getCapitals();
-    });
+    }, []);
 
     return (
+        <Block className="flex flex-col gap-4" title="Pregled kapitala">
         <div className="flex flex-col">
-            <h3 className="text-xl text-gray-500 pb-5">Pregled kapitala</h3>
             <Table
                 headings={[
                     "Tip",
                     "Ukupno",
                   ]}
-                rows={table.length > 0 ? table : testExample}
+                rows={table}
                 clickable={true}
                 onClick={(e) => routeChange(e[0])}
             />
            </div>
+        </Block>
     )
 }
