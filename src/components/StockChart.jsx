@@ -44,13 +44,13 @@ function StockChart(props) {
                     item['time'] = moment(item['time']).format("HH:mm")
                     break
                 case CHART_FILTERS.FIVE_DAYS:
-                    item['time'] = moment(item['time']).format("D MMM")
+                    item['time'] = moment(item['time']).format("D MMM HH:mm")
                     break
                 case CHART_FILTERS.ONE_MONTH:
                     item['time'] = moment(item['time']).format("D MMM")
                     break
                 default:
-                    item['time'] = moment(item['time']).format("MMM YYYY")
+                    item['time'] = moment(item['time']).format("D MMM YYYY")
             }
         })
         setData(temp)
