@@ -78,7 +78,7 @@ export default function ApproveTransactionPage() {
           <div class="text-right">{parseFloat(r["predvidjenaCena"]).toFixed(2)}</div>,
           determineOrderStatus(r["orderStatus"]),
           r["done"] ? "Da" : "Ne",
-          moment(r["lastModified"]).format("DD.MM.YYYY HH:mm"),
+          <div class="text-center">{moment(r["lastModified"]).format("DD.MM.YYYY HH:mm")}</div>,
           r["orderStatus"] == "ON_HOLD" ? <Button design="inline" onClick={() => approveOrder(r['id'])} label="Odobri"/> : null,
           r["orderStatus"] == "ON_HOLD" ? <Button design="inline" onClick={() => rejectOrder(r['id'])} label="Odbij"/> : null,
         ];
