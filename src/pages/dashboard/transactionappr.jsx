@@ -93,9 +93,12 @@ export default function ApproveTransactionPage() {
         <>
         {  user && (user["role"]["name"] == "ROLE_SUPERVISOR") &&
         (<Block className="flex flex-col gap-4" title="Odobravanje porudžbina" cta={
-            <Select className="grow" options={["Sve", "Završene", "Odobrene", "Odbijene", "Na čekanju"]} onChange={(e) => setTypeOfOrder(e)}/>
+            <div class="flex justify-start">
+                <Button label="Osveži" design="primary" className="rounded-l mr-2" type="submit" onClick={() => getData()} />
+                <Select className="grow" options={["Sve", "Završene", "Odobrene", "Odbijene", "Na čekanju"]} onChange={(e) => setTypeOfOrder(e)}/>
+            </div>
         }>
-            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Status', 'Završena', 'Posl. modifikacija', 'Opcije', '']} rows={orderData} />
+            <Table headings={['Hartija', 'Transakcija', 'Simbol', 'Količina', 'Cena', 'Status', 'Završena', 'Posl. modifikacija', 'Opcije', '']} rows={orderData} pagination />
         </Block>)
         }
         </>
