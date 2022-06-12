@@ -63,7 +63,7 @@ function StocksModal(props) {
                             <div className="text-lg">{details.opisHartije}</div>
                             <div className={"text-4xl font-bold"}>{toCurrency(details.price)}</div>
                             <div className={priceStyle + " font-bold text-lg"}>{details.changePercent}% - danas</div>
-                            <div className="text-sm">Last updated: <span className="italic">{moment(details.time).format("D MMM YYYY HH:MM")}</span></div>
+                            <div className="text-sm">Poslednje ažuriranje: <span className="italic">{moment(details.time).format("D MMM YYYY HH:mm")}</span></div>
                         </div>
                         <div className="col-span-2">
                         <div className="mb-5 flex justify-end">
@@ -83,11 +83,11 @@ function StocksModal(props) {
                 </Card>
                 <Card title="Details" className="grid grid-cols-2 gap-10">
                     <div className="flex flex-col">
-                        {renderRow("Change:", <span className={priceStyle}>${toCurrency(details['change'])} (${details['changePercent']}%)</span>)}
+                        {renderRow("Change:", <span className={priceStyle}>{toCurrency(details['change'])} ({details['changePercent']}%)</span>)}
                         {renderRow("Open:", toCurrency(details['open']))}
                         {renderRow("Low:", toCurrency(details['low']))}
                         {renderRow("High:", toCurrency(details['high']))}
-                        {renderRow("Previous close:", details['previousClose'])}
+                        {renderRow("Previous close:", toCurrency(details['previousClose']))}
                     </div >
                     <div>
                         {renderRow("Day range:", `${toCurrency(details['low'])} - ${toCurrency(details['high'])}`)}

@@ -48,17 +48,18 @@ export default function OverviewPage() {
   function createStockRow(r) {
     const priceStyle = classNames(
       "font-bold",
+      "text-right",
       { "text-green-500": r["change"] >= 0 },
       { "text-red-500": r["change"] < 0 }
     );
 
     return [
       r["ticker"],
-      r["price"],
-      r["volume"],
-      <span className={priceStyle}>{r["change"]}</span>,
-      <span className={priceStyle}>{r["changePercent"]}</span>,
-      moment(r["time"]).format("DD.MM.YYYY HH:mm"),
+      <div class="text-right">{parseFloat(r["price"]).toFixed(2)}</div>,
+      <div class="text-right">{r["volume"]}</div>,
+      <div className={priceStyle}>{parseFloat(r["change"]).toFixed(4)}</div>,
+      <div className={priceStyle}>{parseFloat(r["changePercent"]).toFixed(4)}</div>,
+      <div class="text-center">{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
     ];
   }
 
@@ -66,17 +67,17 @@ export default function OverviewPage() {
     return [
       r["fromCurrency"],
       r["toCurrency"],
-      r["exchangeRate"],
-      moment(r["time"]).format("DD.MM.YYYY HH:mm"),
+      <div class="text-right">{parseFloat(r["exchangeRate"]).toFixed(6)}</div>,
+      <div class="text-center">{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
     ];
   }
 
   function createFuturesRow(r) {
     return [
-      r["symbol"],
-      r["high"],
-      "EUREX",
-      moment(r["time"]).format("DD.MM.YYYY HH:mm"),
+      <div class="text-center">{r["symbol"]}</div>,
+      <div class="text-right">{r["high"]}</div>,
+      <div class="text-center">EUREX</div>,
+      <div class="text-center">{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
     ];
   }
 
@@ -119,18 +120,18 @@ export default function OverviewPage() {
           <TextField
             onChange={handleChangeData}
             type="text"
-            className="rounded-r-none"
+            className="rounded-r"
             value={searchData}
             placeholder={"Symbol"}
           />
           <Button
             label="Pretrazi"
             design="primary"
-            className="rounded-l-none"
+            className="rounded-l ml-2 mr-2"
             type="submit"
             onClick={handleSearchData}
           />
-          {searchData.length > 1 && (
+          {searchData.length > 0 && (
             <Button
               label="Clear"
               design="inline"
@@ -178,7 +179,7 @@ export default function OverviewPage() {
             type="submit"
             onClick={handleSearchData}
           />
-          {searchData.length > 1 && (
+          {searchData.length > 0 && (
             <Button
               label="Clear"
               design="inline"
@@ -216,18 +217,18 @@ export default function OverviewPage() {
               onChange={handleChangeData}
               type="text"
               value={searchData}
-              className="rounded-r-none"
+              className="rounded-r"
               placeholder={"Symbol"}
             />
             <Button
               label="Pretrazi"
               design="primary"
               type="submit"
-              className="rounded-l-none"
+              className="rounded-l ml-2"
               onClick={handleSearchData}
             />
           </form>
-          {searchData.length > 1 && (
+          {searchData.length > 0 && (
             <Button
               label="Clear"
               className="ml-3"
