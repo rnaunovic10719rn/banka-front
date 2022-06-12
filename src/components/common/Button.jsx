@@ -60,7 +60,7 @@ function Button(props) {
       onClick={props.onClick}
       disabled={disabled}
     >
-      <div className="flex items-center">
+      <div className="flex justify-center items-center">
         {props.label}
         {props.loading && <Spinner className="ml-4 w-5 h-5"/>}
       </div>

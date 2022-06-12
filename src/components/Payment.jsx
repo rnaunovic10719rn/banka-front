@@ -4,7 +4,7 @@ import Alert from "./common/Alert";
 import TextField, {VALIDATION_PATTERN} from "./common/TextField";
 import Button from "./common/Button";
 import Form from "./common/Form";
-import { Store } from "react-notifications-component";
+import {Store} from "react-notifications-component";
 import PropTypes from "prop-types";
 
 function Payment(props) {
@@ -63,7 +63,7 @@ function Payment(props) {
                     onDismiss={() => setError(null)}
                 ></Alert>
             )}
-            <Form className="flex flex-col gap-3" onValid={setFormValid} onSubmit={handleSubmit}>
+            <Form className="flex flex-col gap-5" onValid={setFormValid} onSubmit={handleSubmit}>
                 <TextField
                     label="Iznos"
                     onChange={(e) => handleChange({iznos: e})}
@@ -76,14 +76,12 @@ function Payment(props) {
                     onChange={(e) => handleChange({valutaOznaka: e})}
                     required
                 />
-                <div className="flex flex-row gap-3">
-                    <Button
-                        label="Realizuj"
-                        type="submit"
-                        loading={loading}
-                        disabled={!formValid}
-                    />
-                </div>
+                <Button
+                    label="Realizuj"
+                    type="submit"
+                    loading={loading}
+                    disabled={!formValid}
+                />
             </Form>
         </div>
     );

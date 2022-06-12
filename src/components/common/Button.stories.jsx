@@ -46,3 +46,12 @@ Spinner.args = {
   disabled: false,
   loading: true
 };
+
+export const FullWidth = Template.bind({});
+FullWidth.args = {
+  label: "Button",
+  className: "w-full",
+  design: BUTTON_DESIGN.PRIMARY,
+  disabled: false,
+  loading: true
+};
