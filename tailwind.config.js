@@ -4,5 +4,6 @@ module.exports = {
 	theme: {
 		extend: {},
 	},
+	plugins: [require("nightwind")],
 	purge: ["./src/**/*.{js,jsx,ts,tsx}"],
 };
