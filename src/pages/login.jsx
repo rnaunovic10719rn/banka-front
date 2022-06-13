@@ -44,7 +44,7 @@ export default function LoginPage() {
                 await loginAction(username, password)
                 await getUser()
                 setLoading(false)
-                navigate(URLS.DASHBOARD.INDEX)
+                navigate(`/${URLS.DASHBOARD.INDEX}`, true)
             } else {
                 setCurrentState(STATE.TWO_FA)
             }
@@ -60,7 +60,7 @@ export default function LoginPage() {
         try {
             await loginAction(username, password, otp)
             await getUser()
-            navigate(URLS.DASHBOARD.INDEX)
+            navigate(`/${URLS.DASHBOARD.INDEX}`, true)
             setLoading(false)
         } catch {
             setLoading(false)
@@ -94,13 +94,12 @@ export default function LoginPage() {
     }
 
     function renderForgotPassword() {
-
         async function emailRes(e) {
             e.preventDefault()
             setLoading(true)
             try {
                 await resetEmail(email)
-                navigate("/" + URLS.LOGIN)
+                navigate(`/${URLS.LOGIN}`, true)
                 setLoading(false)
             } catch {
                 setLoading(false)
