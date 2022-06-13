@@ -20,7 +20,7 @@ jobs:
             - name: Run integration tests 🧪
               uses: cypress-io/github-action@v2
               with:
-                  install: true
+                  install-command: npm install --frozen-lockfile --legacy-peer-deps
                   start: npm start
                   wait-on: "http://localhost:3000"
     unit-tests:
