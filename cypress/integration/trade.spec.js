@@ -1,7 +1,9 @@
+import {URLS} from "../../src/routes";
+
 describe("Trade Page", () => {
     before(() => {
         cy.login()
-        cy.visit("http://localhost:3000/trade")
+        cy.visit("http://localhost:3000/" + URLS.DASHBOARD.TRADE)
     })
     it("trade page => stocks => render form", () => {
         cy.get('[data-testid="common-block"]').should('have.length', 1)

@@ -1,6 +1,8 @@
+import {URLS} from "../../src/routes";
+
 describe("Login Page", () => {
     beforeEach(() => {
-        cy.visit("http://localhost:3000/login");
+        cy.visit("http://localhost:3000/" + URLS.LOGIN);
     });
 
     it("login form => displays login form", () => {
@@ -22,7 +24,7 @@ describe("Login Page", () => {
             .should("not.be.disabled")
             .click();
         cy.get('[data-testid="component-header"]').should("have.length", 1);
-        cy.url().should("be.equal", "http://localhost:3000/index");
+        cy.url().should("be.equal", "http://localhost:3000/" + URLS.DASHBOARD.INDEX);
     });
 
     it("login form => wrong credentials should alert user", () => {
@@ -57,7 +59,7 @@ describe("Login Page", () => {
             .should("not.be.disabled")
             .should("have.text", "Posaljite email")
             .click();
-        cy.url().should("be.equal", "http://localhost:3000/login");
+        cy.url().should("be.equal", "http://localhost:3000/" + URLS.LOGIN);
     });
 
     it("reset password => submitting invalid form should show error", () => {
