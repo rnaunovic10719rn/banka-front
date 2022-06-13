@@ -12,6 +12,7 @@ function TableRow(props) {
   )
 
   const rowStyle = classNames(
+      "odd:bg-gray-50",
     { "hover:bg-gray-100 cursor-pointer": props.clickable },
   )
 
