@@ -11,6 +11,7 @@ import { BANK_POSITIONS } from "../utils";
 import { addUserAction } from "../redux/actions";
 
 function ProfileInformation() {
+
     const user = useSelector(getUserSelector)
     const [form, setForm] = useState({
         ime: "",
@@ -19,34 +20,35 @@ function ProfileInformation() {
         jmbg: "",
         brTelefon: "",
         pozicija: BANK_POSITIONS.ADMIN,
+        limit: "",
     });
 
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    async function getUser() {
-        const response = await getUserApi();
-        dispatch(addUserAction(response));
+  async function getUser() {
+    const response = await getUserApi();
+    dispatch(addUserAction(response));
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const onChange = (event) => {
+    setForm({ ...form, ...event });
+  };
+
+  async function onSubmit() {
+    try {
+      await editUserAction(form);
+      setSuccess(true);
+    } catch (e) {
+      setError(true);
     }
-
-    useEffect(() => {
-        getUser();
-    }, []);
-
-    const onChange = (event) => {
-        setForm({ ...form, ...event });
-    };
-
-    async function onSubmit() {
-        try {
-            await editUserAction(form);
-            setSuccess(true);
-        } catch (e) {
-            setError(true);
-        }
-    }
+  }
 
     useEffect(() => {
         if (!user) return
@@ -57,6 +59,7 @@ function ProfileInformation() {
             jmbg: user["jmbg"],
             brTelefon: user["brTelefon"],
             pozicija: user["role"]["name"],
+            limit: user["limit"]
         })
     }, [user])
 
@@ -76,8 +79,14 @@ function ProfileInformation() {
                     onDismiss={() => setSuccess(null)}
                 ></Alert>
             )}
+            <div className="flex items-center">
+                <div className="w-[200px]">Limit</div>
+                <div>
+                    {form && form["limit"]}
+                </div>
+            </div>
             <Card title="Osnovno">
-                <div class="flex flex-col gap-5">
+                <div className="flex flex-col gap-5">
                     <div className="flex justify-between items-center">
                         <div className="w-[100px]">Ime</div>
                         <TextField
@@ -110,7 +119,7 @@ function ProfileInformation() {
                         <Select
                             className="grow"
                             onChange={(e) => onChange({ pozicija: e })}
-                            options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL]}
+                            options={[BANK_POSITIONS.ADMIN, BANK_POSITIONS.ADMIN_GL, BANK_POSITIONS.ROLE_AGENT,  BANK_POSITIONS.ROLE_SUPERVISOR ]}
                             defValue={form && form["pozicija"]}
                         />
                     </div>
@@ -141,8 +150,8 @@ function ProfileInformation() {
                     </div>
                 </div>
             </Card>
-        </div>
-    );
+    </div>
+  );
 }
 
-export default ProfileInformation
+export default ProfileInformation;
