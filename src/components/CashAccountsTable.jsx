@@ -36,7 +36,7 @@ function CashAccountsTable() {
     }
 
     function formatNumber(num) {
-        return numeral(num).format("0.[000]")
+        return numeral(Number.parseFloat(num)).format("0.00")
     }
 
     function cashAccountToTableRow() {
@@ -44,9 +44,9 @@ function CashAccountsTable() {
         cashAccount.map(item => {
             tableRows.push([
                 item['kodValute'],
-                formatNumber(item['ukupno']),
-                formatNumber(item['rezervisano']),
-                formatNumber(item['raspolozivo']),
+                Number.parseFloat(item['ukupno']).toFixed(2),
+                Number.parseFloat(item['rezervisano']).toFixed(2),
+                Number.parseFloat(item['raspolozivo']).toFixed(2),
             ])
         })
         return tableRows;
@@ -62,10 +62,10 @@ function CashAccountsTable() {
                         item['username'],
                         item['opis'],
                         item['valuta']['kodValute'],
-                        formatNumber(item['uplata']),
-                        formatNumber(item['isplata']),
-                        formatNumber(item['rezervisano']),
-                        formatNumber(item['rezervisanoKoristi']),
+                        Number.parseFloat(item['uplata']).toFixed(2),
+                        Number.parseFloat(item['isplata']).toFixed(2),
+                        Number.parseFloat(item['rezervisano']).toFixed(2),
+                        Number.parseFloat(item['rezervisanoKoristi']).toFixed(2),
                     ]
                 )
             })

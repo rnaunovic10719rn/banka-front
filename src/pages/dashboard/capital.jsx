@@ -28,7 +28,7 @@ export default function CapitalPage() {
     function createCapitalRow(r) {
         return [
             r["kapitalType"],
-            r["ukupno"]
+            Number.parseFloat(r["ukupno"]).toFixed(2)
         ];
     }
 

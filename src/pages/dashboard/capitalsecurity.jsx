@@ -51,12 +51,10 @@ export default function CapitalSecurityPage() {
         return [
           r["oznakaHartije"],
           r["berza"],
-          <div class="text-right">{r["kolicinaUVlasnistvu"]}</div>,
-          <div class="text-right">{parseFloat(r["cena"]).toFixed(2)}</div>,
-          <div class="text-right">{parseFloat(r["vrednost"]).toFixed(2)}</div>,
-          <div class="text-right">{parseFloat(r["vrednostRSD"]).toFixed(2)}</div>,
-          <div class="text-right">{parseFloat(r["kupljenoZa"]).toFixed(2)}</div>,
-          <div class="text-right">{determineProfitStatus(r["profit"])}</div>
+          r["kolicinaUVlasnistvu"],
+          parseFloat(r["cena"]).toFixed(2),
+          parseFloat(r["vrednost"]).toFixed(2),
+          parseFloat(r["vrednostRSD"]).toFixed(2)
         ];
     }
 
@@ -80,8 +78,6 @@ export default function CapitalSecurityPage() {
                     "Cena",
                     "Vrednost",
                     "Vrednost (RSD)",
-                    "Kupljeno za",
-                    "Profit"
                   ]}
                 rows={data}
                 clickable
