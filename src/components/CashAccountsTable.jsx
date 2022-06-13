@@ -74,7 +74,7 @@ function CashAccountsTable() {
         return (
             <div>
                 <Table
-                    headings={["Datum", "Korisnik", "Opis", "Valuta", "Uplata", "Isplata", "Rezervisano", "Rezervisano koristi"]}
+                    headings={["Datum", "Korisnik", "Opis", "Valuta", "Uplata", "Isplata", "Rezervisano", "Koristi"]}
                     rows={transactionsToTableRow()} pagination paginationGroupSize={10}/>
             </div>
         )
