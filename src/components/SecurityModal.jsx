@@ -23,9 +23,9 @@ function UserModal(props) {
     function createHistoryRow(r) {
       return [
         r["tipOrdera"],
-        <div class="text-right">{parseFloat(r["kolicina"]).toFixed(2)}</div>,
-        <div class="text-right">{parseFloat(r["ukupno"]).toFixed(2)}</div>,
-        <div class="text-center">{moment(r["datum"]).format("DD.MM.YYYY HH:mm")}</div>
+        <div>{parseFloat(r["kolicina"]).toFixed(2)}</div>,
+        <div>{parseFloat(r["ukupno"]).toFixed(2)}</div>,
+        <div>{moment(r["datum"]).format("DD.MM.YYYY HH:mm")}</div>
       ];
     }
 

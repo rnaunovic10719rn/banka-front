@@ -6,8 +6,6 @@ function Block(props) {
     const style = classNames(
         "p-8",
         "rounded-xl",
-        "drop-shadow-lg",
-        "drop-shadow-lg-t",
         "bg-white",
         "border",
         props.className,
