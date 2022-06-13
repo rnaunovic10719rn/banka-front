@@ -57,8 +57,6 @@ export function AppRoutes() {
                     />
                     <Route element={<HeaderPageLayout/>}>
                         <Route path={URLS.DASHBOARD.STOCK} element={<OverviewPage/>}/>
-                    </Route>
-                    <Route element={<HeaderPageLayout/>}>
                         <Route path={URLS.DASHBOARD.LIST.INDEX} element={<ListPage/>}/>
                         <Route
                             path={URLS.DASHBOARD.LIST.NEW_USER}

@@ -329,7 +329,6 @@ export default function OverviewPage() {
   return (
     <div>
       {activeTab === TABS.STOCKS && <StockTickerWrapper />}
-      {activeTab === TABS.FOREX && <ForexTickerWrapper />}
       <div className="flex flex-col gap-3">
         {error && (
           <Alert
