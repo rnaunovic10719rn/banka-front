@@ -4,7 +4,7 @@ import Alert from "./common/Alert";
 import TextField, {VALIDATION_PATTERN} from "./common/TextField";
 import Button from "./common/Button";
 import Form from "./common/Form";
-import {Store} from "react-notifications-component";
+import Notification from "./common/Notification";
 import PropTypes from "prop-types";
 
 function Payment(props) {
@@ -37,16 +37,7 @@ function Payment(props) {
             setLoading(true)
             await performPayment(tmp);
             setLoading(false)
-            Store.addNotification({
-                title: "",
-                message: `Uspesno ste izvrsili uplatu.`,
-                type: "success",
-                container: "top-right",
-                dismiss: {
-                    duration: 5000,
-                    onScreen: true
-                }
-            });
+            Notification("", "Uspesno ste izvrsili uplatu.", "success")
             props.onDone()
         } catch (e) {
             setError(true);
