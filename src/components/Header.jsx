@@ -13,7 +13,7 @@ function HeaderItem(props) {
   const location = useLocation();
 
   const style = classNames("px-4 mx-1", "rounded", "hover:bg-indigo-700", {
-    "!bg-indigo-900": location.pathname === `/${props.path}`,
+    "!bg-indigo-900": location.pathname.includes(`/${props.path}`),
   });
 
   return (

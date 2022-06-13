@@ -18,8 +18,8 @@ import CapitalSecurityPage from "./pages/dashboard/capitalsecurity";
 
 export const URLS = {
     DASHBOARD: {
-        INDEX: "/",
-        STOCK: "berza",
+        INDEX: "index",
+        STOCK: "index",
         INFORMATION: "information",
         LIST: {
             INDEX: "list",
@@ -51,12 +51,12 @@ export function AppRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route element={<App/>}>
-                    <Route
-                        path={URLS.DASHBOARD.INDEX}
-                        element={<Navigate to={URLS.DASHBOARD.STOCK} replace/>}
-                    />
+                    {/*<Route*/}
+                    {/*    path={URLS.DASHBOARD.STOCK}*/}
+                    {/*    element={<Navigate to={URLS.DASHBOARD.INDEX} replace/>}*/}
+                    {/*/>*/}
                     <Route element={<HeaderPageLayout/>}>
-                        <Route path={URLS.DASHBOARD.STOCK} element={<OverviewPage/>}/>
+                        <Route path={URLS.DASHBOARD.INDEX} element={<OverviewPage/>}/>
                         <Route path={URLS.DASHBOARD.LIST.INDEX} element={<ListPage/>}/>
                         <Route
                             path={URLS.DASHBOARD.LIST.NEW_USER}
