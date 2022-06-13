@@ -62,6 +62,11 @@ export function deleteUserAction(id) {
 	return delete_(url);
 }
 
+export function enableUserAction(id) {
+	let url = new URL(BASE_URL + "/user/enable/" + id);
+	return post(url);
+}
+
 export function changePasswordApi(password) {
 	let url = new URL(BASE_URL + `/user/change-password`);
 	const body = {
