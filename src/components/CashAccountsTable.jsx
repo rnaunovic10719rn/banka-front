@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     getAccountCacheStateAgent,
     getAccountCashStateSupervisor,
@@ -11,17 +11,19 @@ import {isAgent, isSupervisor} from "../utils";
 import moment from "moment";
 import numeral from "numeral"
 import Stats from "./common/Stats";
+import {addTransactionsAction} from "../redux/actions";
 
 function CashAccountsTable() {
+    const dispatch = useDispatch()
     const user = useSelector(state => state.app.user);
-    const [cashAccount, setCashAccount] = useState([]);
+    const cashAccount = useSelector(state => state.app.transactions);
     const [agentLimits, setAgentLimits] = useState(null);
     const [selected, setSelected] = useState(null);
     const [transactions, setTransactions] = useState([]);
 
     async function fetchCashAccountData() {
         if (isSupervisor(user)) {
-            setCashAccount(await getAccountCashStateSupervisor())
+            dispatch(addTransactionsAction(await getAccountCashStateSupervisor()))
         }
         if (isAgent(user)) {
             setAgentLimits(await getAccountCacheStateAgent())
@@ -30,7 +32,6 @@ function CashAccountsTable() {
 
     async function fetchTransactions() {
         const t = await getAccountTransactions(selected[0])
-        console.log("transactions", t)
         setTransactions(t)
     }
 

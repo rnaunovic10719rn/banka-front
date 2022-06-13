@@ -6,8 +6,14 @@ import Button from "./common/Button";
 import Form from "./common/Form";
 import Notification from "./common/Notification";
 import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "react-redux";
+import {isSupervisor} from "../utils";
+import {getAccountCashStateSupervisor} from "../clients/accountClient";
+import {addTransactionsAction} from "../redux/actions";
 
 function Payment(props) {
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.app.user)
     const [error, setError] = useState(null);
     const [form, setForm] = useState({
         valutaOznaka: "",
@@ -36,11 +42,15 @@ function Payment(props) {
             console.log(tmp);
             setLoading(true)
             await performPayment(tmp);
+            if (isSupervisor(user)) {
+                dispatch(addTransactionsAction(await getAccountCashStateSupervisor()))
+            }
             setLoading(false)
             Notification("", "Uspesno ste izvrsili uplatu.", "success")
             props.onDone()
         } catch (e) {
             setError(true);
+            setLoading(false)
         }
     }
 

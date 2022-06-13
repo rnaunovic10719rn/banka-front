@@ -51,10 +51,10 @@ export function AppRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route element={<App/>}>
-                    {/*<Route*/}
-                    {/*    path={URLS.DASHBOARD.STOCK}*/}
-                    {/*    element={<Navigate to={URLS.DASHBOARD.INDEX} replace/>}*/}
-                    {/*/>*/}
+                    <Route
+                        path={"*"}
+                        element={<Navigate to={`/${URLS.DASHBOARD.INDEX}`} replace/>}
+                    />
                     <Route element={<HeaderPageLayout/>}>
                         <Route path={URLS.DASHBOARD.INDEX} element={<OverviewPage/>}/>
                         <Route path={URLS.DASHBOARD.LIST.INDEX} element={<ListPage/>}/>
