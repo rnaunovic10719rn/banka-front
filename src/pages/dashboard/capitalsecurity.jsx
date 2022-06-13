@@ -33,7 +33,8 @@ export default function CapitalSecurityPage() {
     }
 
     async function loadTable() {
-        const dd = await historyOfOrder(mapping.get(ozHartije));
+        const harType = title == "FUTURE UGOVOR" ? title.replace(" ", "_") : title;
+        const dd = await historyOfOrder(harType, mapping.get(ozHartije));
         setDTabela(dd);
     }
 
@@ -50,11 +51,12 @@ export default function CapitalSecurityPage() {
         return [
           r["oznakaHartije"],
           r["berza"],
-          r["kolicinaUVlasnistvu"],
-          r["cena"],
-          r["vrednost"],
-          r["kupljenoZa"],
-          determineProfitStatus(r["profit"])
+          <div class="text-right">{r["kolicinaUVlasnistvu"]}</div>,
+          <div class="text-right">{parseFloat(r["cena"]).toFixed(2)}</div>,
+          <div class="text-right">{parseFloat(r["vrednost"]).toFixed(2)}</div>,
+          <div class="text-right">{parseFloat(r["vrednostRSD"]).toFixed(2)}</div>,
+          <div class="text-right">{parseFloat(r["kupljenoZa"]).toFixed(2)}</div>,
+          <div class="text-right">{determineProfitStatus(r["profit"])}</div>
         ];
     }
 
@@ -77,6 +79,7 @@ export default function CapitalSecurityPage() {
                     "Kol. u vlasništvu",
                     "Cena",
                     "Vrednost",
+                    "Vrednost (RSD)",
                     "Kupljeno za",
                     "Profit"
                   ]}
