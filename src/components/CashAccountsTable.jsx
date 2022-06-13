@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from "react"
-import { useSelector } from "react-redux";
-import { getAccountCacheStateAgent, getAccountCashStateSupervisor, getAccountTransactions } from "../clients/accountClient";
+import React, {useEffect, useState} from "react"
+import {useSelector} from "react-redux";
+import {
+    getAccountCacheStateAgent,
+    getAccountCashStateSupervisor,
+    getAccountTransactions
+} from "../clients/accountClient";
 import Table from "./common/Table"
 import Modal from "./common/Modal"
-import { BANK_POSITIONS } from "../utils";
+import {isAgent, isSupervisor} from "../utils";
 import moment from "moment";
 import numeral from "numeral"
+import Stats from "./common/Stats";
 
 function CashAccountsTable() {
     const user = useSelector(state => state.app.user);
     const [cashAccount, setCashAccount] = useState([]);
+    const [agentLimits, setAgentLimits] = useState(null);
     const [selected, setSelected] = useState(null);
     const [transactions, setTransactions] = useState([]);
 
     async function fetchCashAccountData() {
-        let tempCashAccount = []
-        const supervisorRoles = [BANK_POSITIONS.ADMIN_GL, BANK_POSITIONS.ROLE_SUPERVISOR]
-        if (supervisorRoles.includes(user['role']['name'])) {
-            tempCashAccount = await getAccountCashStateSupervisor();
-        } else if (user['role']['name'] === BANK_POSITIONS.ROLE_AGENT) {
-            tempCashAccount = await getAccountCacheStateAgent();
+        if (isSupervisor(user)) {
+            setCashAccount(await getAccountCashStateSupervisor())
         }
-        setCashAccount(tempCashAccount)
+        if (isAgent(user)) {
+            setAgentLimits(await getAccountCacheStateAgent())
+        }
     }
 
     async function fetchTransactions() {
@@ -69,8 +73,30 @@ function CashAccountsTable() {
 
         return (
             <div>
-                <Table headings={["Datum", "Korisnik", "Opis", "Valuta", "Uplata", "Isplata", "Rezervisano", "Rezervisano koristi"]} rows={transactionsToTableRow()} pagination paginationGroupSize={10}/>
+                <Table
+                    headings={["Datum", "Korisnik", "Opis", "Valuta", "Uplata", "Isplata", "Rezervisano", "Rezervisano koristi"]}
+                    rows={transactionsToTableRow()} pagination paginationGroupSize={10}/>
             </div>
+        )
+    }
+
+    function renderAgent() {
+        function prepareStats() {
+            const list = []
+            if (!agentLimits) return list
+
+            for (const [key, value] of Object.entries(agentLimits)) {
+                console.log(`${key}: ${value}`);
+                list.push({text: key, stat: value})
+            }
+            return list
+        }
+
+        return (
+            <>
+                <hr className="mb-5"/>
+                <Stats stats={prepareStats()}/>
+            </>
         )
     }
 
@@ -91,9 +117,13 @@ function CashAccountsTable() {
 
     return (
         <>
-            <Table headings={['Valuta', 'Ukupno', 'Rezervisano', 'Raspolozivo']} rows={cashAccountToTableRow()} clickable onClick={setSelected} />
+            {isSupervisor(user) &&
+                <Table headings={['Valuta', 'Ukupno', 'Rezervisano', 'Raspolozivo']} rows={cashAccountToTableRow()}
+                       clickable onClick={setSelected}/>}
+            {isAgent(user) && renderAgent()}
             {!!selected &&
-                <Modal visible title={`Transakcije ${selected[0]}`} onClose={handleCloseModal}  className="min-w-[1000px]">
+                <Modal visible title={`Transakcije ${selected[0]}`} onClose={handleCloseModal}
+                       className="min-w-[1000px]">
                     {renderModalContent()}
                 </Modal>
             }
