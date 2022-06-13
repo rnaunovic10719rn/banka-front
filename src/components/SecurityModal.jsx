@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import PropTypes from "prop-types";
 import Modal from "./common/Modal";
 import Table from "./common/Table";
@@ -20,13 +21,12 @@ function UserModal(props) {
     }
 
     function createHistoryRow(r) {
-      const date = new Date(r["datum"]);
-        return [
-          r["tipOrdera"],
-          r["kolicina"],
-          r["ukupno"],
-          date.toLocaleString()
-        ];
+      return [
+        r["tipOrdera"],
+        <div class="text-right">{parseFloat(r["kolicina"]).toFixed(2)}</div>,
+        <div class="text-right">{parseFloat(r["ukupno"]).toFixed(2)}</div>,
+        <div class="text-center">{moment(r["datum"]).format("DD.MM.YYYY HH:mm")}</div>
+      ];
     }
 
   useEffect(() => {
@@ -34,8 +34,6 @@ function UserModal(props) {
   }, [props.tabela]);
 
   function renderDetails() {
-    console.log(props.tabela);
-
     return (
       <div className="flex flex-col gap-5">
         <Table

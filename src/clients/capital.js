@@ -16,7 +16,7 @@ export function boughtSecurity(kapType) {
     return get(url);
 }
 
-export function historyOfOrder(idSecurity) {
-    let url = new URL(BASE_URL + "/racun/transakcijaHartije/" + idSecurity);
+export function historyOfOrder(kapType, idSecurity) {
+    let url = new URL(BASE_URL + "/racun/transakcijaHartije/" + kapType + "/" + idSecurity);
     return get(url);
 }
