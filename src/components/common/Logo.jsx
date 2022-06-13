@@ -23,7 +23,7 @@ function Logo(props) {
 }
 
 Logo.propTypes = {
-    size: PropTypes.string,
+    size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     className: PropTypes.string,
 }
 

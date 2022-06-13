@@ -13,7 +13,7 @@ function HeaderItem(props) {
   const location = useLocation();
 
   const style = classNames("px-4 mx-1", "rounded", "hover:bg-indigo-700", {
-    "!bg-indigo-900": location.pathname === `/${props.path}`,
+    "!bg-indigo-900": location.pathname.includes(`/${props.path}`),
   });
 
   return (
@@ -77,9 +77,8 @@ function Header() {
           <HeaderItem path={URLS.DASHBOARD.STOCK} text="Berza" />
           <HeaderItem path={URLS.DASHBOARD.CAPITAL.INDEX} text="Kapital" />
           <HeaderItem path={URLS.DASHBOARD.TRADE} text="Trgovina" />
-          {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_GL_ADMIN") && <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni" />}
           <HeaderItem path={URLS.DASHBOARD.APPROVE_TRANSACTION} text="Porudžbine" />
-          <HeaderItem path={URLS.DASHBOARD.PAYMENT} text="Placanja" />
+          {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_GL_ADMIN") && <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni" />}
         </div>
         <HoverMenu className="mr-5" text={userItem}>
           <HoverMenuItem text="Profile" to={`${URLS.DASHBOARD.INFORMATION}`} />

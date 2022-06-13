@@ -12,6 +12,7 @@ import { buySellStocks } from "../../clients/stocks";
 import { Store } from "react-notifications-component";
 import Block from "../../components/common/Block";
 import Form from "../../components/common/Form";
+import Notification from "../../components/common/Notification";
 
 const TYPE = {
   STOCKS: "Stocks",
@@ -56,21 +57,10 @@ export default function TradePage() {
     e.preventDefault();
 
     try {
-      console.log(form);
       const msg = await buySellStocks(form);
-      Store.addNotification({
-        title: "",
-        message: `Uspesno ste izvrsili trgovinu.`,
-        type: "success",
-        container: "top-right",
-      });
+      Notification("", "Uspesno ste izvrsili trgovinu.", "success")
     } catch (e) {
-      Store.addNotification({
-        title: "Doslo je do greske",
-        message: `${e}`,
-        type: "danger",
-        container: "top-right",
-      });
+      Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
     }
   }
 
