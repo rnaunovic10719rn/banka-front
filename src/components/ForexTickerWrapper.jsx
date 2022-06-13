@@ -13,8 +13,8 @@ function ForexTickerWrapper() {
         <div className="-mx-10 -mt-10 mb-10 h-20 flex">
             <Ticker>
                 {stocks.map(stock => {
-                    const change = stock['bid'] > stock['ask']
-                    return <FinancialTicker id={stock['berzaId']} change={change} symbol={`${stock['fromCurrency']}/${stock['toCurrency']}`} lastPrice={0} percentage={0} currentPrice={0} />
+                    const change = true
+                    return <FinancialTicker id={stock['berzaId']} change={change} symbol={`${stock['fromCurrency']}/${stock['toCurrency']}`} percentage={`${stock['exchangeRate']}`} />
                 })}
             </Ticker>
         </div>

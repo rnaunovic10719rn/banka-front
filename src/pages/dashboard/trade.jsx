@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import Card from "../../components/common/Card";
-import TextField, { VALIDATION_PATTERN } from "../../components/common/TextField";
+import TextField, {
+  VALIDATION_PATTERN,
+} from "../../components/common/TextField";
 import RadioGroup from "../../components/common/RadioGroup";
 import Checkbox from "../../components/common/Checkbox";
 import Button from "../../components/common/Button";
 import Select from "../../components/common/Select";
 import { getUserId } from "../../clients/client";
 import { buySellStocks } from "../../clients/stocks";
-import { Store } from 'react-notifications-component';
+import { Store } from "react-notifications-component";
 import Block from "../../components/common/Block";
 import Form from "../../components/common/Form";
+import Notification from "../../components/common/Notification";
 
 const TYPE = {
   STOCKS: "Stocks",
@@ -19,9 +22,9 @@ const TYPE = {
 
 export default function TradePage() {
   const [formValid, setFormValid] = useState(false);
+  const [securityType, setSecurityType] = useState(TYPE.STOCKS);
   const [form, setForm] = useState({
     symbol: "",
-    userId: 1,
     hartijaOdVrednostiTip: TYPE.STOCKS,
     kolicina: null,
     akcija: "BUY",
@@ -52,21 +55,12 @@ export default function TradePage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     try {
       const msg = await buySellStocks(form);
-      Store.addNotification({
-        title: "",
-        message: `Uspesno ste izvrsili trgovinu.`,
-        type: "success",
-        container: "top-right",
-      });
+      Notification("", "Uspesno ste izvrsili trgovinu.", "success")
     } catch (e) {
-      Store.addNotification({
-        title: "Doslo je do greske",
-        message: `${e}`,
-        type: "danger",
-        container: "top-right",
-      });
+      Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
     }
   }
 
@@ -78,6 +72,20 @@ export default function TradePage() {
   useEffect(() => {
     setForm({ ...form, symbol: forexForm.from + " " + forexForm.to });
   }, [forexForm]);
+
+  useEffect(() => {
+    switch (securityType) {
+      case TYPE.STOCKS:
+        setForm({...form, hartijaOdVrednostiTip: "AKCIJA"})
+        break;
+      case TYPE.FOREX:
+        setForm({...form, hartijaOdVrednostiTip: "FOREX"})
+        break;
+      case TYPE.FUTURES:
+        setForm({...form, hartijaOdVrednostiTip: "FUTURES_UGOVOR"})
+        break;
+    }
+  }, [securityType]);
 
   function renderStocks() {
     return (
@@ -100,15 +108,15 @@ export default function TradePage() {
             validation={VALIDATION_PATTERN.NUMBER}
             required
           />
-          <div>
-            <RadioGroup
-              options={["BUY", "SELL"]}
-              onChange={(e) => onChange({ akcija: e })}
-            />
-          </div>
+          <RadioGroup
+            options={["BUY", "SELL"]}
+            onChange={function (e) {
+              onChange({ akcija: e });
+            }}
+          />
         </div>
       </>
-    )
+    );
   }
 
   function renderForex() {
@@ -139,7 +147,7 @@ export default function TradePage() {
           />
         </div>
       </>
-    )
+    );
   }
 
   function renderShared() {
@@ -166,8 +174,8 @@ export default function TradePage() {
             * Ako su oba 0 onda se radi Market Order
           </div>
           <div className="text-xs">
-            * Ako je jedan stavljen, a drugi 0, radi se šta ste odabrail
-            (Limit ili Stop Order)
+            * Ako je jedan stavljen, a drugi 0, radi se šta ste odabrail (Limit
+            ili Stop Order)
           </div>
           <div className="text-xs">
             * Ako su oba stavljena, radi se Stop-Limit order
@@ -179,15 +187,16 @@ export default function TradePage() {
           value={form["allOrNoneFlag"]}
         />
       </>
-    )
+    );
   }
-
 
   function renderForm() {
     return (
       <>
-        {(form.hartijaOdVrednostiTip === TYPE.STOCKS || form.hartijaOdVrednostiTip === TYPE.FUTURES) && renderStocks()}
-        {form.hartijaOdVrednostiTip === TYPE.FOREX && renderForex()}
+        {(securityType === TYPE.STOCKS ||
+          securityType === TYPE.FUTURES) &&
+          renderStocks()}
+        {securityType === TYPE.FOREX && renderForex()}
         {renderShared()}
       </>
     );
@@ -200,11 +209,11 @@ export default function TradePage() {
           <Select
             label="Hartija vrednosti"
             className="grow"
-            onChange={(e) => onChange({ hartijaOdVrednostiTip: e })}
+            onChange={(e) => setSecurityType(e)}
             options={[TYPE.STOCKS, TYPE.FOREX, TYPE.FUTURES]}
             defValue={TYPE.STOCKS}
           />
-          {form.hartijaOdVrednostiTip && renderForm()}
+          {securityType && renderForm()}
           <div>
             <Button label="Naruci" type="submit" disabled={!formValid} />
           </div>

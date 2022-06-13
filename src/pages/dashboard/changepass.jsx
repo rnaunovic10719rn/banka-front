@@ -93,7 +93,7 @@ export default function ChangePasswordPage() {
         try {
             if (linkPath.length == 2) {
                 await changePasswordById(id,password1)
-                navigate("/" + URLS.DASHBOARD.PRIVACY)
+                navigate("/" + URLS.DASHBOARD.INFORMATION)
             }
             else {
                 const body = {

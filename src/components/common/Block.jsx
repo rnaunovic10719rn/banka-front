@@ -6,18 +6,16 @@ function Block(props) {
     const style = classNames(
         "p-8",
         "rounded-xl",
-        "drop-shadow-lg",
-        "drop-shadow-lg-t",
         "bg-white",
         "border",
         props.className,
     )
 
     return (
-        <div>
+        <div data-testid="common-block">
             <div className={style} >
                 <div className="flex justify-between">
-                    <h1 className="font-extrabold text-4xl mb-8">{props.title}</h1>
+                    <h1 data-testid="common-block-title" className="font-extrabold text-4xl mb-8">{props.title}</h1>
                     <div>
                         {props.cta}
                     </div>

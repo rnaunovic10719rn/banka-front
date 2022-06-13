@@ -1,4 +1,12 @@
-import { get, post, patch, delete_, postWithoutStringify, postWithoutTokenAndBody, postWithoutToken } from "./api";
+import {
+	get,
+	post,
+	patch,
+	delete_,
+	postWithoutStringify,
+	postWithoutTokenAndBody,
+	postWithoutToken,
+} from "./api";
 import { authSaveToken, authGetToken } from "../auth";
 
 const BASE_URL = "http://localhost:8080/api";
@@ -8,7 +16,7 @@ export async function loginAction(username, password, otp = null) {
 	const body = {
 		username: username,
 		password: password,
-		otp: otp
+		otp: otp,
 	};
 	console.log(body);
 	const r = await post(url, body);
@@ -60,6 +68,11 @@ export function createUserAction(body) {
 export function deleteUserAction(id) {
 	let url = new URL(BASE_URL + "/user/delete/" + id);
 	return delete_(url);
+}
+
+export function enableUserAction(id) {
+	let url = new URL(BASE_URL + "/user/enable/" + id);
+	return post(url);
 }
 
 export function changePasswordApi(password) {
@@ -119,7 +132,12 @@ export function hasTwoFactor(username) {
 	return postWithoutTokenAndBody(url);
 }
 
-//export async function savePassAction(password1,password2, otp = null){
-//	let url = new URL(BASE_URL + "/login");
-//	let params = new URLSearchParams(url.search);
-//}
+export function resetLimitUser(id) {
+	let url = new URL(BASE_URL + "/limit-reset/" + id);
+	return patch(url, id);
+}
+//
+// //export async function savePassAction(password1,password2, otp = null){
+// //	let url = new URL(BASE_URL + "/login");
+// //	let params = new URLSearchParams(url.search);
+// //}
