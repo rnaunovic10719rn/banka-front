@@ -14,5 +14,5 @@ Cypress.Commands.add('login', (username, password) => {
 		.should("not.be.disabled")
 		.click();
 	cy.get('[data-testid="component-header"]').should("have.length", 1);
-	cy.url().should("be.equal", "http://localhost:3000/berza");
+	cy.url().should("be.equal", "http://localhost:3000/index");
 })
