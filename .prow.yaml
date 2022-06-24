@@ -1,0 +1,8 @@
+presubmits:
+  - name: pull-banka-front-inrepo
+    always_run: true
+    decorate: true
+    spec:
+      containers:
+        - image: alpine
+          command: ["/bin/printenv"]
