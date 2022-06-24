@@ -1,8 +1,0 @@
-presubmits:
-  - name: pull-banka-front-tests
-    always_run: true
-    decorate: true
-    spec:
-      containers:
-        - image: alpine
-          command: ["/bin/date"]
