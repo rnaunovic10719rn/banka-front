@@ -1,5 +1,6 @@
-import { get, post } from "./api";
-const BASE_URL = "http://localhost:8083/api";
+import {get, post} from "./api";
+
+const BASE_URL = process.env.REACT_APP_ACCOUNTS_API;
 
 export function performPayment(body) {
     let url = new URL(BASE_URL + "/racun/transakcija");
