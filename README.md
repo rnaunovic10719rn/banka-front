@@ -6,7 +6,7 @@
 
 #### Prerequisites
 
--   [NodeJS](https://nodejs.org/en/)
+- [NodeJS](https://nodejs.org/en/)
 
 ```shell
 cd banka-front
@@ -17,11 +17,12 @@ npm run storybook # starts Storybook
 
 ### Via Docker (OSX|Linux only)
 
-For Windows hot reload isn't working. See this [issue](https://github.com/microsoft/WSL/issues/4739) for more information.
+For Windows hot reload isn't working. See this [issue](https://github.com/microsoft/WSL/issues/4739) for more
+information.
 
 #### Prerequisites
 
--   [Docker](https://www.docker.com/)
+- [Docker](https://www.docker.com/)
 
 ```shell
 cd banka-front
@@ -30,8 +31,18 @@ docker compose up --build
 
 Once the app is up and running it can be accessed at:
 
--   UI `localhost:3000`
--   Storybook `localhost:6006`
+- UI `localhost:3000`
+- Storybook `localhost:6006`
+
+### Configuration
+
+#### `.env`
+
+Default environment file that will use production configuration.
+
+#### `.env.development.example`
+
+Environment file for development. It needs to be renamed to `.env.development` for npm to recognize it.
 
 ### Tests
 
@@ -57,8 +68,8 @@ npx cypress run
 
 ## Technologies
 
--   [NodeJS](https://nodejs.org/en/)
--   [React](https://nodejs.org/en/)
--   [Storybook](https://storybook.js.org/)
--   [TailwindCSS](https://tailwindcss.com/)
--   [Cypress](https://cypress.io/)
+- [NodeJS](https://nodejs.org/en/)
+- [React](https://nodejs.org/en/)
+- [Storybook](https://storybook.js.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Cypress](https://cypress.io/)
