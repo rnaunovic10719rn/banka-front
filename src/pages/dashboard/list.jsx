@@ -73,7 +73,10 @@ export default function ListPage() {
                     : null ,
                 u['role']['name'] === "ROLE_AGENT" ? <Button design="inline" onClick={() => resetLimit(u['id'])} label="Resetuj limit" /> : null
             ]);
-        })
+        });
+
+        r.sort((a, b) => (a[0] > b[0]) ? 1 : -1);
+
         setRows(r)
     }, [id, users])
 
