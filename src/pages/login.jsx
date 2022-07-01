@@ -40,8 +40,6 @@ export default function LoginPage() {
         setLoading(true)
         try {
             const has2fa = await hasTwoFactor(username);
-            console.log(username);
-            console.log(has2fa);
             if (!has2fa) {
                 await loginAction(username, password)
                 await getUser()
