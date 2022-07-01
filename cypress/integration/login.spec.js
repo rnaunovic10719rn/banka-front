@@ -89,7 +89,7 @@ describe("Login Page", () => {
     cy.get(".rnc__notification-content").should("have.length", 1);
   });
 
-  it("login form => login as agent and check there is no zaposleni tab at header", () => {
+  it("login form => login as agent and check there is no 'Zaposleni' in header", () => {
     cy.get('[type="text"]').click().focused().type("milica.mihajlovic");
     cy.get('[type="password"]').click().focused().type("agent2agent2");
     cy.get('[data-testid="common-button"]')
@@ -105,7 +105,7 @@ describe("Login Page", () => {
     );
   });
 
-  it("login form => login as supervizor and check there is no zaposleni tab at header", () => {
+  it("login form => login as supervizor and check there is no 'Zaposleni' in header", () => {
     cy.get('[type="text"]').click().focused().type("vladimir.vladimirovic");
     cy.get('[type="password"]').click().focused().type("supervisor1");
     cy.get('[data-testid="common-button"]')

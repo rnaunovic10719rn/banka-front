@@ -49,7 +49,7 @@ describe("Information Page", () => {
       "Uspesno promenjeni podaci"
     );
   });
-  it("information page => inserted password dont have 8 characters,any number or first big letter", () => {
+  it("information page => inserted password doesn't have 8 characters, any number or an uppercase letter", () => {
     cy.get('[data-testid="common-button"]').eq(1).click();
     cy.url().should(
       "be.equal",
@@ -78,7 +78,7 @@ describe("Information Page", () => {
         "Šifra ne sadrži nijednu cifru.\n"
     );
   });
-  it("information page => inserted password without big first letter or any number", () => {
+  it("information page => inserted password without uppercase letter or any number", () => {
     cy.get('[data-testid="common-button"]').eq(1).click();
     cy.url().should(
       "be.equal",
@@ -106,7 +106,7 @@ describe("Information Page", () => {
         "Šifra ne sadrži nijednu cifru.\n"
     );
   });
-  it("information page => inserted password with big letter but without of numbers", () => {
+  it("information page => inserted password with an uppercase letter but without numbers", () => {
     cy.get('[data-testid="common-button"]').eq(1).click();
     cy.url().should(
       "be.equal",
@@ -133,7 +133,7 @@ describe("Information Page", () => {
         "Šifra ne sadrži nijednu cifru.\n"
     );
   });
-  it("information page => alert disappear when x button is pressed", () => {
+  it("information page => alert disappears when the X button is pressed", () => {
     cy.get('[data-testid="common-button"]').eq(1).click();
     cy.url().should(
       "be.equal",
@@ -163,7 +163,7 @@ describe("Information Page", () => {
     cy.get('[data-testid="common-exit-button"]').eq(0).click();
     cy.get('[data-testid="common-alert"]').should("have.length", 0);
   });
-  it("information page => inserted passwords doesnt matching ", () => {
+  it("information page => inserted passwords don't match", () => {
     cy.get('[data-testid="common-button"]').eq(1).click();
     cy.url().should(
       "be.equal",
@@ -184,7 +184,7 @@ describe("Information Page", () => {
       .type("novasifra");
     cy.get('[data-testid="common-button"]').should("be.disabled");
   });
-  it("information page => inserting valid password,changing password and taking back to information page", () => {
+  it("information page => insert valid password, change password and redirect to information page", () => {
     cy.get('[data-testid="common-button"]').eq(1).click();
     cy.url().should(
       "be.equal",
