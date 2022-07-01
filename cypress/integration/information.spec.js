@@ -10,6 +10,45 @@ describe("Information Page", () => {
     cy.get('[data-testid="common-block"]').should("have.length", 1);
     cy.get('[data-testid="common-button"]').should("have.length", 5);
   });
+  it("information page => change data", () => {
+    cy.get('[data-testid="common-button"]').eq(0).click();
+    cy.get('[data-testid="common-text-field"]').should("have.length", 5);
+    cy.get('[data-testid="common-text-field"]')
+      .eq(0)
+      .click()
+      .focus()
+      .clear()
+      .type("test");
+    cy.get('[data-testid="common-text-field"]')
+      .eq(1)
+      .click()
+      .focus()
+      .clear()
+      .type("test");
+    cy.get('[data-testid="common-text-field"]')
+      .eq(2)
+      .click()
+      .focus()
+      .clear()
+      .type("test");
+    cy.get('[data-testid="common-text-field"]')
+      .eq(3)
+      .click()
+      .focus()
+      .clear()
+      .type("test");
+    cy.get('[data-testid="common-text-field"]')
+      .eq(4)
+      .click()
+      .focus()
+      .clear()
+      .type("test");
+    cy.get('[data-testid="common-button"]').eq(0).click();
+    cy.get('[data-testid="common-alert"]').should(
+      "have.text",
+      "Uspesno promenjeni podaci"
+    );
+  });
   it("information page => inserted password dont have 8 characters,any number or first big letter", () => {
     cy.get('[data-testid="common-button"]').eq(1).click();
     cy.url().should(

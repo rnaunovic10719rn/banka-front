@@ -103,6 +103,7 @@ describe("Users Page", () => {
     cy.get('[data-testid="common-button"]')
       .should("have.length", 14)
       .eq(13)
-      .should("contain", "Aktiviraj");
+      .should("contain", "Aktiviraj")
+      .click();
   });
 });
