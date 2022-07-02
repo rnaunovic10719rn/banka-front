@@ -40,7 +40,6 @@ function Payment(props) {
                 "lastSegment": false,
                 "type": "NOVAC"
             };
-            console.log(tmp);
             setLoading(true)
             await performPayment(tmp);
             if (isSupervisor(user)) {
@@ -80,12 +79,9 @@ function Payment(props) {
                         />
                     </div>
                 </div>
-                <Button
-                    label="Realizuj"
-                    type="submit"
-                    loading={loading}
-                    disabled={!formValid}
-                />
+                <div className="flex justify-end gap-5">
+                    <Button label="Realizuj" type={"submit"} loading={loading} disabled={!formValid}/>
+                </div>
             </Form>
         </div>
     );

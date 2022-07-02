@@ -24,7 +24,6 @@ export default function ChangePasswordPage() {
     }
 
     useEffect(() => {
-        console.log(window.location.pathname);
         setLinkPath(window.location.pathname.split("/"));
         getId()
     }, [])

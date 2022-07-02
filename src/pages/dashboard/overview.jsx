@@ -11,11 +11,11 @@ import {
     getStocksSearchApi,
 } from "../../clients/stocks";
 import StocksModal from "../../components/StocksModal";
+import Notification from "../../components/common/Notification";
 import ForexModal from "../../components/ForexModal";
 import PlaceholderLoading from "react-placeholder-loading";
 import Button from "../../components/common/Button";
 import TextField from "../../components/common/TextField";
-import Alert from "../../components/common/Alert";
 import Block from "../../components/common/Block";
 import {useDispatch} from "react-redux";
 import {addForexAction, addStocksAction} from "../../redux/actions";
@@ -24,9 +24,9 @@ import classNames from "classnames";
 import numeral from "numeral";
 
 const TABS = {
-    STOCKS: "Stocks",
+    STOCKS: "Akcije",
     FOREX: "Forex",
-    FUTURES: "Futures",
+    FUTURES: "Terminski ugovori",
 };
 
 export default function OverviewPage() {
@@ -40,10 +40,12 @@ export default function OverviewPage() {
     const [selectedStock, setSelectedStock] = useState(null);
     const [selectedForex, setSelectedForex] = useState(null);
 
-    const [error, setError] = useState(null);
-
     const [searchData, setSearchData] = useState("");
     const [helpSearchForex, setHelpSearchForex] = useState("");
+
+    function toCurrency(number) {
+        return numeral(number).format("$0,0.00")
+    }
 
     function createStockRow(r) {
         const priceStyle = classNames(
@@ -54,9 +56,9 @@ export default function OverviewPage() {
 
         return [
             r["ticker"],
-            <div>{parseFloat(r["price"]).toFixed(2)}</div>,
+            <div>{toCurrency(r["price"])}</div>,
             <div>{numeral(r["volume"]).format("0.0a")}</div>,
-            <div className={priceStyle}>{parseFloat(r["change"]).toFixed(4)}</div>,
+            <div className={priceStyle}>{toCurrency(r["change"])}</div>,
             <div className={priceStyle}>{parseFloat(r["changePercent"]).toFixed(4)}</div>,
             <div>{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
         ];
@@ -74,7 +76,7 @@ export default function OverviewPage() {
     function createFuturesRow(r) {
         return [
             <div>{r["symbol"]}</div>,
-            <div>{r["high"]}</div>,
+            <div>{toCurrency(r["high"])}</div>,
             <div>EUREX</div>,
             <div>{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
         ];
@@ -121,10 +123,10 @@ export default function OverviewPage() {
                         type="text"
                         className="rounded-r"
                         value={searchData}
-                        placeholder={"Symbol"}
+                        placeholder={"Oznaka future"}
                     />
                     <Button
-                        label="Pretrazi"
+                        label="Pretraži"
                         design="primary"
                         className="rounded-l ml-2 mr-2"
                         type="submit"
@@ -140,7 +142,7 @@ export default function OverviewPage() {
                     )}
                 </div>
                 <Table
-                    headings={["Oznaka", "Cena", "Berza", "Poslednje azuriranje"]}
+                    headings={["Oznaka", "Cena", "Berza", "Poslednje ažuriranje"]}
                     rows={futuresData}
                     pagination
                 />
@@ -164,16 +166,16 @@ export default function OverviewPage() {
                         onChange={handleChangeData}
                         type="text"
                         value={searchData}
-                        placeholder={"From"}
+                        placeholder={"Prodajna valuta (EUR...)"}
                     />
                     <TextField
                         onChange={handleChangeDataForex}
                         type="text"
                         value={helpSearchForex}
-                        placeholder={"To"}
+                        placeholder={"Kupovna valuta (RSD...)"}
                     />
                     <Button
-                        label="Pretrazi"
+                        label="Pretraži"
                         design="primary"
                         type="submit"
                         onClick={handleSearchData}
@@ -192,7 +194,7 @@ export default function OverviewPage() {
                         "Prodajna valuta",
                         "Kupovna valuta",
                         "Kurs",
-                        "Poslednje azuriranje",
+                        "Poslednje ažuriranje",
                     ]}
                     rows={forexData}
                     pagination
@@ -217,10 +219,10 @@ export default function OverviewPage() {
                             type="text"
                             value={searchData}
                             className="rounded-r"
-                            placeholder={"Symbol"}
+                            placeholder={"Oznaka akcije (AAPL...)"}
                         />
                         <Button
-                            label="Pretrazi"
+                            label="Pretraži"
                             design="primary"
                             type="submit"
                             className="rounded-l ml-2"
@@ -244,7 +246,7 @@ export default function OverviewPage() {
                         "Volume",
                         "Promena",
                         "Promena (%)",
-                        "Poslednje azuriranje",
+                        "Poslednje ažuriranje",
                     ]}
                     rows={data}
                     pagination
@@ -294,7 +296,7 @@ export default function OverviewPage() {
                 tmp.push(createStockRow(response));
                 setStocksRowData(tmp);
             } catch (e) {
-                setError(true);
+                Notification("Nema podataka za datu pretragu", "Proverite da li ste ispravno uneli oznaku.", "danger")
             }
         } else if (activeTab == TABS.FOREX) {
             try {
@@ -303,7 +305,7 @@ export default function OverviewPage() {
                 tmp.push(createForexRow(response));
                 setForexData(tmp);
             } catch (e) {
-                setError(true);
+                Notification("Nema podataka za datu pretragu", "Proverite da li ste ispravno uneli oznaku.", "danger")
             }
         } else {
             try {
@@ -312,7 +314,7 @@ export default function OverviewPage() {
                 tmp.push(createFuturesRow(response));
                 setFuturesData(tmp);
             } catch (e) {
-                setError(true);
+                Notification("Nema podataka za datu pretragu", "Proverite da li ste ispravno uneli oznaku.", "danger")
             }
         }
     };
@@ -329,20 +331,12 @@ export default function OverviewPage() {
         <div>
             {activeTab === TABS.STOCKS && <StockTickerWrapper/>}
             <div className="flex flex-col gap-3">
-                {error && (
-                    <Alert
-                        design="danger"
-                        text="Nema podataka za datu pretragu"
-                        onDismiss={() => setError(null)}
-                    ></Alert>
-                )}
                 <Block title="Berza">
                     <Tab
                         tabs={[TABS.STOCKS, TABS.FOREX, TABS.FUTURES]}
                         onChange={function (e) {
                             setActiveTab(e);
                             clearSearchData(e);
-                            setError(false);
                         }}
                     />
                     {activeTab === TABS.STOCKS && renderStocks()}

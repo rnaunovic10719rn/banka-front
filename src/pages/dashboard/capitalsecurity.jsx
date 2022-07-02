@@ -20,7 +20,6 @@ export default function CapitalSecurityPage() {
         const harType = title == "FUTURE UGOVOR" ? title.replace(" ", "_") : title;
         // ovde treba switch da se korektno pozove api
         const ls = await boughtSecurity(harType);
-        console.log(ls);
         let tmp = [];
         let tmpMap = new Map();
         ls.map((r) => {
@@ -29,7 +28,6 @@ export default function CapitalSecurityPage() {
         });
         setData(tmp);
         setMapping(tmpMap);
-        console.log(tmpMap);
     }
 
     async function loadTable() {
