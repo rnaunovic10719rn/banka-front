@@ -29,9 +29,7 @@ function OtpModal(props) {
 
     async function setUserSecretModal() {
         const id = await getUserId();
-        console.log(secret);
         await setUserSecret(id, secret);
-        console.log('finito');
     }
 
     function handleClose() {

@@ -12,11 +12,12 @@ import Modal from "../../components/common/Modal";
 import MarginKapitalBlock from "../../components/margins/MarginKapitalBlock";
 import MarginStateBlock from "../../components/margins/MarginStateBlock";
 import Tab from "../../components/common/Tab";
+import numeral from "numeral"
 
 export default function CapitalPage() {
     const [table, setTable] = useState([]);
     const [paymentModal, setPaymentModal] = useState(false)
-    const [selectedTab, setSelectedTab] = useState("Kes nalog")
+    const [selectedTab, setSelectedTab] = useState("Tekući račun")
 
     const navigate = useNavigate();
 
@@ -29,10 +30,14 @@ export default function CapitalPage() {
         setTable(tmp);
     }
 
+    function toCurrency(number) {
+        return numeral(number).format("$0,0.00")
+    }
+
     function createCapitalRow(r) {
         return [
             r["kapitalType"],
-            Number.parseFloat(r["ukupno"]).toFixed(2)
+            toCurrency(r["ukupno"])
         ];
     }
 
@@ -47,11 +52,11 @@ export default function CapitalPage() {
     function renderCash() {
         return (
             <>
-                <Block title="Keš nalog"
-                       cta={<Button design="secondary" label="Uplata" onClick={() => setPaymentModal(true)}/>}>
+                <Block title="Tekući račun"
+                       cta={<Button design="secondary" label="Uplata/Isplata" onClick={() => setPaymentModal(true)}/>}>
                     <CashAccountsTable/>
                     {paymentModal &&
-                        <Modal visible={true} onClose={() => setPaymentModal(false)} id="payment-modal" title="Uplata">
+                        <Modal visible={true} onClose={() => setPaymentModal(false)} id="payment-modal" title="Uplata/Isplata (tekući račun)">
                             <Payment onDone={() => setPaymentModal(false)}/>
                         </Modal>}
                 </Block>
@@ -59,7 +64,7 @@ export default function CapitalPage() {
                     <div className="flex flex-col">
                         <Table
                             headings={[
-                                "Tip",
+                                "Tip kapitala",
                                 "Ukupno",
                             ]}
                             rows={table}
@@ -83,9 +88,9 @@ export default function CapitalPage() {
 
     return (
         <div className='grid gap-5'>
-            <Tab tabs={['Kes nalog', 'Margin nalog']} onChange={setSelectedTab}/>
-            {selectedTab === "Kes nalog" && renderCash()}
-            {selectedTab === "Margin nalog" && renderMargin()}
+            <Tab tabs={['Tekući račun', 'Maržni račun']} onChange={setSelectedTab}/>
+            {selectedTab === "Tekući račun" && renderCash()}
+            {selectedTab === "Maržni račun" && renderMargin()}
         </div>
     )
 }

@@ -9,6 +9,7 @@ import Table from "../../components/common/Table";
 import { getUserSelector } from "../../redux/selectors";
 import Button from "../../components/common/Button";
 import classNames from "classnames";
+import numeral from "numeral"
 
 export default function ApproveTransactionPage() {
 
@@ -38,10 +39,13 @@ export default function ApproveTransactionPage() {
         }
         let tmp = [];
         response.map((r) => {
-            console.log(r);
-          tmp.push(createOrderRow(r));
+            tmp.push(createOrderRow(r));
         });
         setOrderData(tmp);
+    }
+
+    function toCurrency(number) {
+        return numeral(number).format("$0,0.00")
     }
 
     async function approveOrder(id) {
@@ -72,10 +76,10 @@ export default function ApproveTransactionPage() {
     function createOrderRow(r) {
         return [
           r["hartijaOdVrednosti"],
-          r["orderAction"],
+          (r["orderAction"] == "BUY") ? "Kupovina" : "Prodaja",
           r["hartijaOdVrednostiSymbol"],
           <div class="text-right">{r["kolicina"]}</div>,
-          <div class="text-right">{parseFloat(r["predvidjenaCena"]).toFixed(2)}</div>,
+          <div class="text-right">{toCurrency(r["predvidjenaCena"])}</div>,
           determineOrderStatus(r["orderStatus"]),
           r["done"] ? "Da" : "Ne",
           <div class="text-center">{moment(r["lastModified"]).format("DD.MM.YYYY HH:mm")}</div>,

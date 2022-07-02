@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 
 function Stats(props) {
     function renderStat(s) {
-        console.log(s)
         return (
             <div className="text-center">
                 <div className="text-3xl text-indigo-500 font-black">{s.stat}</div>

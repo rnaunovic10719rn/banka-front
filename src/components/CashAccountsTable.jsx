@@ -9,7 +9,6 @@ import Table from "./common/Table"
 import Modal from "./common/Modal"
 import {isAgent, isSupervisor} from "../utils";
 import moment from "moment";
-import numeral from "numeral"
 import Stats from "./common/Stats";
 import {addTransactionsAction} from "../redux/actions";
 
@@ -33,10 +32,6 @@ function CashAccountsTable() {
     async function fetchTransactions() {
         const t = await getAccountTransactions(selected[0])
         setTransactions(t)
-    }
-
-    function formatNumber(num) {
-        return numeral(Number.parseFloat(num)).format("0.00")
     }
 
     function cashAccountToTableRow() {
@@ -87,7 +82,6 @@ function CashAccountsTable() {
             if (!agentLimits) return list
 
             for (const [key, value] of Object.entries(agentLimits)) {
-                console.log(`${key}: ${value}`);
                 list.push({text: key, stat: value})
             }
             return list
@@ -119,7 +113,7 @@ function CashAccountsTable() {
     return (
         <>
             {isSupervisor(user) &&
-                <Table headings={['Valuta', 'Ukupno', 'Rezervisano', 'Raspolozivo']} rows={cashAccountToTableRow()}
+                <Table headings={['Valuta', 'Ukupno', 'Rezervisano', 'Raspoloživo']} rows={cashAccountToTableRow()}
                        clickable onClick={setSelected}/>}
             {isAgent(user) && renderAgent()}
             {!!selected &&
