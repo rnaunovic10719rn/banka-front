@@ -213,31 +213,6 @@ describe("Company Page", () => {
         cy.url().should("be.equal", `http://localhost:3000/${URLS.DASHBOARD.AGREEMENT.LIST}/1`);
     })
 
-    it("company page => table click => agreement block => agreement table click => change the description", () => {
-        cy.wait(500)
-        cy.get('[data-testid="common-table-row"]')
-            .should('have.length.at.least', 1)
-            .eq(0)
-            .click()
-        cy.url().should("be.equal", `http://localhost:3000/${URLS.DASHBOARD.COMPANY.LIST}/ABC`);
-        cy.wait(500)
-        cy.get('[data-testid="common-table-row"]')
-            .should('have.length.at.least', 1)
-            .eq(0)
-            .click()
-        cy.get('[data-testid="common-textarea"]')
-            .eq(0)
-            .click()
-            .focus()
-            .clear()
-            .type("test test test")
-        cy.get('[data-testid="common-button"]')
-            .should('have.length.at.least', 4)
-            .eq(1)
-            .click()
-        cy.get('.rnc__notification-content').should("have.length.at.least", 1).should('have.text', 'Uspesno ste izmenili ugovor.')
-    })
-
     it("company page => table click => contact block => add contact", () => {
         cy.wait(500)
         cy.get('[data-testid="common-table-row"]')
