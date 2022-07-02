@@ -5,6 +5,7 @@ import Table from "../common/Table";
 import Button from "../common/Button";
 import MarginAddTransactionModal from "./MarginAddTransactionModal";
 import MarginTransactionModal from "./MarginTransactionModal";
+import numeral from "numeral"
 
 function MarginStateBlock() {
     const [marginState, setMarginState] = useState([])
@@ -19,13 +20,19 @@ function MarginStateBlock() {
         getMarginState().then(setMarginState)
     }
 
+    function toCurrency(number) {
+        return numeral(number).format("$0,0.00")
+    }
+
     function createRows() {
         const rows = []
         marginState.map(m => {
             rows.push([
                 m['kodValute'],
-                m['ukupno'].toFixed(2),
-                m['raspolozivo'].toFixed(2)
+                toCurrency(m['ukupno']),
+                toCurrency(m['kredit']),
+                toCurrency(m['maintenanceMargin']),
+                (m['marginCall']) ? "DA" : "Ne"
             ])
         })
         return rows
@@ -33,14 +40,14 @@ function MarginStateBlock() {
 
     function renderCta() {
         return (
-            <Button label="Uplata" onClick={() => setCreateTransactionModal(true)} design="secondary"/>
+            <Button label="Uplata/Isplata" onClick={() => setCreateTransactionModal(true)} design="secondary"/>
         )
     }
 
     return (
-        <Block title="Marzni nalog" cta={renderCta()}>
+        <Block title="Maržni račun" cta={renderCta()}>
             <Table
-                headings={['Valuta', 'Ukupno', 'Raspolozivo']}
+                headings={['Valuta', 'Ukupno', 'Kredit', 'Maintenance Margin', 'Margin Call']}
                 rows={createRows()}
                 onClick={() => setViewTransactionsModal(true)}
                 clickable

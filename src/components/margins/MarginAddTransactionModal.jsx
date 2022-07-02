@@ -29,7 +29,7 @@ function MarginAddTransactionModal(props) {
     }
 
     return (
-        <Modal id="margin-modal" title="Uplata" onClose={props.onClose}>
+        <Modal id="margin-modal" title="Uplata/Isplata (maržni račun)" onClose={props.onClose}>
             <Form onValid={setValid} className="grid gap-5" onSubmit={submitForm}>
                 <div className="flex gap-5">
                     <CurrencyDropdown selected="USD" disabled/>

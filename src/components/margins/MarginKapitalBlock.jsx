@@ -3,6 +3,7 @@ import Block from "../common/Block";
 import { getMarginCapital } from "../../clients/marginClient";
 import Table from "../common/Table";
 import MarginKapitalModal from "./MarginKapitalModal";
+import numeral from "numeral"
 
 function MarginKapitalBlock() {
     const [marginState, setMarginState] = useState([])
@@ -17,12 +18,16 @@ function MarginKapitalBlock() {
         getMarginCapital().then(setMarginState)
     }
 
+    function toCurrency(number) {
+        return numeral(number).format("$0,0.00")
+    }
+
     function createRows() {
         const rows = []
         marginState.map(m => {
             rows.push([
                 m['kapitalType'],
-                m['ukupno']
+                toCurrency(m['ukupno'])
             ])
         })
         return rows
