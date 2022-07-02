@@ -9,7 +9,7 @@ function Link(props) {
     )
 
     return (
-        <a className={style} href={props.href}>
+        <a className={style} href={props.href} target="_blank" rel="nofollow">
             {props.text}
         </a>
     );
