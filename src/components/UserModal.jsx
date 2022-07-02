@@ -34,8 +34,6 @@ function UserModal(props) {
   const user = useSelector(getUserSelector);
 
   function renderDetails() {
-    console.log(props.user);
-
     return (
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center">

@@ -49,7 +49,6 @@ function RadioGroup(props) {
   function handleChange(e) {
     setActive(e.target.value);
     props.onChange(e.target.value);
-    console.log(e.target.value);
   }
 
   return (
