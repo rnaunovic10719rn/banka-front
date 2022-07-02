@@ -9,7 +9,7 @@ export const BANK_POSITIONS = {
 
 export function isSupervisor(user) {
     if (!user) return false
-    const supervisorRoles = [BANK_POSITIONS.ADMIN_GL, BANK_POSITIONS.ROLE_SUPERVISOR]
+    const supervisorRoles = [BANK_POSITIONS.ADMIN_GL, BANK_POSITIONS.ADMIN, BANK_POSITIONS.ROLE_SUPERVISOR]
     return supervisorRoles.includes(user['role']['name'])
 }
 
