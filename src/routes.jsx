@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HeaderPageLayout from "./components/HeaderPageLayout";
 import InformationPage from "./pages/dashboard/information";
 import ListPage from "./pages/dashboard/list";
@@ -14,6 +14,10 @@ import ChangePasswordPage from "./pages/dashboard/changepass";
 import CapitalPage from "./pages/dashboard/capital";
 import ApproveTransactionPage from "./pages/dashboard/transactionappr";
 import CapitalSecurityPage from "./pages/dashboard/capitalsecurity";
+import CompanyListPage from "./pages/dashboard/company-list";
+import CompanySinglePage from "./pages/dashboard/company-single";
+import AgreementListPage from "./pages/dashboard/agreement-list";
+import AgreementSinglePage from "./pages/dashboard/agreement-single";
 
 
 export const URLS = {
@@ -40,6 +44,13 @@ export const URLS = {
             INDEX: "capital",
             SPECIFIC: "capital/:security"
         },
+        COMPANY: {
+            LIST: "company", SINGLE: "company/:companyName"
+        },
+        AGREEMENT: {
+            LIST: "agreement",
+            SINGLE: "agreement/:agreementId",
+        }
     },
     LOGIN: "login",
     REGISTER: "register",
@@ -47,57 +58,71 @@ export const URLS = {
 };
 
 export function AppRoutes() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route element={<App/>}>
+    return (<BrowserRouter>
+        <Routes>
+            <Route element={<App/>}>
+                <Route
+                    path={"*"}
+                    element={<Navigate to={`/${URLS.DASHBOARD.INDEX}`} replace/>}
+                />
+                <Route element={<HeaderPageLayout/>}>
+                    <Route path={URLS.DASHBOARD.INDEX} element={<OverviewPage/>}/>
+                    <Route path={URLS.DASHBOARD.LIST.INDEX} element={<ListPage/>}/>
                     <Route
-                        path={"*"}
-                        element={<Navigate to={`/${URLS.DASHBOARD.INDEX}`} replace/>}
+                        path={URLS.DASHBOARD.LIST.NEW_USER}
+                        element={<NewUserPage/>}
                     />
-                    <Route element={<HeaderPageLayout/>}>
-                        <Route path={URLS.DASHBOARD.INDEX} element={<OverviewPage/>}/>
-                        <Route path={URLS.DASHBOARD.LIST.INDEX} element={<ListPage/>}/>
-                        <Route
-                            path={URLS.DASHBOARD.LIST.NEW_USER}
-                            element={<NewUserPage/>}
-                        />
-                        <Route path={URLS.DASHBOARD.TRADE} element={<TradePage/>}/>
-                        <Route
-                            path={URLS.DASHBOARD.OVERVIEW.INDEX}
-                            element={<OverviewPage/>}
-                        ></Route>
-                        <Route
-                            path={URLS.DASHBOARD.APPROVE_TRANSACTION}
-                            element={<ApproveTransactionPage/>}
-                        />
-                        <Route
-                            path={URLS.DASHBOARD.CAPITAL.INDEX}
-                            element={<CapitalPage/>}
-                        />
-                        <Route
-                            path={URLS.DASHBOARD.CAPITAL.SPECIFIC}
-                            element={<CapitalSecurityPage/>}
-                        />
-                        <Route path={URLS.DASHBOARD.SYSTEM} element={<SystemPage/>}/>
-                        <Route
-                            path={URLS.DASHBOARD.INFORMATION}
-                            element={<InformationPage/>}
-                        />
-                    </Route>
-                    <Route element={<PageLayout/>}>
-                        <Route path={URLS.LOGIN} element={<LoginPage/>}/>
-                        <Route
-                            path={URLS.DASHBOARD.CHANGEPASSWORD.REGULAR}
-                            element={<ChangePasswordPage/>}
-                        />
-                        <Route
-                            path={URLS.DASHBOARD.CHANGEPASSWORD.WITH_TOKEN}
-                            element={<ChangePasswordPage/>}
-                        />
-                    </Route>
+                    <Route path={URLS.DASHBOARD.TRADE} element={<TradePage/>}/>
+                    <Route
+                        path={URLS.DASHBOARD.OVERVIEW.INDEX}
+                        element={<OverviewPage/>}
+                    ></Route>
+                    <Route
+                        path={URLS.DASHBOARD.APPROVE_TRANSACTION}
+                        element={<ApproveTransactionPage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.CAPITAL.INDEX}
+                        element={<CapitalPage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.CAPITAL.SPECIFIC}
+                        element={<CapitalSecurityPage/>}
+                    />
+                    <Route path={URLS.DASHBOARD.SYSTEM} element={<SystemPage/>}/>
+                    <Route
+                        path={URLS.DASHBOARD.INFORMATION}
+                        element={<InformationPage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.COMPANY.LIST}
+                        element={<CompanyListPage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.COMPANY.SINGLE}
+                        element={<CompanySinglePage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.AGREEMENT.LIST}
+                        element={<AgreementListPage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.AGREEMENT.SINGLE}
+                        element={<AgreementSinglePage/>}
+                    />
                 </Route>
-            </Routes>
-        </BrowserRouter>
-    );
+                <Route element={<PageLayout/>}>
+                    <Route path={URLS.LOGIN} element={<LoginPage/>}/>
+                    <Route
+                        path={URLS.DASHBOARD.CHANGEPASSWORD.REGULAR}
+                        element={<ChangePasswordPage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.CHANGEPASSWORD.WITH_TOKEN}
+                        element={<ChangePasswordPage/>}
+                    />
+                </Route>
+            </Route>
+        </Routes>
+    </BrowserRouter>);
 }

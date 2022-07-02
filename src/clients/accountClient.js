@@ -1,6 +1,6 @@
-import {get} from "./api";
+import { get } from "./api";
 
-const BASE_URL = process.env.ACCOUNTS_API;
+const BASE_URL = process.env.REACT_APP_ACCOUNTS_API;
 
 export function getAccountCashStateSupervisor() {
     let url = new URL(BASE_URL + "/racun/stanjeSupervisor");
@@ -14,5 +14,10 @@ export function getAccountCacheStateAgent() {
 
 export function getAccountTransactions(currency) {
     let url = new URL(BASE_URL + "/racun/transakcije/" + currency);
+    return get(url);
+}
+
+export function getCurrencies() {
+    let url = new URL(`${BASE_URL}/racun/valute`);
     return get(url);
 }

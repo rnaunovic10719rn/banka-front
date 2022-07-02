@@ -1,15 +1,16 @@
-import React, {useState} from "react";
-import {performPayment} from "../clients/capital";
+import React, { useState } from "react";
+import { performPayment } from "../clients/capital";
 import Alert from "./common/Alert";
-import TextField, {VALIDATION_PATTERN} from "./common/TextField";
+import TextField, { VALIDATION_PATTERN } from "./common/TextField";
 import Button from "./common/Button";
 import Form from "./common/Form";
 import Notification from "./common/Notification";
 import PropTypes from "prop-types";
-import {useDispatch, useSelector} from "react-redux";
-import {isSupervisor} from "../utils";
-import {getAccountCashStateSupervisor} from "../clients/accountClient";
-import {addTransactionsAction} from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { isSupervisor } from "../utils";
+import { getAccountCashStateSupervisor } from "../clients/accountClient";
+import { addTransactionsAction } from "../redux/actions";
+import CurrencyDropdown from "./CurrencyDropdown";
 
 function Payment(props) {
     const dispatch = useDispatch()
@@ -64,19 +65,21 @@ function Payment(props) {
                     onDismiss={() => setError(null)}
                 ></Alert>
             )}
-            <Form className="flex flex-col gap-5" onValid={setFormValid} onSubmit={handleSubmit}>
-                <TextField
-                    label="Iznos"
-                    onChange={(e) => handleChange({iznos: e})}
-                    validation={VALIDATION_PATTERN.NUMBER}
-                    required
-                />
-                <TextField
-                    label="Valuta"
-                    placeholder="RSD"
-                    onChange={(e) => handleChange({valutaOznaka: e})}
-                    required
-                />
+            <Form className="grid gap-5" onValid={setFormValid} onSubmit={handleSubmit}>
+                <div className="flex gap-5">
+                    <CurrencyDropdown
+                        onSelect={e => handleChange({valutaOznaka: e['kodValute']})}
+                        required
+                    />
+                    <div className="grow">
+                        <TextField
+                            label="Iznos"
+                            onChange={(e) => handleChange({iznos: e})}
+                            validation={VALIDATION_PATTERN.NUMBER}
+                            required
+                        />
+                    </div>
+                </div>
                 <Button
                     label="Realizuj"
                     type="submit"
