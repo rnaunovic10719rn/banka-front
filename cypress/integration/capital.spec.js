@@ -1,4 +1,4 @@
-import {URLS} from "../../src/routes";
+import { URLS } from "../../src/routes";
 
 describe("Capital Page", () => {
     beforeEach(() => {
@@ -32,6 +32,7 @@ describe("Capital Page", () => {
         cy.get('.rnc__notification-content').should("have.length.at.least", 1)
     });
     it("capital page => cash block => table click => click should open transaction modal", () => {
+        cy.wait(1000)
         cy.get('[data-testid="common-table-row"]')
             .should('have.length.at.least', 1)
             .eq(0)
