@@ -42,7 +42,7 @@ export default function CapitalPage() {
     }
 
     const routeChange = (e) => {
-        navigate(e);
+        navigate(`/capital/checking/${e}`);
     }
 
     useEffect(() => {
@@ -56,7 +56,8 @@ export default function CapitalPage() {
                        cta={<Button design="secondary" label="Uplata/Isplata" onClick={() => setPaymentModal(true)}/>}>
                     <CashAccountsTable/>
                     {paymentModal &&
-                        <Modal visible={true} onClose={() => setPaymentModal(false)} id="payment-modal" title="Uplata/Isplata (tekući račun)">
+                        <Modal visible={true} onClose={() => setPaymentModal(false)} id="payment-modal"
+                               title="Uplata/Isplata (tekući račun)">
                             <Payment onDone={() => setPaymentModal(false)}/>
                         </Modal>}
                 </Block>
