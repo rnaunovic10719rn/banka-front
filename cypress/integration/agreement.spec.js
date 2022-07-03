@@ -38,11 +38,19 @@ describe("Agreement Page", () => {
             .should('have.length.at.least', 1)
             .eq(0)
             .click()
-        cy.url().should("be.equal", `http://localhost:3000/${URLS.DASHBOARD.AGREEMENT.LIST}/1`);
+        cy.url().should("include", `http://localhost:3000/${URLS.DASHBOARD.AGREEMENT.LIST}`);
     })
 
     it("agreement page => table click => change the description", () => {
         cy.wait(500)
+        cy.get('[data-testid="common-table-row"]')
+            .find('.listing')
+            .then(listing => {
+                const listingCount = Cypress.$(listing).length;
+                expect(listing).to.have.length(listingCount);
+            });
+        const tableLength = cy.get('[data-testid="common-table-row"]').its("length")
+        console.log(tableLength)
         cy.get('[data-testid="common-table-row"]')
             .should('have.length.at.least', 1)
             .eq(0)

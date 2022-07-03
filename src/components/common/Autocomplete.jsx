@@ -37,7 +37,7 @@ function Autocomplete(props) {
     }, [query])
 
     return (
-        <div>
+        <div data-testid="common-autocomplete">
             <label className="text-sm text-slate-500 pb-1 text-left">{props.label}</label>
             <div className="relative">
                 <Combobox value={query} onChange={handleQuery}>

@@ -22,7 +22,8 @@ describe("Capital Page", () => {
             .focus()
             .type("10000")
         cy.get('[data-testid="common-button"]')
-            .eq(3)
+            .should('have.length', 2)
+            .eq(1)
             .click()
         cy.get('.rnc__notification-content').should("have.length.at.least", 1)
     });
@@ -44,14 +45,14 @@ describe("Capital Page", () => {
             .should('have.length.at.least', 5)
             .eq(3)
             .click()
-        cy.url().should("be.equal", `http://localhost:3000/${URLS.DASHBOARD.CAPITAL.INDEX}/AKCIJA`);
+        cy.url().should("be.equal", `http://localhost:3000/${URLS.DASHBOARD.CAPITAL.INDEX}/checking/AKCIJA`);
     });
     it("capital single page => table row => click should open modal with info", () => {
         cy.get('[data-testid="common-table-row"]')
             .should('have.length.at.least', 5)
             .eq(3)
             .click()
-        cy.url().should("be.equal", `http://localhost:3000/${URLS.DASHBOARD.CAPITAL.INDEX}/AKCIJA`);
+        cy.url().should("be.equal", `http://localhost:3000/${URLS.DASHBOARD.CAPITAL.INDEX}/checking/AKCIJA`);
         cy.get('[data-testid="common-table-row"]')
             .should('have.length.at.least', 1)
             .click()
@@ -59,7 +60,7 @@ describe("Capital Page", () => {
     });
 
     it("capital page => margin block => add funds", () => {
-        cy.get('[data-testid="common-button"]')
+        cy.get('[data-testid="common-tab-item"]')
             .eq(1)
             .click()
         cy.get(':nth-child(2) > [data-testid="common-button"]')
@@ -69,13 +70,13 @@ describe("Capital Page", () => {
             .focus()
             .type("1000")
         cy.get('[data-testid="common-button"]')
-            .eq(4)
+            .eq(2)
             .click()
         cy.get('.rnc__notification-content').should("have.length.at.least", 1)
     });
 
     it("capital page => margin block => render margin modal", () => {
-        cy.get('[data-testid="common-button"]')
+        cy.get('[data-testid="common-tab-item"]')
             .eq(1)
             .click()
         cy.get('[data-testid="common-table-row"]')
@@ -85,21 +86,21 @@ describe("Capital Page", () => {
     });
 
     it("capital page => margin block => render margin action modal", () => {
-        cy.get('[data-testid="common-button"]')
+        cy.get('[data-testid="common-tab-item"]')
             .eq(1)
             .click()
         cy.get('[data-testid="common-table-row"]')
-            .eq(1)
+            .eq(0)
             .click()
         cy.get('[data-testid="common-modal"]').should('have.length', 1)
     });
 
     it("capital page => margin block => render margin future modal", () => {
-        cy.get('[data-testid="common-button"]')
+        cy.get('[data-testid="common-tab-item"]')
             .eq(1)
             .click()
         cy.get('[data-testid="common-table-row"]')
-            .eq(2)
+            .eq(0)
             .click()
         cy.get('[data-testid="common-modal"]').should('have.length', 1)
     });
