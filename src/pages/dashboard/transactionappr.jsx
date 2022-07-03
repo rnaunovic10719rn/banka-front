@@ -83,8 +83,8 @@ export default function ApproveTransactionPage() {
           determineOrderStatus(r["orderStatus"]),
           r["done"] ? "Da" : "Ne",
           <div class="text-center">{moment(r["lastModified"]).format("DD.MM.YYYY HH:mm")}</div>,
-          (r["orderStatus"] === "ON_HOLD" && user && user["role"]["name"] !== "ROLE_ADMIN") ? <Button design="inline" onClick={() => approveOrder(r['id'])} label="Odobri"/> : null,
-          (r["orderStatus"] === "ON_HOLD" && user && user["role"]["name"] !== "ROLE_ADMIN") ? <Button design="inline" onClick={() => rejectOrder(r['id'])} label="Odbij"/> : null,
+          (r["orderStatus"] === "ON_HOLD" && user && user["role"]["name"] !== "ROLE_AGENT") ? <Button design="inline" onClick={() => approveOrder(r['id'])} label="Odobri"/> : null,
+          (r["orderStatus"] === "ON_HOLD" && user && user["role"]["name"] !== "ROLE_AGENT") ? <Button design="inline" onClick={() => rejectOrder(r['id'])} label="Odbij"/> : null,
         ];
     }
 
