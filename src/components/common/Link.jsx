@@ -9,7 +9,7 @@ function Link(props) {
     )
 
     return (
-        <a className={style} href={props.href} target="_blank" rel="nofollow">
+        <a className={style} href={props.href} download={props.downloadText}>
             {props.text}
         </a>
     );
@@ -18,6 +18,7 @@ function Link(props) {
 Link.propTypes = {
     text: PropTypes.string,
     href: PropTypes.string,
+    downloadText: PropTypes.string,
     className: PropTypes.string,
 }
 
