@@ -23,6 +23,7 @@ import StockTickerWrapper from "../../components/StockTickerWrapper";
 import classNames from "classnames";
 import numeral from "numeral";
 import Form from "../../components/common/Form";
+import AnimationFadeIn from "../../components/common/AnimationFadeIn";
 
 const TABS = {
     STOCKS: "Akcije",
@@ -128,7 +129,7 @@ export default function OverviewPage() {
 
     function renderFutures() {
         return (
-            <div className="flex flex-col gap-5">
+            <AnimationFadeIn className="flex flex-col gap-5">
                 <Form onSubmit={handleSearchData} className="flex justify-start">
                     <TextField
                         onChange={handleChangeData}
@@ -157,7 +158,7 @@ export default function OverviewPage() {
                     rows={futuresData}
                     pagination
                 />
-            </div>
+            </AnimationFadeIn>
         );
     }
 
@@ -171,7 +172,7 @@ export default function OverviewPage() {
 
     function renderForex() {
         return (
-            <div className="flex flex-col gap-5">
+            <AnimationFadeIn className="flex flex-col gap-5">
                 <Form onSubmit={handleSearchData} className="flex gap-5">
                     <TextField
                         onChange={handleChangeData}
@@ -212,7 +213,7 @@ export default function OverviewPage() {
                     // Ovo je jos vise nesrecno jer nam treba 2 parametra => tabela treba da se refaktorise da primar props.children redova i da se pise odvojeno logika za red a ne ovi hakovi
                     onClick={(e) => setSelectedForex([e[0], e[1]])}
                 />
-            </div>
+            </AnimationFadeIn>
         );
     }
 
@@ -221,7 +222,7 @@ export default function OverviewPage() {
             stocksRowData.length > 0 ? stocksRowData : renderPlaceholderRows(6);
 
         return (
-            <div className="flex flex-col gap-5">
+            <AnimationFadeIn className="flex flex-col gap-5">
                 <div className="flex justify-start gap-0">
                     <form className="flex">
                         <TextField
@@ -264,7 +265,7 @@ export default function OverviewPage() {
                     // Nesrecno je uradjeno biranje iz tabele, mora da se vrati red pa da se bira redni broj za informaciju
                     onClick={(e) => setSelectedStock(e[0])}
                 />
-            </div>
+            </AnimationFadeIn>
         );
     }
 
@@ -351,7 +352,6 @@ export default function OverviewPage() {
 
     return (
         <div>
-            {activeTab === TABS.STOCKS && <StockTickerWrapper/>}
             <div className="flex flex-col gap-3">
                 <Block title="Berza">
                     <Tab
@@ -379,6 +379,7 @@ export default function OverviewPage() {
                     />
                 )}
             </div>
+            {activeTab === TABS.STOCKS && <StockTickerWrapper/>}
         </div>
     );
 }

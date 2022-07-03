@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classNames from 'classnames';
 import Button from './Button'
 import ExitButton from './ExitButton';
+import AnimationFadeIn from "./AnimationFadeIn";
 
 function Modal(props) {
     const wrapperStyle = classNames(
@@ -31,7 +32,7 @@ function Modal(props) {
     }
 
     return (
-        <div data-testid="common-modal" id={props.id} tabIndex="-1" className={wrapperStyle}>
+        <AnimationFadeIn data-testid="common-modal" id={props.id} tabIndex="-1" className={wrapperStyle}>
             <div className={modalStyle}>
                 <div className="relative bg-white shadow rounded-2xl">
                     {renderHeader()}
@@ -45,7 +46,7 @@ function Modal(props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </AnimationFadeIn>
     )
 }
 

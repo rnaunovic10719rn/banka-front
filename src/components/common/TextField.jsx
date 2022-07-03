@@ -17,8 +17,7 @@ function TextField(props) {
     const [valid, setValid] = useState(true)
 
     const classes = classNames(
-        "border-2 border-gray-300",
-        "min-widht",
+        "border focus:ring-1 border-gray-300",
         "font-sans",
         "dark:text-slate-900 bg-white-50", // background
         "text-base", // text
