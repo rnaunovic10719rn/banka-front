@@ -17,5 +17,7 @@ Default.args = {
         'Test2',
         'Lorep',
         'Ipsum',
-    ]
+    ],
+    onChange: () => {
+    }
 };

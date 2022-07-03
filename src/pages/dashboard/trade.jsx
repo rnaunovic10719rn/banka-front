@@ -70,6 +70,7 @@ export default function TradePage() {
             setForm(DEFAULT_FORM)
             setHack(true)
             setHack(false)
+            window.location.reload()
         } catch (e) {
             Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
             setLoading(false)

@@ -5,7 +5,7 @@ import CurrencyDropdown from "../CurrencyDropdown";
 
 function Select(props) {
     const style = classNames(
-        "border border-gray-300 rounded",
+        "border focus:ring-1 border-gray-300",
         "p-2.5", //spacing
         "bg-white",
         props.className,

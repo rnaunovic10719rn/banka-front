@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import Button, { BUTTON_DESIGN } from "./Button";
 
 function TabItem(props) {
     const style = classNames(
         "flex gap-5",
-        "pb-2",
-        "-mb-px",
+        "pb-3",
+        "-mb-[2px]",
         "!no-underline",
-        { "!text-indigo-500 border-b-2 border-indigo-500": props.isActive }, // active
-        { "!text-gray-400 !hover:text-gray-500": !props.isActive },
+        "cursor-pointer",
+        "select-none",
+        "hover:text-indigo-400",
+        {"text-indigo-500 border-b-2 border-indigo-500": props.isActive}, // active
+        {"text-gray-400": !props.isActive},
     )
 
 
     return (
-        <Button className={style} design={BUTTON_DESIGN.INLINE} label={props.label} onClick={() => props.onClick(props.label)} />
+        <div className={style} onClick={() => props.onClick(props.label)}>{props.label}</div>
     );
 }
 
@@ -30,7 +32,7 @@ function Tab(props) {
 
     const style = classNames(
         "flex gap-5",
-        "border-b border-gray-300",
+        "border-b-2 border-gray-300",
         "mb-8",
     )
 
@@ -40,8 +42,8 @@ function Tab(props) {
     }
 
     return (
-        <div data-testid="common-tab" className={style} >
-            {props.tabs.map(t => <TabItem key={t} label={t} isActive={t === active} onClick={handleClick} />)}
+        <div data-testid="common-tab" className={style}>
+            {props.tabs.map(t => <TabItem key={t} label={t} isActive={t === active} onClick={handleClick}/>)}
         </div>
     );
 }
