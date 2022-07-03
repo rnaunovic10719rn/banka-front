@@ -8,7 +8,7 @@ const cellSpacing = "px-4 py-3"
 
 function TableRow(props) {
     const cellClassnames = classNames(
-        "border-b text-gray-700", borderColor, cellSpacing,
+        "border-b text-gray-500", borderColor, cellSpacing,
     )
 
     const rowStyle = classNames(
@@ -40,11 +40,11 @@ function Table(props) {
     const [startRange, setStartRange] = useState(0)
     const [endRange, setEndRange] = useState(0)
 
-    const headerClassnames = classNames("border-b text-black", cellSpacing, borderColor)
+    const headerClassnames = classNames("border-b text-slate-700", cellSpacing, borderColor)
     const tableClassnames = classNames(
         // "border-collapse border", borderColor, // border
         "w-full", // width
-        "text-left", // text
+        "text-left text-light", // text
         "bg-white",
         props.classNames,
     );
