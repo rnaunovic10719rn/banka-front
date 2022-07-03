@@ -18,7 +18,7 @@ function App(props) {
     }, []);
 
     return (
-        <div data-testid="app" className="h-full bg-slate-50 text-slate-700 pb-10">
+        <div data-testid="app" className="min-h-full bg-slate-50 text-slate-700 pb-10">
             <script dangerouslySetInnerHTML={{__html: nightwind.init()}}/>
             <Outlet/>
         </div>
