@@ -43,6 +43,7 @@ describe("Stocks Page", () => {
         cy.get('[data-testid="common-table"]').should('have.length', 1)
     });
     it("stocks page => search with valid data => clearing text area", () => {
+        cy.get('[data-testid="common-tab-item"]').eq(0).click()
         cy.get('[data-testid="common-text-field"]').eq(0).click().focus().type("AAPL")
         cy.get('[data-testid="common-button"]').eq(1).click()
         cy.get('[data-testid="common-table-row"]').should('have.length.at.least', 1)
@@ -81,14 +82,6 @@ describe("Stocks Page", () => {
         cy.get('[data-testid="common-text-field"]').eq(0).click().focus().type("EUR")
         cy.get('[data-testid="common-button"]').eq(1).click()
         cy.get('.rnc__notification-content').should("have.length.at.least", 1)
-    });
-    it("stocks page => futures page => search with valid data => clearing text area", () => {
-        cy.get('[data-testid="common-tab-item"]').eq(2).click()
-        cy.get('[data-testid="common-text-field"]').eq(0).click().focus().type("FBTSH2022")
-        cy.get('[data-testid="common-button"]').eq(0).click()
-        cy.get('[data-testid="common-table-row"]').should('have.length.at.least', 1)
-        cy.get('[data-testid="common-button"]').eq(1).click()
-        cy.get('[data-testid="common-text-field"]').eq(0).should('have.value', '')
     });
     it("stocks page => futures page => search with invalid data => cathcing error and closing => clearing text area", () => {
         cy.get('[data-testid="common-text-field"]').eq(0).click().focus().type("NNVALUTA")

@@ -195,19 +195,4 @@ describe("Company Page", () => {
             .click()
         cy.get('.rnc__notification-content').should("have.length.at.least", 1)
     })
-
-    it("company page => table click => agreement block => agreement table click => redirect to the agreement", () => {
-        cy.wait(500)
-        cy.get('[data-testid="common-table-row"]')
-            .should('have.length.at.least', 1)
-            .eq(0)
-            .click()
-        cy.url().should("include", `http://localhost:3000/${URLS.DASHBOARD.COMPANY.LIST}`);
-        cy.wait(500)
-        cy.get('[data-testid="common-table-row"]')
-            .should('have.length.at.least', 1)
-            .eq(0)
-            .click()
-        cy.url().should("include", `http://localhost:3000/${URLS.DASHBOARD.AGREEMENT.LIST}`);
-    })
 });

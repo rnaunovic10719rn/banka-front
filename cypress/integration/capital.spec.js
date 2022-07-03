@@ -79,9 +79,11 @@ describe("Capital Page", () => {
         cy.get('[data-testid="common-tab-item"]')
             .eq(1)
             .click()
-        cy.get('[data-testid="common-table-row"]')
-            .eq(0)
-            .click()
+        cy.get("#margin-account-table").within(() => {
+            cy.get('[data-testid="common-table-row"]')
+                .eq(0)
+                .click()
+        })
         cy.get('[data-testid="common-modal"]').should('have.length', 1)
     });
 
@@ -89,19 +91,11 @@ describe("Capital Page", () => {
         cy.get('[data-testid="common-tab-item"]')
             .eq(1)
             .click()
-        cy.get('[data-testid="common-table-row"]')
-            .eq(0)
-            .click()
-        cy.get('[data-testid="common-modal"]').should('have.length', 1)
-    });
-
-    it("capital page => margin block => render margin future modal", () => {
-        cy.get('[data-testid="common-tab-item"]')
-            .eq(1)
-            .click()
-        cy.get('[data-testid="common-table-row"]')
-            .eq(0)
-            .click()
-        cy.get('[data-testid="common-modal"]').should('have.length', 1)
+        cy.get("#margin-account-capital").within(() => {
+            cy.get('[data-testid="common-table-row"]')
+                .eq(0)
+                .click()
+        })
+        cy.url().should("be.equal", `http://localhost:3000/${URLS.DASHBOARD.CAPITAL.INDEX}/margin/AKCIJA`);
     });
 })
