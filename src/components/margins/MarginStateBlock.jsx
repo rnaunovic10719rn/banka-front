@@ -45,18 +45,21 @@ function MarginStateBlock() {
     }
 
     return (
-        <Block title="Maržni račun" cta={renderCta()}>
-            <Table
-                headings={['Valuta', 'Ukupno', 'Kredit', 'Maintenance Margin', 'Margin Call']}
-                rows={createRows()}
-                onClick={() => setViewTransactionsModal(true)}
-                clickable
-            />
-            {createTransactionModal &&
-                <MarginAddTransactionModal onClose={() => setCreateTransactionModal(false)} onSuccess={fetchData}/>}
-            {viewTransactionsModal &&
-                <MarginTransactionModal onClose={() => setViewTransactionsModal(false)}/>}
-        </Block>
+        <div id="margin-account-table">
+            <Block title="Maržni račun" cta={renderCta()}>
+                <Table
+
+                    headings={['Valuta', 'Ukupno', 'Kredit', 'Maintenance Margin', 'Margin Call']}
+                    rows={createRows()}
+                    onClick={() => setViewTransactionsModal(true)}
+                    clickable
+                />
+                {createTransactionModal &&
+                    <MarginAddTransactionModal onClose={() => setCreateTransactionModal(false)} onSuccess={fetchData}/>}
+                {viewTransactionsModal &&
+                    <MarginTransactionModal onClose={() => setViewTransactionsModal(false)}/>}
+            </Block>
+        </div>
     )
 }
 

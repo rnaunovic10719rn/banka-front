@@ -14,11 +14,14 @@ import MarginStateBlock from "../../components/margins/MarginStateBlock";
 import Tab from "../../components/common/Tab";
 import numeral from "numeral"
 import AnimationFadeIn from "../../components/common/AnimationFadeIn";
+import { isSupervisor } from "../../utils";
+import { useSelector } from "react-redux";
 
 export default function CapitalPage() {
     const [table, setTable] = useState([]);
     const [paymentModal, setPaymentModal] = useState(false)
     const [selectedTab, setSelectedTab] = useState("Tekući račun")
+    const user = useSelector(state => state.app.user)
 
     const navigate = useNavigate();
 
@@ -54,7 +57,8 @@ export default function CapitalPage() {
         return (
             <>
                 <Block title="Tekući račun"
-                       cta={<Button design="secondary" label="Uplata/Isplata" onClick={() => setPaymentModal(true)}/>}>
+                       cta={isSupervisor(user) &&
+                           <Button design="secondary" label="Uplata/Isplata" onClick={() => setPaymentModal(true)}/>}>
                     <CashAccountsTable/>
                     {paymentModal &&
                         <Modal visible={true} onClose={() => setPaymentModal(false)} id="payment-modal"
@@ -82,7 +86,7 @@ export default function CapitalPage() {
     function renderMargin() {
         return (
             <>
-                <MarginStateBlock/>
+                {isSupervisor(user) && <MarginStateBlock/>}
                 <MarginKapitalBlock/>
             </>
         )

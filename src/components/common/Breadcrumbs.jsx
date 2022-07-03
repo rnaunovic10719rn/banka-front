@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {Link, useLocation} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
-import {URLS} from "../../routes";
+import { URLS } from "../../routes";
 
 function Breadcrumbs(props) {
     const location = useLocation();
@@ -14,7 +14,7 @@ function Breadcrumbs(props) {
         location.pathname.match(/[^\/]+/g).map(item => {
             path += `/${item}`
             tempBreadcrumbs.push({
-                text: item.replace(/[^a-zA-Z0-9]/g, ' ').toLowerCase(),
+                text: decodeURI(item).toLowerCase(),
                 url: path
             })
         })

@@ -58,6 +58,7 @@ function CompanyBankAccounts(props) {
                 Notification("Uspesno ste obrisali racun", "", "success")
                 setModal(false)
                 props.onDelete()
+                fetchData()
             } catch (e) {
                 Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
             }

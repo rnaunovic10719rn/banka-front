@@ -37,14 +37,16 @@ function MarginKapitalBlock() {
     }
 
     return (
-        <Block title="Pregled kapitala">
-            <Table
-                headings={['Tip kapitala', 'Ukupno']}
-                rows={createRows()}
-                onClick={handleOnSelect}
-                clickable
-            />
-        </Block>
+        <div id="margin-account-capital">
+            <Block title="Pregled kapitala">
+                <Table
+                    headings={['Tip kapitala', 'Ukupno']}
+                    rows={createRows()}
+                    onClick={handleOnSelect}
+                    clickable
+                />
+            </Block>
+        </div>
     )
 }
 

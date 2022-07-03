@@ -52,6 +52,7 @@ function CompanyInformation(props) {
             Notification("Uspesno ste obrisali kontakt", "", "success")
             setModal(false)
             props.onDelete()
+            fetchData()
         } catch (e) {
             Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
         }

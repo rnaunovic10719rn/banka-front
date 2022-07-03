@@ -32,8 +32,8 @@ function Modal(props) {
     }
 
     return (
-        <AnimationFadeIn data-testid="common-modal" id={props.id} tabIndex="-1" className={wrapperStyle}>
-            <div className={modalStyle}>
+        <AnimationFadeIn id={props.id} tabIndex="-1" className={wrapperStyle}>
+            <div data-testid="common-modal" className={modalStyle}>
                 <div className="relative bg-white shadow rounded-2xl">
                     {renderHeader()}
                     <div className='p-6'>

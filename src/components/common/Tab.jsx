@@ -17,7 +17,7 @@ function TabItem(props) {
 
 
     return (
-        <div className={style} onClick={() => props.onClick(props.label)}>{props.label}</div>
+        <div data-testid="common-tab-item" className={style} onClick={() => props.onClick(props.label)}>{props.label}</div>
     );
 }
 
