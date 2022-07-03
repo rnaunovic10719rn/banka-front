@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Tab from "../../components/common/Tab";
 import Table from "../../components/common/Table";
@@ -17,11 +17,13 @@ import PlaceholderLoading from "react-placeholder-loading";
 import Button from "../../components/common/Button";
 import TextField from "../../components/common/TextField";
 import Block from "../../components/common/Block";
-import {useDispatch} from "react-redux";
-import {addForexAction, addStocksAction} from "../../redux/actions";
+import { useDispatch } from "react-redux";
+import { addForexAction, addStocksAction } from "../../redux/actions";
 import StockTickerWrapper from "../../components/StockTickerWrapper";
 import classNames from "classnames";
 import numeral from "numeral";
+import Form from "../../components/common/Form";
+import AnimationFadeIn from "../../components/common/AnimationFadeIn";
 
 const TABS = {
     STOCKS: "Akcije",
@@ -49,17 +51,28 @@ export default function OverviewPage() {
 
     function createStockRow(r) {
         const priceStyle = classNames(
-            "font-bold",
+            "font-semibold",
+            "flex items-center",
             {"text-green-500": r["change"] >= 0},
             {"text-red-500": r["change"] < 0}
         );
+
+        const arrow = r["change"] >= 0 ?
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18"/>
+            </svg> :
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 17l-4 4m0 0l-4-4m4 4V3"/>
+            </svg>
 
         return [
             r["ticker"],
             <div>{toCurrency(r["price"])}</div>,
             <div>{numeral(r["volume"]).format("0.0a")}</div>,
-            <div className={priceStyle}>{toCurrency(r["change"])}</div>,
-            <div className={priceStyle}>{parseFloat(r["changePercent"]).toFixed(4)}</div>,
+            <div className={priceStyle}>{arrow} {toCurrency(r["change"])}</div>,
+            <div className={priceStyle}>{arrow} {parseFloat(r["changePercent"]).toFixed(4)}</div>,
             <div>{moment(r["time"]).format("DD.MM.YYYY HH:mm")}</div>,
         ];
     }
@@ -116,21 +129,20 @@ export default function OverviewPage() {
 
     function renderFutures() {
         return (
-            <div className="flex flex-col gap-5">
-                <div className="flex justify-start">
+            <AnimationFadeIn className="flex flex-col gap-5">
+                <Form onSubmit={handleSearchData} className="flex justify-start">
                     <TextField
                         onChange={handleChangeData}
                         type="text"
-                        className="rounded-r"
+                        className="rounded-r-none"
                         value={searchData}
                         placeholder={"Oznaka future"}
                     />
                     <Button
                         label="Pretraži"
                         design="primary"
-                        className="rounded-l ml-2 mr-2"
+                        className="rounded-l-none mr-2"
                         type="submit"
-                        onClick={handleSearchData}
                     />
                     {searchData.length > 0 && (
                         <Button
@@ -140,13 +152,13 @@ export default function OverviewPage() {
                             onClick={clearSearchData}
                         />
                     )}
-                </div>
+                </Form>
                 <Table
                     headings={["Oznaka", "Cena", "Berza", "Poslednje ažuriranje"]}
                     rows={futuresData}
                     pagination
                 />
-            </div>
+            </AnimationFadeIn>
         );
     }
 
@@ -160,8 +172,8 @@ export default function OverviewPage() {
 
     function renderForex() {
         return (
-            <div className="flex flex-col gap-5">
-                <div className="flex justify-start gap-5">
+            <AnimationFadeIn className="flex flex-col gap-5">
+                <Form onSubmit={handleSearchData} className="flex gap-5">
                     <TextField
                         onChange={handleChangeData}
                         type="text"
@@ -178,7 +190,6 @@ export default function OverviewPage() {
                         label="Pretraži"
                         design="primary"
                         type="submit"
-                        onClick={handleSearchData}
                     />
                     {searchData.length > 0 && (
                         <Button
@@ -188,7 +199,7 @@ export default function OverviewPage() {
                             onClick={clearSearchData}
                         />
                     )}
-                </div>
+                </Form>
                 <Table
                     headings={[
                         "Prodajna valuta",
@@ -202,7 +213,7 @@ export default function OverviewPage() {
                     // Ovo je jos vise nesrecno jer nam treba 2 parametra => tabela treba da se refaktorise da primar props.children redova i da se pise odvojeno logika za red a ne ovi hakovi
                     onClick={(e) => setSelectedForex([e[0], e[1]])}
                 />
-            </div>
+            </AnimationFadeIn>
         );
     }
 
@@ -211,21 +222,21 @@ export default function OverviewPage() {
             stocksRowData.length > 0 ? stocksRowData : renderPlaceholderRows(6);
 
         return (
-            <div className="flex flex-col gap-5">
+            <AnimationFadeIn className="flex flex-col gap-5">
                 <div className="flex justify-start gap-0">
                     <form className="flex">
                         <TextField
                             onChange={handleChangeData}
                             type="text"
                             value={searchData}
-                            className="rounded-r"
+                            className="rounded-r-none"
                             placeholder={"Oznaka akcije (AAPL...)"}
                         />
                         <Button
                             label="Pretraži"
                             design="primary"
                             type="submit"
-                            className="rounded-l ml-2"
+                            className="rounded-l-none"
                             onClick={handleSearchData}
                         />
                     </form>
@@ -254,7 +265,7 @@ export default function OverviewPage() {
                     // Nesrecno je uradjeno biranje iz tabele, mora da se vrati red pa da se bira redni broj za informaciju
                     onClick={(e) => setSelectedStock(e[0])}
                 />
-            </div>
+            </AnimationFadeIn>
         );
     }
 
@@ -291,6 +302,10 @@ export default function OverviewPage() {
 
         if (activeTab == TABS.STOCKS) {
             try {
+                if (searchData === "") {
+                    getStocks();
+                    return
+                }
                 const response = await getStocksSearchApi(searchData);
                 let tmp = [];
                 tmp.push(createStockRow(response));
@@ -300,6 +315,10 @@ export default function OverviewPage() {
             }
         } else if (activeTab == TABS.FOREX) {
             try {
+                if (searchData === "") {
+                    getForex();
+                    return
+                }
                 const response = await getForexSearchApi(searchData, helpSearchForex);
                 let tmp = [];
                 tmp.push(createForexRow(response));
@@ -309,6 +328,10 @@ export default function OverviewPage() {
             }
         } else {
             try {
+                if (searchData === "") {
+                    getFutures();
+                    return
+                }
                 const response = await getFuturesSearchApi(searchData);
                 let tmp = [];
                 tmp.push(createFuturesRow(response));
@@ -329,7 +352,6 @@ export default function OverviewPage() {
 
     return (
         <div>
-            {activeTab === TABS.STOCKS && <StockTickerWrapper/>}
             <div className="flex flex-col gap-3">
                 <Block title="Berza">
                     <Tab
@@ -357,6 +379,7 @@ export default function OverviewPage() {
                     />
                 )}
             </div>
+            {activeTab === TABS.STOCKS && <StockTickerWrapper/>}
         </div>
     );
 }

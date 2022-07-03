@@ -13,6 +13,7 @@ import MarginKapitalBlock from "../../components/margins/MarginKapitalBlock";
 import MarginStateBlock from "../../components/margins/MarginStateBlock";
 import Tab from "../../components/common/Tab";
 import numeral from "numeral"
+import AnimationFadeIn from "../../components/common/AnimationFadeIn";
 
 export default function CapitalPage() {
     const [table, setTable] = useState([]);
@@ -42,7 +43,7 @@ export default function CapitalPage() {
     }
 
     const routeChange = (e) => {
-        navigate(e);
+        navigate(`/capital/checking/${e}`);
     }
 
     useEffect(() => {
@@ -56,7 +57,8 @@ export default function CapitalPage() {
                        cta={<Button design="secondary" label="Uplata/Isplata" onClick={() => setPaymentModal(true)}/>}>
                     <CashAccountsTable/>
                     {paymentModal &&
-                        <Modal visible={true} onClose={() => setPaymentModal(false)} id="payment-modal" title="Uplata/Isplata (tekući račun)">
+                        <Modal visible={true} onClose={() => setPaymentModal(false)} id="payment-modal"
+                               title="Uplata/Isplata (tekući račun)">
                             <Payment onDone={() => setPaymentModal(false)}/>
                         </Modal>}
                 </Block>
@@ -87,10 +89,12 @@ export default function CapitalPage() {
     }
 
     return (
-        <div className='grid gap-5'>
+        <div>
             <Tab tabs={['Tekući račun', 'Maržni račun']} onChange={setSelectedTab}/>
-            {selectedTab === "Tekući račun" && renderCash()}
-            {selectedTab === "Maržni račun" && renderMargin()}
+            <AnimationFadeIn className='grid gap-5'>
+                {selectedTab === "Tekući račun" && renderCash()}
+                {selectedTab === "Maržni račun" && renderMargin()}
+            </AnimationFadeIn>
         </div>
     )
 }

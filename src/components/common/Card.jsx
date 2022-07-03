@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 function Card(props) {
     const cardStyle = classNames(
-        "border border-gray-300 rounded-2xl",
+        "border rounded-xl",
         "p-8",
         "bg-white",
         props.className,
@@ -14,7 +14,7 @@ function Card(props) {
     const titleStyle = classNames(
         "relative px-2 left-6 top-3.5", // position
         "bg-white ", // background
-        "text-xl text-gray-500",
+        "text-3xl font-extrabold",
     )
 
     return (
@@ -26,7 +26,7 @@ function Card(props) {
             <div className={cardStyle}>
                 {props.children}
             </div>
-        </div >
+        </div>
     );
 }
 

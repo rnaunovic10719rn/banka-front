@@ -6,10 +6,11 @@ import { boughtSecurity, historyOfOrder } from "../../clients/capital";
 import Block from "../../components/common/Block";
 import Table from "../../components/common/Table";
 import SecurityModal from "../../components/SecurityModal";
+import { useParams } from "react-router-dom";
 
 export default function CapitalSecurityPage() {
-    let title = window.location.pathname.split("/")[2];
-    title = title.replace("_", " ");
+    const params = useParams();
+    const title = params['type']
 
     const [data, setData] = useState([]);
     const [ozHartije, setOzHartije] = useState(null);

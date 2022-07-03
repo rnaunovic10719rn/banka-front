@@ -18,6 +18,7 @@ import CompanyListPage from "./pages/dashboard/company-list";
 import CompanySinglePage from "./pages/dashboard/company-single";
 import AgreementListPage from "./pages/dashboard/agreement-list";
 import AgreementSinglePage from "./pages/dashboard/agreement-single";
+import CapitalMarginPage from "./pages/dashboard/capital-margin";
 
 
 export const URLS = {
@@ -42,7 +43,8 @@ export const URLS = {
         APPROVE_TRANSACTION: "approve-transaction",
         CAPITAL: {
             INDEX: "capital",
-            SPECIFIC: "capital/:security"
+            CHECKING: "capital/checking/:type",
+            MARGIN: "capital/margin/:type",
         },
         COMPANY: {
             LIST: "company", SINGLE: "company/:companyName"
@@ -61,6 +63,10 @@ export function AppRoutes() {
     return (<BrowserRouter>
         <Routes>
             <Route element={<App/>}>
+                <Route
+                    path={`/capital/checking`}
+                    element={<Navigate to={`/${URLS.DASHBOARD.CAPITAL.INDEX}`} replace/>}
+                />
                 <Route
                     path={"*"}
                     element={<Navigate to={`/${URLS.DASHBOARD.INDEX}`} replace/>}
@@ -86,8 +92,12 @@ export function AppRoutes() {
                         element={<CapitalPage/>}
                     />
                     <Route
-                        path={URLS.DASHBOARD.CAPITAL.SPECIFIC}
+                        path={URLS.DASHBOARD.CAPITAL.CHECKING}
                         element={<CapitalSecurityPage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.CAPITAL.MARGIN}
+                        element={<CapitalMarginPage/>}
                     />
                     <Route path={URLS.DASHBOARD.SYSTEM} element={<SystemPage/>}/>
                     <Route

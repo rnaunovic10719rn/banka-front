@@ -1,4 +1,3 @@
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -6,15 +5,16 @@ import classNames from 'classnames'
 function ExitButton(props) {
     const stlye = classNames(
         " bg-transparent text-sm inline-flex items-center",
-        { "text-gray-500 hover:text-gray-900": !props.color },
+        {"text-gray-500 hover:text-gray-900": !props.color},
         props.color,
     )
 
     return (
         <button data-testid="common-exit-button" type="button" className={stlye} onClick={props.onClick}>
-            <svg className="w-5 h-5" fillRule="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd">
-                </path>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round"
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
         </button>
     )

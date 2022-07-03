@@ -13,21 +13,16 @@ describe("Capital Page", () => {
             .should('have.length.at.least', 1)
     });
     it("capital page => cash block => add funds", () => {
-        cy.get('[data-testid="common-button"]')
-            .should('have.length', 1)
+        cy.get(':nth-child(2) > [data-testid="common-button"]')
             .click()
+        cy.get('[data-testid="common-select"]')
+            .select("RSD")
         cy.get('[data-testid="common-text-field"]')
-            .eq(0)
             .click()
             .focus()
             .type("10000")
-        cy.get('[data-testid="common-text-field"]')
-            .eq(1)
-            .click()
-            .focus()
-            .type("RSD")
         cy.get('[data-testid="common-button"]')
-            .eq(1)
+            .eq(3)
             .click()
         cy.get('.rnc__notification-content').should("have.length.at.least", 1)
     });
@@ -61,5 +56,51 @@ describe("Capital Page", () => {
             .should('have.length.at.least', 1)
             .click()
         cy.get('[data-testid="common-modal"]').should("have.length", 1)
+    });
+
+    it("capital page => margin block => add funds", () => {
+        cy.get('[data-testid="common-button"]')
+            .eq(1)
+            .click()
+        cy.get(':nth-child(2) > [data-testid="common-button"]')
+            .click()
+        cy.get('[data-testid="common-text-field"]')
+            .click()
+            .focus()
+            .type("1000")
+        cy.get('[data-testid="common-button"]')
+            .eq(4)
+            .click()
+        cy.get('.rnc__notification-content').should("have.length.at.least", 1)
+    });
+
+    it("capital page => margin block => render margin modal", () => {
+        cy.get('[data-testid="common-button"]')
+            .eq(1)
+            .click()
+        cy.get('[data-testid="common-table-row"]')
+            .eq(0)
+            .click()
+        cy.get('[data-testid="common-modal"]').should('have.length', 1)
+    });
+
+    it("capital page => margin block => render margin action modal", () => {
+        cy.get('[data-testid="common-button"]')
+            .eq(1)
+            .click()
+        cy.get('[data-testid="common-table-row"]')
+            .eq(1)
+            .click()
+        cy.get('[data-testid="common-modal"]').should('have.length', 1)
+    });
+
+    it("capital page => margin block => render margin future modal", () => {
+        cy.get('[data-testid="common-button"]')
+            .eq(1)
+            .click()
+        cy.get('[data-testid="common-table-row"]')
+            .eq(2)
+            .click()
+        cy.get('[data-testid="common-modal"]').should('have.length', 1)
     });
 })

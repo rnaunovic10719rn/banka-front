@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import Block from "../common/Block";
 import { getMarginCapital } from "../../clients/marginClient";
 import Table from "../common/Table";
-import MarginKapitalModal from "./MarginKapitalModal";
 import numeral from "numeral"
+import { useNavigate } from "react-router-dom";
 
 function MarginKapitalBlock() {
+    const navigate = useNavigate();
     const [marginState, setMarginState] = useState([])
-    const [modal, setModal] = useState(false)
-    const [selected, setSelected] = useState(null)
 
     useEffect(() => {
         fetchData()
@@ -34,13 +33,7 @@ function MarginKapitalBlock() {
     }
 
     function handleOnSelect(e) {
-        setSelected(e[0])
-        setModal(true)
-    }
-
-    function handleCloseModal() {
-        setModal(false)
-        setSelected(null)
+        navigate(`/capital/margin/${e[0]}`);
     }
 
     return (
@@ -51,7 +44,6 @@ function MarginKapitalBlock() {
                 onClick={handleOnSelect}
                 clickable
             />
-            {modal && <MarginKapitalModal onClose={handleCloseModal} type={selected}/>}
         </Block>
     )
 }

@@ -36,3 +36,8 @@ export function getMarginCapitalForType(type) {
     let url = new URL(`${BASE_URL}kapitalStanje/${type}`);
     return get(url);
 }
+
+export function getMarginCapitalForTypeDetails(type, id) {
+    let url = new URL(`${BASE_URL}transakcijaHartije/${type}/${id}`);
+    return get(url);
+}

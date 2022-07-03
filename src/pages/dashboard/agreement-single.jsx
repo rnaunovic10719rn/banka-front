@@ -10,6 +10,7 @@ import AgreementPointModal from "../../components/company/AgreementPointModal";
 import Table from "../../components/common/Table";
 import Notification from "../../components/common/Notification";
 import FinalizeAgreementModal from "../../components/FinalizeAgreementModal";
+import Link from "../../components/common/Link";
 
 export default function AgreementSinglePage() {
     const params = useParams();
@@ -51,6 +52,10 @@ export default function AgreementSinglePage() {
         }
     }
 
+    function createDownloadLink() {
+        return new URL(`${process.env.REACT_APP_ACCOUNTS_API}/ugovor/document/${agreement.documentId}`)
+    }
+
     function renderContent() {
         if (!agreement) {
             return (
@@ -70,8 +75,8 @@ export default function AgreementSinglePage() {
                 <div className="grid grid-cols-2 gap-5">
                     <TextField label="Status" value={agreement['status']} readOnly/>
                     <TextField label="Delovodni broj" value={agreement['delovodniBroj']} readOnly/>
-                    <TextField label="Kreiran" value={agreement['created']} readOnly/>
-                    <TextField label="Izmenjen" value={agreement['lastChanged']} readOnly/>
+                    <TextField label="Kreiran" value={new Date(agreement['created']).toLocaleString()} readOnly/>
+                    <TextField label="Izmenjen" value={new Date(agreement['lastChanged']).toLocaleString()} readOnly/>
                 </div>
                 <TextArea
                     label="Opis"
@@ -79,12 +84,18 @@ export default function AgreementSinglePage() {
                     value={agreement['description']}
                     onChange={(e) => setAgreement({...agreement, description: e})}
                 />
-                {canEdit() &&
-                    <div className="flex justify-end gap-5">
-                        <Button label="Odbaci" design="danger" onClick={handleRejectAgreement}/>
-                        <Button label="Azuriraj" design="secondary" onClick={handleEditAgreement}/>
-                        <Button label="Finalizuj" onClick={() => setFinalizeModal(true)}/>
-                    </div>}
+                <div className="flex justify-end gap-5">
+                    {canEdit() &&
+                        <>
+                            <Button label="Odbaci" design="danger" onClick={handleRejectAgreement}/>
+                            <Button label="Azuriraj" design="secondary" onClick={handleEditAgreement}/>
+                            <Button label="Finalizuj" onClick={() => setFinalizeModal(true)}/>
+                        </>}
+                    {!canEdit() &&
+                        <Link href={createDownloadLink()}
+                              text="Download"
+                              downloadText={`${agreement.documentId}.pdf`}/>}
+                </div>
             </div>
         )
     }

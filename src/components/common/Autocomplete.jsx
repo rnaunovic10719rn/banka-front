@@ -13,7 +13,7 @@ function Autocomplete(props) {
     }
 
     const style = classNames(
-        "border-2 border-gray-300",
+        "border focus:ring-1 border-gray-300",
         "font-sans",
         "dark:text-slate-900 bg-white-50", // background
         "text-base", // text
@@ -46,7 +46,7 @@ function Autocomplete(props) {
                         className={style}
                         onChange={(e) => handleQuery(e.target.value)}
                     />
-                    <Combobox.Options className="border border-gray-300 rounded absolute left-0 right-0">
+                    <Combobox.Options className="border border-gray-300 rounded-b absolute left-0 right-0">
                         {filtered.map((item) => (
                             <Combobox.Option
                                 className={""}
@@ -54,7 +54,7 @@ function Autocomplete(props) {
                                 value={item}>
                                 {({active, selected}) => {
                                     const itemStyle = classNames(
-                                        "bg-white px-1 py-2 hover:bg-gray-100 cursor-pointer rounded",
+                                        "bg-white px-4 py-2 hover:bg-gray-100 cursor-pointer rounded",
                                         {"bg-gray-100": active}
                                     )
                                     return (

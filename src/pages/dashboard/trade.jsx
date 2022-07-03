@@ -70,6 +70,7 @@ export default function TradePage() {
             setForm(DEFAULT_FORM)
             setHack(true)
             setHack(false)
+            window.location.reload()
         } catch (e) {
             Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
             setLoading(false)
@@ -103,7 +104,10 @@ export default function TradePage() {
         return (
             <>
                 <div className="flex">
-                    <StocksDropdown allowCustom onSelect={(e => onChange({symbol: e}))}/>
+                    {securityType === TYPE.STOCKS &&
+                        <StocksDropdown allowCustom onSelect={(e => onChange({symbol: e}))}/>}
+                    {securityType === TYPE.FUTURES &&
+                        <TextField label="Akcija" onChange={(e => onChange({symbol: e}))}/>}
                 </div>
                 <div className="flex items-end gap-3">
                     <TextField
